@@ -1,0 +1,6 @@
+{
+ "kokoku":    {"dir": ".",         "url": "https://claude.ai/artifact/9HfSQ3k2wkLBJAWzg4EMMM", "name": "皇國經綸",       "bg": "#181e2c", "fg": "#d8b25a", "ch": "經", "status": "black-translucent"},
+ "kunitori":  {"dir": "kunitori",  "url": "https://claude.ai/artifact/WSxE64hLyza27Qfm1NTNvm", "name": "國盗り物語",     "bg": "#17130e", "fg": "#e0b858", "ch": "國", "status": "black"},
+ "bungensha": {"dir": "bungensha", "url": "https://claude.ai/artifact/Ge25YLdYokBLFpk9GeGaQQ", "name": "分限者への道",   "bg": "#1f3d66", "fg": "#eef1ec", "ch": "分", "status": "default"},
+ "kutan":     {"dir": "kutan",     "url": "https://claude.ai/artifact/PtKKK64F1SP48txTbnj8xU", "name": "口丹庄屋豪商伝", "bg": "#b03a27", "fg": "#f6f7f3", "ch": "丹", "status": "default"}
+}
