@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="皇國經綸"><meta name="theme-color" content="#181e2c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"></head><body>
-<title>皇國經綸 Ver.39</title>
+<title>皇國經綸 Ver.40</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 作戰室の机上：鐵紺の地に國防色の罫。金は見出し、朱は戰と裁可印にのみ使ふ */
@@ -85,7 +85,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .ver{color:var(--mu);font-size:11px;letter-spacing:.06em}
 </style>
 <div class="w">
-<header><h1>皇國經綸</h1><small class="ver">Ver.39</small><div class="dt" id="dt"></div></header>
+<header><h1>皇國經綸</h1><small class="ver">Ver.40</small><div class="dt" id="dt"></div></header>
 <div class="wars" id="wars"></div><div class="fl"><button class="sm" id="stt" data-a="stt">統計を畳む</button><button class="sm" data-a="menu">記録・始め方</button></div>
 <div class="st" id="st"></div>
 <nav class="tb" id="tb"></nav>
@@ -670,8 +670,8 @@ if(bT=='bal')h+='<p class="p one">官債殘高 '+yen(S.debt||0)+'・利率 '+bon
 else if(bT=='fund')h+='<p class="p one">帑蔵（國帑）'+yen(S.fund)+'・國課 '+yen(calc().inc)+'／季・預金利子 '+yen(depInt())+'／季・投資基金 '+yen(S.ivest||0)+'（運用益 '+yen(gifRet())+'／季）</p>';
 else if(bT=='gif'){const gp=GP[S.gp]?S.gp:'std';h+='<p class="p one">投資基金 '+yen(S.ivest||0)+'・'+GP[gp][0]+'・年利 '+fR().toFixed(2)+'%（運用益 '+yen(gifRet())+'／季は國帑へ）'+(S.fLast?'・前季の自動運用 '+(S.fLast>0?'基金へ ':'國帑へ ')+yen(Math.abs(S.fLast))+'':'')+'</p>';
 h+='<div class="fl">'+Object.keys(GP).map(k=>'<button class="sm'+(gp==k?' on':'')+'" data-a="gp:'+k+'">'+GP[k][0]+'</button>').join('')+'</div>';
-h+='<div class="fl"><button class="sm'+(S.fAuto?' on':'')+'" data-a="gauto">自動運用 '+(S.fAuto?'入':'切')+'</button>'+[1,2,4,8].map(n=>'<button class="sm'+((S.fRes||2)==n?' on':'')+'" data-a="gres:'+n+'">帑を'+n+'季分殘す</button>').join('')+'</div>';
-h+='<p class="p one">自動運用：國債が0の時、國帑のうち維持費'+(S.fRes||2)+'季分を超える分を毎季基金へ移し、國帑が足りなくなれば基金から戻す。交戰中は利回りが下がる。</p>';
+h+='<div class="fl"><button class="sm'+(S.fAuto?' on':'')+'" data-a="gauto">自動運用 '+(S.fAuto?'入':'切')+'</button>'+[8,10,15,20].map(n=>'<button class="sm'+((S.fRes>=8?S.fRes:10)==n?' on':'')+'" data-a="gres:'+n+'">帑を'+n+'季分殘す</button>').join('')+'</div>';
+h+='<p class="p one">自動運用：國債が0の時、國帑のうち維持費'+(S.fRes>=8?S.fRes:10)+'季分を超える分を毎季基金へ移し、國帑が足りなくなれば基金から戻す。交戰中は利回りが下がる。</p>';
 h+='<div class="fl">'+BA.map(v=>'<button class="sm'+(bA==v?' on':'')+'" data-a="bsel:'+v+'">'+bLbl(v)+'</button>').join('')+'</div><div class="fl"><button class="sm" data-a="gin">基金へ拠出 '+bLbl(bA)+'</button><button class="sm" data-a="gout">基金から引出 '+bLbl(bA)+'</button></div>'}
 else{const iss=bT=='iss';h+='<div class="fl">'+BA.map(v=>'<button class="sm'+(bA==v?' on':'')+'" data-a="bsel:'+v+'">'+bLbl(v)+'</button>').join('')+'</div>';h+='<div class="fl"><button class="sm" data-a="'+(iss?'bi':'br')+'">'+(iss?'國債調達 ':'國債償還 ')+bLbl(bA)+'</button></div>';h+='<p class="p one">'+(iss?'國債調達で資金確保できます（行動1・民心−1）。':'償還は行動を使ひません。債務が0の時の償還は國帑から投資基金への拠出になります。償還額が債務を上回った差額は國帑に戻ります。')+'</p>'}
 return h}
@@ -682,7 +682,7 @@ function fR(){const g=GP[S.gp||'std']||GP.std;return Math.max(0,bondR()+g[1]*(at
 function depInt(){return (S.debt||0)>0?0:Math.max(0,S.fund)*bondR()/400}
 function gifRet(){return (S.ivest||0)*fR()/400}
 function bondNet(){return bondInt()-depInt()-gifRet()}
-function gifSeason(c){const iv=S.ivest||0;if(S.gp=='ind'&&iv>0)S.ind*=1+Math.min(.005,iv/(Math.max(1,c.gdp)*400));S.fLast=0;if(!S.fAuto)return;const res=(S.fRes||2)*Math.max(1,c.upk);if((S.debt||0)<=0&&S.fund>res){const m=S.fund-res;S.fund-=m;S.ivest=iv+m;S.fLast=m}else if(S.fund<res&&iv>0){const m=Math.min(iv,res-S.fund);S.ivest=iv-m;S.fund+=m;S.fLast=-m}}
+function gifSeason(c){const iv=S.ivest||0;if(S.gp=='ind'&&iv>0)S.ind*=1+Math.min(.005,iv/(Math.max(1,c.gdp)*400));S.fLast=0;if(!S.fAuto)return;const res=(S.fRes>=8?S.fRes:10)*Math.max(1,c.upk);if((S.debt||0)<=0&&S.fund>res){const m=S.fund-res;S.fund-=m;S.ivest=iv+m;S.fLast=m}else if(S.fund<res&&iv>0){const m=Math.min(iv,res-S.fund);S.ivest=iv-m;S.fund+=m;S.fLast=-m}}
 /* 民營化：[案, 社數, 賣値(季GDP比), 效率(税收+), 專賣益金の喪失(税收−), 民心, 特記(電力=民間が不足を補ふ率／電信=情報)] */
 const PV={den:{n:'電力',jp:'日本發送電・配電',pl:[['一社のまま民營化',1,.5,.01,0,-1,.2],['發電と送配電の二社',2,.45,.015,0,-1,.3],['地域九分割（九電力）',9,.4,.025,0,-2,.5]]},
 tet:{n:'國有鐵道',jp:'鐵道省（國鐵）',pl:[['一社のまま民營化',1,.6,.01,0,-2],['東西二分割',2,.55,.015,0,-3],['旅客六社＋貨物一社',7,.5,.025,0,-4]]},
