@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="皇國經綸"><meta name="theme-color" content="#181e2c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"></head><body>
-<title>皇國經綸 Ver.41</title>
+<title>皇國經綸 Ver.42</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 作戰室の机上：鐵紺の地に國防色の罫。金は見出し、朱は戰と裁可印にのみ使ふ */
@@ -85,7 +85,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .ver{color:var(--mu);font-size:11px;letter-spacing:.06em}
 </style>
 <div class="w">
-<header><h1>皇國經綸</h1><small class="ver">Ver.41</small><div class="dt" id="dt"></div></header>
+<header><h1>皇國經綸</h1><small class="ver">Ver.42</small><div class="dt" id="dt"></div></header>
 <div class="wars" id="wars"></div><div class="fl"><button class="sm" id="stt" data-a="stt">統計を畳む</button><button class="sm" data-a="menu">記録・始め方</button></div>
 <div class="st" id="st"></div>
 <nav class="tb" id="tb"></nav>
@@ -416,7 +416,7 @@ function ojInit(o,pl,sc){const T=pl=='jp'?OJP[sc==1930?1932:1937]:{};let oj=0;o.
    外地生まれは生涯で15%ほどが内地へ戻る（近畿6割・九州1割・中國四國1割・東京圏1割・その他1割）。 */
 /* 版圖の「本土・外地」：内地は一行にまとめ、タップで開く。外地は朝鮮から沿海州の順 */
 var naiOpen=false;const JNAI=['csm','kar','hkd','thk','sth','nai','bsu','tyo','hkr','nri','chb','kin','cgs','shk','kyu','nsw','nan'],JGAI=['cho','tai','kwa','man','umo','smo','kka','enk'],JNS=new Set(JNAI),JAL=new Set(JNAI.concat(JGAI));
-function hOrd(t){if(P=='jp'&&t=='本')return JNAI.concat(JGAI).map(id=>S.R.findIndex(r=>r.id==id)).filter(i=>i>=0);return S.R.map((r,i)=>i)}
+function hOrd(t){if(P=='jp'&&t=='本')return JNAI.concat(JGAI).map(id=>S.R.findIndex(r=>r.id==id)).filter(i=>i>=0);const ix=S.R.map((r,i)=>i);if(P=='jp')return ix;const c=MPOS[HMO[P]];if(!c)return ix;const q=Math.PI/180,k=ix.map(i=>{const m=MPOS[S.R[i].id];return m?Math.sin((m[1]-c[1])*q/2)**2+Math.cos(c[1]*q)*Math.cos(m[1]*q)*Math.sin((m[0]-c[0])*q/2)**2:9});return ix.sort((a,b)=>k[a]-k[b]||a-b)}
 function hIn(t,id){if(P=='jp')return t=='本'?JAL.has(id):TH[id]==t&&!JAL.has(id);return TH[id]==t}
 function naiSum(){const L=JNAI.map(id=>rs(id)).filter(r=>r&&r.o==P),p=L.reduce((a,r)=>a+r.p,0),j=L.reduce((a,r)=>a+(r.jp||0),0);return `<div class="row" data-a="nopen" style="cursor:pointer"><div><span class="nm">${naiOpen?'▾':'▸'} 内地</span><span class="o" style="color:${oc(P)}">${L.length}地</span><div class="meta">人口 ${f(p*100)}萬・${DMN()} ${f(j*100)}萬・タップで${naiOpen?'閉ぢる':'開く'}</div></div></div>`}
 function c100(){S.R.forEach(r=>{if(r.c>=100)r.k1=r.o;else if(r.k1){if(r.k1==r.o)r.c=100;else delete r.k1}})}
