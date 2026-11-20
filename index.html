@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="皇國經綸"><meta name="theme-color" content="#181e2c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"></head><body>
-<title>皇國經綸 Ver.45</title>
+<title>皇國經綸 Ver.46</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 作戰室の机上：鐵紺の地に國防色の罫。金は見出し、朱は戰と裁可印にのみ使ふ */
@@ -85,7 +85,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .ver{color:var(--mu);font-size:11px;letter-spacing:.06em}
 </style>
 <div class="w">
-<header><h1>皇國經綸</h1><small class="ver">Ver.45</small><div class="dt" id="dt"></div></header>
+<header><h1>皇國經綸</h1><small class="ver">Ver.46</small><div class="dt" id="dt"></div></header>
 <div class="wars" id="wars"></div><div class="fl"><button class="sm" id="stt" data-a="stt">統計を畳む</button><button class="sm" data-a="menu">記録・始め方</button></div>
 <div class="st" id="st"></div>
 <nav class="tb" id="tb"></nav>
@@ -522,11 +522,11 @@ av=x=>!S.tech[x[0]]&&(!TY[x[0]]||S.y>=TY[x[0]])&&x[3].split(',').every(p=>!p||S.
 wk=o=>(PS().wk||{})[o]||'',atW=o=>{const k=wk(o);return k&&S.war[k]};
 function calc(){homeNi();const c={food:0,coal:0,iron:0,oil:0,ura:0,gold:0,gas:0},t=S.tech;let pe=0,pop=0;
  S.R.forEach((r,i)=>{const d=RD[i];let k;
-  if(r.o==P){k=r.c/100;pop+=r.p;pe+=r.id==HM()||r.ni?r.p:r.p*k*(isC(i)||r.an?.4:.2)}
+  if(r.o==P){k=r.c/100;pop+=r.p;pe+=r.id==HM()||r.ni?r.p:r.p*k*(isC(i)||r.an?.4:.2);k=.6+.4*k}
   else if(isI(r.o))k=.5;else if(r.o=='th'&&(S.al.th||S.rel.th>=60))k=.3+Math.max(0,S.rel.th)/250;else if(r.id=='fin'&&r.o=='fr'&&S.rel.fr>=40)k=.3;else return;
   let fd=d[9];if(r.id==HM()||(r.ni&&HSPL.includes(r.id)))fd*=S.fert*(1+(t.fe1?.2:0)+(t.fe2?.25:0)+(t.fe3?.3:0));else if(r.o==P)fd*=1+(S.fert-1)*.5;
   c.food+=fd*k;c.coal+=d[10]*k;c.iron+=d[11]*k;c.oil+=d[12]*k;c.gold+=d[13]*k});
- S.D.forEach((x,i)=>{const d=DD[i],r=rs(d[2]);if(d[4]&&!t[d[4]])return;const k=r.o==P?r.c/100:isI(r.o)?.5:P=='jp'&&r.id=='man'&&rs('kwa').o=='jp'&&/ans|fus|hon/.test(d[0])?.5:0;for(const q in d[3])c[q]+=d[3][q]*x.v*k*(d[4]=='sea'?1+.05*L('fis'):1)});
+ S.D.forEach((x,i)=>{const d=DD[i],r=rs(d[2]);if(d[4]&&!t[d[4]])return;const k=r.o==P?.6+.4*r.c/100:isI(r.o)?.5:P=='jp'&&r.id=='man'&&rs('kwa').o=='jp'&&/ans|fus|hon/.test(d[0])?.5:0;for(const q in d[3])c[q]+=d[3][q]*x.v*k*(d[4]=='sea'?1+.05*L('fis'):1)});
  {const mn=S.mine||0;c.gas+=mn*.5;c.oil+=mn*.5;c.food+=mn;c.coal+=mn*1.5;c.iron+=mn}c.food+=c.gas*.3;c.food+=8*S.fish+(t.fi1?6:0)+(t.fi2?8:0);
  for(const k in(S.tr||{}))if(S.tr[k].trd&&!atW(k)){c.gold+=2;c.oil+=1;c.iron+=1}if(P=='jp'){c.imp=S.emb?0:3;if(!S.emb){c.oil+=8;c.iron+=4}}else{const im=PS().imp||{},h=P=='de'&&S.war.gb?.5:1;c.imp=im.oil?2:0;c.oil+=(im.oil||0)*h;c.iron+=(im.iron||0)*h}
  const rl=S.rel;if(rl.gb>=40&&!S.war.gb){c.gold+=4;c.iron+=2}if(rl.nl>=40&&!S.war.us)c.oil+=6;if(rl.pt>=50){c.oil+=2;c.gold+=2}
