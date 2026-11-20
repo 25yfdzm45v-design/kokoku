@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="皇國經綸"><meta name="theme-color" content="#181e2c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"></head><body>
-<title>皇國經綸 Ver.37</title>
+<title>皇國經綸 Ver.38</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 作戰室の机上：鐵紺の地に國防色の罫。金は見出し、朱は戰と裁可印にのみ使ふ */
@@ -85,7 +85,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .ver{color:var(--mu);font-size:11px;letter-spacing:.06em}
 </style>
 <div class="w">
-<header><h1>皇國經綸</h1><small class="ver">Ver.37</small><div class="dt" id="dt"></div></header>
+<header><h1>皇國經綸</h1><small class="ver">Ver.38</small><div class="dt" id="dt"></div></header>
 <div class="wars" id="wars"></div><div class="fl"><button class="sm" id="stt" data-a="stt">統計を畳む</button><button class="sm" data-a="menu">記録・始め方</button></div>
 <div class="st" id="st"></div>
 <nav class="tb" id="tb"></nav>
@@ -399,8 +399,9 @@ function sc30(o,pl){o.sc=1930;o.y=1930;o.R.forEach(r=>{r.p*=PF30[r.id]??.93});co
  else{const f={de:[.4,.35,.1],su:[.8,.6,.5],us:[.8,.85,.5],gb:[.8,.9,.5]}[pl];o.army=Math.round(o.army*f[0]);o.navy=Math.round(o.navy*f[1]);o.air=Math.round(o.air*f[2]);o.log=['一九三〇年正月　'+PLD[pl].n+'の'+PLD[pl].t+'として國を率ゐる']}}
 function story30(){if(S.sc!=1930)return;const v=S.ev,d=S.y*4+S.q,E=S.E;
  if(d<1939*4){E.de=Math.min(100,E.de+2);if(P!='jp'&&E.jp!=null)E.jp=Math.min(100,E.jp+1)}
+ if(P=='de'&&!S.nzb&&d>=1933*4){lg('ヒトラー政權成る。第三帝國の始まり');nzB(S);lg('總統の下、民力各25上がり、大日本帝國との親密度100となる')}
  if(P!='jp')return;
- if(!v.hit&&d>=1933*4){v.hit=1;drel('de',10);lg('第三帝國にヒトラー政權成る')}
+ if(!v.hit&&d>=1933*4){v.hit=1;drel('de',10);lg('獨逸にヒトラー政權成る。第三帝國の始まり')}
  if(!v.ni6&&d>=1936*4){v.ni6=1;up('stab',-5);lg('二・二六事件。陸軍青年將校、蹶起す')}
  if(!v.acp&&d>=1936*4+3){v.acp=1;drel('de',15);lg('日獨防共協定成る')}
  if(v.mo&&!v.mko&&d>=1932*4){v.mko=1;const m=rs('man');if(m.o=='jp'){m.c=Math.min(100,m.c+15);lg('滿洲國建國。帝國、これを承認す')}}
@@ -448,7 +449,7 @@ function denMig(){const R=S.R,d={};R.forEach((r,i)=>{if(r.o==P&&r.p>0)d[i]=r.p/c
  for(const k in d){const i=+k,r=R[i];if(d[i]<=1)continue;const nb=RD[i][7].split('|').map(id=>ri(id)).filter(j=>j>=0&&d[j]!=null&&d[j]*1.15<d[i]);if(!nb.length)continue;const out=r.p*.003*Math.min(1,d[i]-1);nb.forEach(j=>mv.push([i,j,out/nb.length*Math.min(1,(d[i]-d[j])/d[i])]))}
  mv.forEach(([i,j,x])=>{const a=R[i],b=R[j];if(!(x>0)||a.p<=x*2)return;const jr=a.p>0?Math.min(1,(a.jp||0)/a.p):0,loc=Math.max(1e-9,a.p-(a.jp||0)),ol=a.lo!=null?Math.min(1,a.lo/loc):0,xl=x*(1-jr);a.p-=x;a.jp=Math.max(0,(a.jp||0)-x*jr);if(a.lo!=null)a.lo=Math.max(0,a.lo-xl*ol);b.p+=x;b.jp=(b.jp||0)+x*jr;if(xl*ol>0)b.lo=(b.lo||0)+xl*ol})}
 function colMig(r,i){if(P!='jp'||r.ni||r.id==HM()||!(isC(i)||r.an))return;const loc=Math.max(0,r.p-(r.jp||0)),x=loc*.0005;if(x>0){r.p-=x;if(r.lo!=null)r.lo=Math.max(0,r.lo-x*r.lo/Math.max(1e-9,loc));toHome(x)}}
-const ns=(pl='jp',sc=1937)=>{const o=ns1(pl);if(pl=='jp')o.fund=90;if(sc==1930)sc30(o,pl);o.ap=10+Math.floor((o.kin+o.shun)/25);o.oj=ojInit(o,pl,sc);o.oj0=o.oj;return o};
+const ns=(pl='jp',sc=1937)=>{const o=ns1(pl);if(pl=='jp')o.fund=90;if(sc==1930)sc30(o,pl);else nzB(o);o.ap=10+Math.floor((o.kin+o.shun)/25);o.oj=ojInit(o,pl,sc);o.oj0=o.oj;return o};
 const ns1=(pl='jp')=>{const o=ns0();o.E.jp=100;o.E.it=50;o.E.pol=60;if(pl=='jp')return o;const D=PLD[pl],q=NQ[pl];Object.assign(o,{pl,kin:q[0],nou:q[1],shun:q[2],ken:q[3],sav:q[4],fai:q[5],kyo:q[6],imi:q[7],inf:q[8],ika:q[9],zai:0,war:{},army:D.ar[0],navy:D.ar[1],air:D.ar[2],rel:{...D.rel},L:{},ind:null,log:['一九三七年正月　'+D.n+'の'+D.t+'として國を率ゐる']});o.R.forEach(r=>{if(r.o==pl)r.c=r.id==D.hm?100:D.core.includes(r.id)?90:70});o.ap=Math.floor((o.kin+o.shun)/25);return o};
 /* 雲上保存：claude.ai で開いた時は、閲覧者ごとの非公開領域にも自動記録と記録枠を書く。ブラウザの保存が消えても續けられる */
 var CDB=null,CDu=null,cdQ={},cdBusy=0,cdT=0,CSL={},xm='';
@@ -456,6 +457,10 @@ function cdRef(k){return CDB.doc('data/users/'+CDu+'/'+k)}
 function cdPut(k,j){if(!CDB)return;cdQ[k]=j||null;clearTimeout(cdT);cdT=setTimeout(cdFl,1200)}
 async function cdFl(){if(cdBusy||!CDB)return;cdBusy=1;let k;while((k=Object.keys(cdQ)[0])){const j=cdQ[k]||JSON.stringify(S);delete cdQ[k];let o;try{o=JSON.parse(j)}catch(e){continue}try{await cdRef(k).set({j,y:o.y||0,q:o.q||0,pl:o.pl||'jp',t:o.ts||Date.now()})}catch(e){if(e&&e.code=='unavailable'){await new Promise(r=>setTimeout(r,1500+Math.random()*1500));try{await cdRef(k).set({j,y:o.y||0,q:o.q||0,pl:o.pl||'jp',t:o.ts||Date.now()})}catch(e2){}}else if(e&&(e.code=='quota_exceeded'||e.code=='invalid_argument'))toast('雲上へ保存できなかった（容量）')}}cdBusy=0}
 function cdAdopt(j){const pv=S;try{S=JSON.parse(j)}catch(e){S=pv;return 0}mig();if(!S||S.v!==31){S=pv;return 0}fixR();P=S.pl||'jp';relFix();lqMig();rep=[];seen=S.log[0];had=true;try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}return 1}
+const NZ=()=>{try{return !S||S.sc!=1930||S.y*4+(S.q||0)>=1933*4}catch(e){return true}};
+for(const M of [NN,ON])Object.defineProperty(M,'de',{get:()=>NZ()?'第三帝國':'獨逸',set(){},enumerable:true,configurable:true});
+Object.defineProperties(PLD.de,{n:{get:()=>NZ()?'第三帝國':'獨逸國',set(){},enumerable:true},t:{get:()=>NZ()?'總統':'大統領',set(){},enumerable:true},h1:{get:()=>NZ()?'第三帝國經綸':'獨逸經綸',set(){},enumerable:true},lb:{get:()=>{try{return scSel==1930?'獨逸大統領':'第三帝國總統'}catch(e){return '第三帝國總統'}},set(){},enumerable:true}});
+function nzB(o){if(o.pl!='de'||o.nzb)return;o.nzb=1;['kin','nou','shun','ken','sav','fai','kyo','imi','inf','ika'].forEach(k=>o[k]=Math.min(200,(o[k]||0)+25));o.rel.jp=100}
 let S;try{S=JSON.parse(localStorage.getItem(K))}catch(e){}
 function apMax(){return Math.floor((S.kin+S.shun)/25)}
 function mig(){
