@@ -1,0 +1,1127 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="皇國經綸">
+<meta name="theme-color" content="#181e2c">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>html,body{margin:0}[hidden]{display:none!important}</style>
+<title>皇國經綸 Ver.36</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* 作戰室の机上：鐵紺の地に國防色の罫。金は見出し、朱は戰と裁可印にのみ使ふ */
+:root{--bg:#141b26;--pn:#1d2633;--pn2:#26303f;--ln:#36424f;--fg:#e8e2cf;--mu:#9b9884;--kh:#a8995c;--au:#d6b35c;--sh:#cf5638;--shl:#f0b09e;--ok:#86b071;--ink:#fbeee0;color-scheme:dark;
+--fm:"Hiragino Mincho ProN","Yu Mincho","YuMincho","Noto Serif JP","Noto Serif CJK JP",serif;
+--fs:"Hiragino Kaku Gothic ProN","Yu Gothic","YuGothic","Noto Sans JP","Noto Sans CJK JP",system-ui,sans-serif}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:14px/1.6 var(--fs);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 100px}
+.w{max-width:780px;margin:0 auto;display:grid;gap:12px}
+h1{font:700 26px/1.2 var(--fm);color:var(--au);letter-spacing:.3em;margin:0}
+.dt{font-family:var(--fm);font-size:16px;display:flex;flex-wrap:wrap;gap:2px 14px;align-items:baseline}
+.dt small{color:var(--mu);font:12px var(--fs)}
+.wars{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;padding:0 8px;border:1px solid var(--sh);color:var(--shl)}
+.chip.k{border-color:var(--ln);color:var(--mu)}
+.st{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:6px}
+.c{background:var(--pn);padding:6px 8px;min-width:0}
+.c em{display:block;font-style:normal;font-size:11px;color:var(--mu);letter-spacing:.06em}
+.c b{font:600 17px/1.3 var(--fs);font-variant-numeric:tabular-nums}
+.c s{display:block;text-decoration:none;font-size:11px;color:var(--ok);font-variant-numeric:tabular-nums}
+.c s.n{color:var(--sh)}
+.tb{display:grid;grid-template-columns:repeat(5,1fr);border-bottom:1px solid var(--ln)}
+.tb button{background:none;border:0;border-bottom:2px solid transparent;color:var(--mu);font:15px var(--fm);padding:8px 0;cursor:pointer}
+.tb button.on{color:var(--au);border-color:var(--au)}
+h2{font:600 15px var(--fm);color:var(--kh);margin:8px 0 0;letter-spacing:.15em}
+.p{color:var(--mu);font-size:11px;line-height:1.5;margin:0;max-width:none}
+.p.one{white-space:nowrap;max-width:none;overflow-x:auto;scrollbar-width:none}.p.one::-webkit-scrollbar{display:none}
+/* 本文の幅は畫面に固定：長い行や地圖で欄が廣がり、内政の札が2列⇔3列に搖れないやうに */
+#pn{grid-template-columns:minmax(0,1fr)}#pn>*{min-width:0}.mapw{overflow-x:auto}
+.g{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:8px}
+.act{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left;background:var(--pn);border:1px solid var(--ln);color:var(--fg);padding:8px 10px;cursor:pointer;font:inherit;min-width:0}
+.act:hover:not(:disabled){border-color:var(--kh)}
+.act:disabled,.sm:disabled{opacity:.4;cursor:default}
+.act b{font:600 14px var(--fm)}
+.act span{font-size:12px;color:var(--mu)}
+.act i{font-style:normal;font-size:11px;color:var(--kh);font-variant-numeric:tabular-nums}
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--ln)}
+.nm{font-family:var(--fm);font-size:15px}
+.meta{font-size:12px;color:var(--mu);font-variant-numeric:tabular-nums}
+.bt{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.sm{background:var(--pn2);border:1px solid var(--ln);color:var(--fg);font:12px var(--fs);padding:4px 8px;cursor:pointer}
+.sm.r{border-color:var(--sh);color:var(--shl)}
+.o{font-size:11px;padding:0 6px;border:1px solid currentColor;margin-left:6px;vertical-align:2px}
+.bar{height:4px;background:var(--ln);margin-top:4px}
+.bar>i{display:block;height:100%;background:var(--kh)}
+.q{display:grid;grid-template-columns:6.5em minmax(0,1fr) 2.6em;gap:8px;align-items:center;font-size:13px;padding:3px 0}
+.q .bar{margin:0}
+.q span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.log{font-size:13px;display:grid;gap:4px}
+.log div{border-left:2px solid var(--ln);padding-left:8px}
+.end{border:1px solid var(--au);background:var(--pn);padding:12px;display:grid;gap:6px}
+.end b{font:700 18px var(--fm);color:var(--au)}
+.ft{position:fixed;left:0;right:0;bottom:0;background:var(--pn);border-top:1px solid var(--ln);padding:8px max(16px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.ft>div{max-width:780px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ap{font-size:12px;color:var(--mu)}.ap b{color:var(--au);letter-spacing:.2em;font-size:17px}
+.seal{background:var(--sh);color:var(--ink);border:3px double var(--ink);outline:2px solid var(--sh);padding:4px 14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;line-height:1.2}
+.seal b{font:700 17px var(--fm);letter-spacing:.3em}.seal small{font-size:10px}
+.seal:disabled{opacity:.4}
+button:focus-visible{outline:2px solid var(--au);outline-offset:2px}
+.rk{grid-template-columns:7em minmax(0,1fr) 3.6em}.qr{grid-template-columns:11em minmax(0,1fr) 3em}.qr span{white-space:nowrap}.tw{overflow-x:auto}.tw table{border-collapse:collapse;font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}.tw th,.tw td{padding:3px 7px;text-align:right;border-bottom:1px solid var(--ln)}.tw th{color:var(--kh);font-weight:500}.tw td:first-child,.tw th:first-child{text-align:left;font-family:var(--fm)}.tw tr.jp td{color:var(--au)}.tw td:nth-child(2),.tw th:nth-child(2){text-align:left;font-family:var(--fm)}
+.tb{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.sm{min-height:34px}.sm.on{border-color:var(--au);color:var(--au)}.fl{display:flex;gap:6px;flex-wrap:wrap}
+.ts{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(72px + env(safe-area-inset-bottom,0px));background:var(--pn2);border:1px solid var(--kh);padding:6px 12px;font-size:13px;width:max-content;max-width:calc(100vw - 32px);z-index:20}
+.rep{border:1px solid var(--kh);background:var(--pn);padding:10px 12px;display:grid;gap:4px;font-size:13px}.rep b{font-family:var(--fm);color:var(--kh)}
+.ap small{font-size:11px;margin-left:6px}
+.sv{width:100%;max-width:320px;display:block}.sv .ln{fill:none;stroke-width:4;pointer-events:none}.sv .m{stroke:var(--kh)}.sv .r{stroke:var(--ok)}.sv .hit{fill:none;stroke:transparent;stroke-width:22;cursor:pointer;pointer-events:stroke}.sv text{fill:var(--mu);font-size:10px}
+.adp{border:1px solid var(--ln);background:var(--pn);padding:10px;display:grid;gap:8px}input,select{background:var(--pn2);color:var(--fg);border:1px solid var(--ln);padding:4px 8px;font:inherit;font-size:13px;min-width:0;max-width:100%}
+.sc{max-height:70vh;overflow-y:auto;border-top:1px solid var(--ln);overscroll-behavior:contain}.sc .bt{min-width:9.5em}.sc .row{min-height:58px}
+@media(max-width:520px){.row{grid-template-columns:1fr}.bt{justify-content:flex-start}}
+.mapw{margin-bottom:10px}.mapsv{width:100%;height:auto;display:block;border:1px solid var(--ln);border-radius:4px}.mp{cursor:pointer}.mp circle{fill-opacity:.95;stroke:var(--fg);stroke-width:1.5}.mp text{fill:var(--fg);font-size:26px;pointer-events:none}.mapsv polygon{fill:var(--ln);stroke:var(--mu);stroke-width:2;opacity:.8}.mp.cd circle{stroke:var(--au);stroke-width:2.5}.mp.sl circle{stroke:var(--sh);stroke-width:3}.mp.cu circle{stroke:var(--fg);stroke-width:2.5}
+#st.st{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:10px;align-items:start}
+.sl{display:grid;gap:8px;min-width:0}
+.srow{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.srow>*{min-width:0}
+.sr{min-width:0}
+@media(max-width:520px){#st.st{grid-template-columns:minmax(0,1fr)}.srow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ntp{position:fixed;right:max(12px,env(safe-area-inset-right,0px));bottom:calc(80px + env(safe-area-inset-bottom,0px));width:min(340px,calc(100vw - 24px));max-height:45vh;overflow:auto;z-index:25}
+.ntp:empty{display:none}
+.ntf{display:grid;gap:6px}
+.nt{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--pn2);border:1px solid var(--au);padding:8px 10px;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.ntb{background:none;border:0;color:var(--fg);font-size:20px;line-height:1;cursor:pointer;padding:2px 8px}
+.ver{color:var(--mu);font-size:11px;letter-spacing:.06em}
+</style>
+<div class="w">
+<header><h1>皇國經綸</h1><small class="ver">Ver.36</small><div class="dt" id="dt"></div></header>
+<div class="wars" id="wars"></div><div class="fl"><button class="sm" id="stt" data-a="stt">統計を畳む</button><button class="sm" data-a="menu">記録・始め方</button></div>
+<div class="st" id="st"></div>
+<nav class="tb" id="tb"></nav>
+<main id="pn" style="display:grid;gap:8px;min-width:0"></main>
+</div>
+<div class="ts" id="ts" hidden></div><div class="ntp" id="ntp"></div><div class="ft"><div><div class="ap" id="ap"></div><button class="sm" id="mu" data-a="mul">一括 ×1</button><button class="seal" id="nx" data-a="next"><b>裁可</b><small>次の季へ</small></button></div></div>
+<script>let P='jp';
+const K='kokoku-v1',NUM='〇一二三四五六七八九',QN=['正月','四月','七月','十月'],
+ON={zxl:'張學良',yxs:'閻・馮',lzj:'李宗仁',swn:'西南軍閥',xbj:'新疆',ccp:'中國共産黨',swe:'瑞典',che:'瑞西',tib:'チベット國',prs:'ペルシア',jp:'帝國',ind:'屬國',cn:'支那',su:'魯西亞',us:'米國',gb:'英國',fr:'佛國',nl:'蘭國',th:'泰國',la:'中南米',de:'獨逸',it:'伊太利',pol:'波蘭',nt:'中立國',es:'西班牙',pt:'葡萄牙',tr:'土耳古'},
+CN={fund:'帑',iron:'鐵',coal:'炭',oil:'油',ura:'鈾',mun:'彈',medi:'藥',gas:'瓦',gold:'財'};
+// id,名,領有,人口(百萬),支配,守備,海,前提,印(c外地 l解放可),食,炭,鐵,油,財
+const HSPL=['AL','AZ','AR','CA','CO','CT','DE','DC','FL','GA','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','tyo','ber','pri','lon','mos','roma','sar','csm','nsw','bsu','wal','nir','hkd','thk','chb','kin','cgs','kyu','sth','hkr','nri','shk','kar','nan','len','vlg','cau','url','mdw','krl','tat','cvs','mar','klm','bsk','kom','dag','cec','vgr','mrd','udm','kbr','oss','nkh','sou','rhr','bay','epr','kbg','sil','pom','sit','sco','sfr','als','nce'];
+const SPLIT={'tjn':'hok','shd':'hok','yan':'hok','xuz':'chu','whn':'chu','csh':'chu','mac':'knn','hai':'knn','cdu':'jyu','kmg':'jyu','hkd':'nai','thk':'nai','sth':'thk','hkr':'chb','nri':'chb','shk':'cgs','chb':'nai','kin':'nai','cgs':'nai','kyu':'nai','len':'sue','vlg':'sue','cau':'sue','url':'sue','mdw':'use','sou':'use','rhr':'deu','bay':'deu','epr':'deu','sil':'deu','pom':'deu','kbg':'epr','sit':'ita','sco':'gbr','sfr':'fra','als':'fra','nce':'fra','wal':'gbr','nir':'gbr','csm':'nai','nsw':'nai','hwb':'haw','nal':'alk','nsb':'wsb','esb':'wsb','sar':'ita','est':'blt','lat':'blt','geo':'cau','arm':'cau','kaz':'cas','uzb':'cas','tyo':'nai','ber':'deu','pri':'fra','bsu':'nai','lon':'gbr','mos':'sue','roma':'ita','slk':'cze','sud':'cze','cro':'yug','trn':'rom','bes':'rom','mol':'rom','dob':'rom','buk':'rom','tat':'vlg','bsk':'url','cvs':'vlg','mar':'vlg','klm':'vlg','dag':'cau','cec':'cau','crm':'ukr','dnb':'ukr','zap':'ukr','gal':'pol','krl':'len','kom':'url','yak':'tsb','bur':'esb','kgz':'cas','taj':'cas','vgr':'vlg','mrd':'vlg','udm':'url','kbr':'cau','oss':'cau','nkh':'cau','kkp':'uzb','abk':'geo','ajr':'geo','mda':'ukr'},SPR=new Set(['sth','hkr','nri','shk']),SPLIT0={'cze':15,'thk':7.6,'chb':12.6,'cgs':8.8,'uzb':6,'geo':3.5,'epr':2.5,'pol':35,'ukr':31,'vlg':14,'url':10,'len':6.5,'tsb':3,'esb':2.5,'yug':15.5,'rom':19,'hok':80.0,'chu':96.5,'knn':60.0,'jyu':50.0,'nai':70.6,'sue':103.4,'use':92.0,'deu':69.0,'ita':43.0,'gbr':47.0,'fra':42.0,'wsb':8.5,'haw':0.4,'alk':0.07,'blt':6,'cau':13,'cas':16.5,'usw':38.5,'sou':28,'use':30};
+const RD=[
+['nai','北關東（茨城・栃木・群馬）','jp',3.85,100,0,0,'cho|tai|kar|nan|thk|chb|kin|hkd|kyu|csm|nsw|bsu|tyo|sth|nri','',12,0,0,0,0],
+['cho','朝鮮','jp',22,90,0,0,'nai|man|kwa|kyu|enk','c',12,2,1,0,0],
+['tai','臺灣','jp',5.5,95,0,1,'nai|knn|phi|nsw|sha|hkg|fin|kyu','c',8,0,0,0,1],
+['kar','南樺太','jp',0.3,95,0,1,'nai|kka|hkd|csm','c',0,1,0,0,0],
+['nan','小笠原・南洋群島','jp',0.1,95,0,1,'nai|gum|phi|ngn|pgb|haw|aus|hwb|bsu','c',1,0,0,0,0],
+['man','滿洲國','jp',37,80,0,0,'cho|kwa|hok|umo|smo|enk','ca',20,2,1,0,0],
+['kwa','關東州','jp',1.37,100,20,1,'man|cho|tjn|shd','c',1,0,0,0,2],
+['umo','内蒙古','yxs',5,0,15,0,'man|smo|hok|yan|sin','ale',2,1,0,0,0],
+['hok','北平・河北','yxs',38,0,40,0,'man|umo|tjn|shd|xuz|whn|yan','al',8,2,1,0,0],
+['sha','上海','cn',3.5,0,35,1,'chu|tai','a',1,0,0,0,3],
+['chu','南京（江蘇・浙江）','cn',26.5,0,55,0,'sha|xuz|whn|jxi','l',4,0,0,0,1],
+['knn','廣州（廣東・廣西）','lzj',57.1,0,40,1,'tai|jxi|csh|kmg|hkg|mac|hai|fin','l',7,0,0,0,1],
+['hkg','香港','gb',1,0,25,1,'knn|tai|mac','a',0,0,0,0,3],
+['jyu','重慶','swn',13,0,75,0,'whn|csh|cdu|kmg','ld',2,1,0,0,0],
+['tib','チベット國','tib',4,0,35,0,'cdu|kmg|sin','l',1,0,0,0,0],
+['sin','新疆','xbj',4,0,30,0,'smo|umo|wsb|cas|tib|nsb|kaz|uzb|kgz|taj','ae',1,0,0,1,0],
+['smo','外蒙古','su',0.8,0,55,0,'man|umo|sin|tsb|nsb|esb|bur','ale',2,0,0,0,0],
+['kka','北樺太','su',0.1,0,30,1,'kar|alk|csm|nal','ae',0,1,0,0,0],
+['enk','沿海州','su',1.5,0,90,0,'man|cho|tsb|alk|esb|yak','ae',5,1,0,0,0],
+['tsb','西比利亞鐵道','su',2.6,0,110,0,'enk|smo|wsb|alk|nsb|esb|kaz|yak|bur','ae',2,3,1,0,0],
+['wsb','西西伯利亞（オムスク）','su',3.5,0,120,0,'tsb|url|cas|nsb|sin|kaz','aed',-1,3,1,0,0],
+['cas','土庫曼','su',1.5,0,110,0,'wsb|sin|kaz|uzb|tur|mde|vlg|cau|url|nsb|kgz|taj|kkp','aled',-1,-2,1,1,2],
+['sue','歐露中部','su',55.9,0,200,0,'len|vlg|url|blr|ukr|blt|mos|mrd','ld',67,6,3,2,2],
+['blr','白魯','su',5.6,0,60,0,'sue|pol|blt|ukr|lat|mos','l',3,0,0,0,0],
+['ukr','烏克蘭','su',23.5,0,120,0,'sue|blr|pol|rom|hun|vlg|cau|mos|slk|trn|bes|crm|dnb|gal|zap|mda','l',12,3,4,0,1],
+['alk','南荒須加（アンカレジ）','us',0.05,0,40,1,'kka|tsb|enk|nal|can|CA|OR|WA','ae',0,1,0,0,1],
+['can','金田','gb',11,0,120,0,'alk|nal|CO|UT|NV|WY|MT|ID|MA|CT|ME|NH|VT|RI|WA|ND|MN|MI|NY','aed',25,2,3,1,3],
+['mex','墨西哥','la',19,0,50,1,'TX|NM|AZ|CA|haw|gua|enz|crb','a',8,1,1,4,2],
+['gua','具充間','la',2.2,0,20,1,'mex|enz|sal|hon','a',2,0,0,0,1],
+['enz','縁図','la',0.06,0,10,1,'gua|mex|hon','a',0,0,0,0,0],
+['sal','得申鳩','la',1.6,0,15,1,'gua|hon|nic','a',1,0,0,0,1],
+['hon','本土拉','la',1,0,15,1,'gua|sal|enz|nic|crb','a',1,0,0,0,1],
+['nic','丹唐具','la',0.8,0,15,1,'hon|sal|cos|crb','a',1,0,0,0,0],
+['cos','越田利','la',0.6,0,12,1,'nic|pan','a',1,0,0,0,1],
+['pan','華間','la',0.6,0,25,1,'cos|col|haw|crb|ecu','a',0,0,0,0,3],
+['col','小論比','la',8.7,0,35,1,'pan|ven|crb|ecu|bra','a',4,1,0,2,2],
+['ven','屁音洲','la',3.5,0,30,1,'col|crb|guy|bra','a',2,0,1,10,3],
+['crb','狩部海諸島','la',13,0,30,1,'mex|ven|col|pan|hon|nic|FL|TX|guy|sur|gfr','a',6,0,0,2,3],
+['ecu','江桑','la',2.6,0,20,1,'col|pan|per','a',2,0,0,0.5,1],
+['per','秘露','la',6.8,0,30,1,'ecu|bol|chi|bra','a',4,0,1,1,2],
+['bol','堀比亞','la',2.9,0,20,0,'per|chi|par|arg|bra','a',1,0,0,0,2],
+['chi','知里','la',4.9,0,35,1,'per|bol|arg|flk','a',3,1,2,0,3],
+['par','晴具藍','la',1,0,15,0,'bol|bra|uru|arg','a',1,0,0,0,0],
+['uru','潤具藍','la',2.1,0,15,1,'bra|arg|par','a',4,0,0,0,1],
+['arg','有全鎮','la',13.5,0,55,1,'chi|par|uru|bol|flk','a',20,0,0,1,4],
+['flk','北蘭土諸島','gb',0.002,0,10,1,'arg|chi','ae',0,0,0,0,0],
+['guy','外穴','gb',0.34,0,10,1,'ven|crb|sur','ae',0,0,1,0,1],
+['sur','刷南','nl',0.17,0,10,1,'guy|crb|gfr','ae',0,0,1,0,1],
+['gfr','岐穴','fr',0.04,0,8,1,'sur|crb|bra','ae',0,0,0,0,0],
+['bra','裏慈塁','la',40,0,60,1,'gfr|ven|col|per|bol|par|uru','a',15,1,3,0,4],
+['deu','獨逸中部','de',26.8,0,130,0,'rhr|bay|epr|sil|pom|aut|cze|pol|dnk|bnl|ber|sud','ld',41,5,7,2,5],
+['aut','墺太利','nt',6.8,0,30,0,'deu|cze|ita|hun|che|yug|bay|cro|sud','a',3,0,1,0,1],
+['cze','波希米亞・摩拉維亞','nt',8.1,0,60,0,'deu|aut|pol|hun|bay|sil|slk|sud','al',4,2,2,0,3],
+['sud','ズデーテン地方','nt',3.5,0,70,0,'cze|deu|bay|sil|aut','al',2,2,0,0,0],
+['pol','波蘭','pol',29,0,80,0,'deu|cze|blt|blr|ukr|rom|epr|sil|pom|slk|gal','al',14,8,1,0,2],
+['blt','立陶宛','nt',3,0,25,1,'len|suo|blr|pol|est|lat|blt|sue|epr|kbg','al',2,0,0,0,1],
+['suo','芬蘭','nt',3.8,0,50,0,'len|blt|swe|est|krl','al',2,0,1,0,1],
+['swe','瑞典','nt',6.3,0,50,1,'nor|suo|dnk','al',4,0,10,0,3],
+['nor','諾威','nt',2.9,0,25,1,'dnk|swe|gbr|sco','al',1,0,1,0,2],
+['dnk','丁抹','nt',3.8,0,15,1,'deu|nor|swe|pom','al',4,0,0,0,1],
+['bnl','蘭白盧','nl',17,0,60,1,'deu|fra|gbr|rhr|pri|lon','al',8,6,1,0,6],
+['fra','北佛','fr',20.3,0,130,0,'rhr|als|sfr|bnl|gbr|pri|lon','ld',23,4,1,0,7],
+['che','瑞西','nt',4.2,0,60,0,'rhr|bay|als|sfr|nce|ita|aut','a',2,0,0,0,4],
+['ita','伊太利北部','it',24.2,0,80,1,'sfr|nce|che|aut|yug|sit|grc|egy|sar|roma|cro','l',11,1,1,0,4],
+['spa','西班牙本國','es',25,0,60,1,'sfr|por|sar','l',10,1,3,0,2],
+['por','葡萄牙本國','pt',7.5,0,30,1,'spa','l',3,0,0,0,1],
+['gbr','英格蘭','gb',30.2,0,220,1,'fra|bnl|nor|sco|wal|nir|pri|lon','ld',25,21,6,0,14],
+['hun','洪牙利','nt',9,0,40,0,'aut|cze|rom|yug|ukr|slk|cro|trn','al',6,1,0,0,1],
+['rom','羅馬尼亞（ワラキア）','nt',7,0,45,0,'hun|ukr|bul|pol|yug|trn|bes|gal|mol|dob|buk','al',6,0,0,8,2],
+['yug','南斯拉夫（塞爾維亞）','nt',9.5,0,45,1,'aut|hun|ita|bul|grc|rom|cro','al',7,1,1,0,1],
+['bul','勃牙利','nt',6.3,0,30,0,'rom|yug|grc|tur|dob','al',4,0,0,0,1],
+['grc','希臘','nt',7,0,35,1,'yug|bul|tur|ita|sit','al',3,0,0,0,1],
+['slk','斯洛伐克','nt',3.4,0,35,0,'cze|pol|hun|ukr|gal','al',3,0,0,0,0],
+['cro','克羅地亞・波斯尼亞','nt',6,0,35,1,'yug|hun|aut|ita','al',3,0,0,0,0],
+['trn','特蘭西瓦尼亞','nt',5,0,40,0,'hun|rom|ukr|bes|mol|buk','al',4,0,0,0,0],
+['bes','比薩拉比亞','nt',2.8,0,30,0,'ukr|rom|trn|mol|buk|mda','al',2,0,0,0,0],
+['mol','モルダヴィア（ヤシ）','nt',2.6,0,40,0,'rom|bes|trn|buk','al',2,0,0,0,0],
+['dob','ドブロジャ（コンスタンツァ）','nt',0.8,0,30,1,'rom|bul','al',1,0,0,0,0],
+['buk','ブコヴィナ（チェルナウツィ）','nt',0.8,0,30,0,'rom|mol|trn|gal|bes','al',1,0,0,0,0],
+['tat','韃靼（タタール）','su',3,0,40,0,'vlg|url|bsk|cvs|mar|udm','al',2,0,0,0,0],
+['bsk','巴什基爾（バシキール）','su',3.2,0,40,0,'url|tat|kom|udm','al',2,0,0,2,0],
+['cvs','チュヴァシ','su',0.9,0,30,0,'vlg|tat|mar|mrd','al',2,0,0,0,0],
+['mar','マリ・エル','su',0.6,0,30,0,'vlg|tat|cvs|url','al',1,0,0,0,0],
+['klm','カルムイク','su',0.2,0,25,0,'vlg|cau|dag|vgr','al',1,0,0,0,0],
+['dag','ダゲスタン','su',1,0,40,1,'cau|cec|klm','al',2,0,0,0,0],
+['cec','チェチェン・イングーシ','su',0.9,0,40,0,'cau|dag|geo|oss','al',1,0,0,1,0],
+['crm','クリミア自治共和國','su',1.1,0,60,1,'ukr|zap','al',2,0,0,0,0],
+['dnb','ドンバス（スターリノ・ヴォロシロフグラード）','su',4.5,0,70,0,'ukr|vlg|zap','al',2,5,1,0,0],
+['gal','ガリツィア（ルヴフ）','pol',6,0,50,0,'pol|ukr|rom|slk|buk','al',3,1,0,1,0],
+['zap','ザポリッジャ','su',1.3,0,60,1,'ukr|dnb|crm','al',2,0,1,0,0],
+['krl','カレリア','su',0.3,0,30,0,'len|suo|est','al',1,0,0,0,0],
+['kom','コミ','su',0.3,0,25,0,'url|bsk|udm','al',1,2,0,0,0],
+['yak','サハ（ヤクート）','su',0.4,0,30,0,'tsb|esb|enk','al',1,0,0,0,1],
+['bur','ブリヤート','su',0.5,0,30,0,'esb|smo|tsb','al',1,0,0,0,0],
+['kgz','キルギス','su',1,0,40,0,'cas|kaz|sin','al',2,0,0,0,0],
+['taj','タジク','su',1,0,40,0,'cas|uzb|sin','al',2,0,0,0,0],
+['vgr','ヴォルガ・ドイツ人','su',0.6,0,30,0,'vlg|klm|kaz','al',2,0,0,0,0],
+['mrd','モルドヴィア','su',1.2,0,30,0,'vlg|sue|cvs','al',2,0,0,0,0],
+['udm','ウドムルト','su',1.2,0,30,0,'url|tat|bsk|kom','al',1,0,0,0,0],
+['kbr','カバルダ・バルカル','su',0.4,0,30,0,'cau|geo|oss|abk','al',1,0,0,0,0],
+['oss','北オセチア','su',0.3,0,30,0,'cau|kbr|geo|cec','al',1,0,0,0,0],
+['nkh','ナヒチェヴァン','su',0.1,0,20,0,'cau|arm|tur|mde','al',0,0,0,0,0],
+['kkp','カラカルパク','su',0.4,0,20,0,'uzb|cas|kaz','al',1,0,0,0,0],
+['abk','アブハジア','su',0.3,0,25,1,'geo|kbr','al',1,0,0,0,0],
+['ajr','アジャリア（バトゥミ）','su',0.2,0,25,1,'geo|tur','al',1,0,0,0,0],
+['mda','沿ドニエストル（モルダヴィア自治共和國）','su',0.6,0,30,0,'ukr|bes','al',1,0,0,0,0],
+['tur','土耳古本國','tr',17,0,80,1,'bul|grc|mde|cau|cas|geo|arm|nkh|ajr','l',8,1,1,0,2],
+['mde','中東（伊拉克・波斯）','gb',20,0,40,0,'tur|cas|cau|egy|ind|geo|arm|nkh','al',6,0,0,15,3],
+['egy','埃及・北阿','gb',20,0,50,1,'lby|mde|ita','al',8,0,0,1,4],
+['lby','利比亞','it',1,0,20,1,'sit|egy','a',0,0,0,0,0],
+['fin','佛印','fr',23,0,30,1,'knn|tai|hai|kmg|thi|mal','l',20,1,0,0,1],
+['thi','泰','th',15,0,40,0,'fin|mal|bir','l',20,0,0,0,0],
+['mal','馬來','gb',4.3,0,45,1,'fin|thi|sgp|bir|sum|kal','al',2,0,1,0,3],
+['sgp','昭南','gb',0.7,0,40,1,'mal|sum|jaw|kal','a',0,0,0,0,2],
+['bir','緬甸','gb',16,0,40,0,'mal|thi|kmg|ind','l',8,0,0,1,0],
+['sum','スマトラ','nl',9.3,0,30,1,'mal|sgp|jaw','l',3,0,0,0,1],
+['jaw','ジャワ','nl',46.7,0,35,1,'sum|kal|sgp|ran','al',8,0,0,0,1],
+['kal','刈滿丹','nl',2.5,0,20,1,'mal|sgp|phi|jaw|ran','ae',0,0,0,0,1],
+['ran','東印度諸島','nl',9.45,0,20,1,'jaw|kal|phi|ngn|pgb|aus','ae',1,0,0,0,0],
+['ngn','新祇庭','gb',1.3,0,20,1,'ran|nan|pgb|aus','ae',1,0,0,0,1],
+['phi','比律賓','us',16,0,45,1,'tai|nan|kal|ran','al',6,0,1,0,1],
+['gum','大宮','us',0.02,0,15,1,'nan|haw|hwb','ae',0,0,0,0,0],
+['haw','布哇（オアフ・真珠灣）','us',0.3,0,90,1,'nan|gum|hwb|CA|OR|WA|mex|pan|bsu','ae',0,0,0,0,0],
+['pgb','英領太平洋諸島','gb',0.3,0,15,1,'nan|ran|ngn|pfr|nzl','ae',0,0,0,0,0],
+['pfr','佛領太平洋','fr',0.1,0,15,1,'pgb|aus','ae',0,0,1,0,0],
+['ind','印度','gb',380,0,150,0,'bir|mde','ld',0,2,2,0,5],
+['aus','豪州','gb',7,0,80,1,'ran|nan|ngn|pfr|nzl','ae',25,1,2,0,2],
+['nzl','新慈蘭','gb',1.6,0,40,1,'aus|pgb','ae',6,0,0,0,1],
+['jxi','江西・革命根據地','ccp',1.6,60,20,0,'chu|whn|csh|knn','d',1,0,0,0,0],
+['tjn','天津','yxs',2.5,0,20,1,'hok|shd|kwa','a',0.5,0,0,0,0],
+['shd','山東（濟南・青島）','yxs',38,0,30,1,'hok|tjn|xuz|kwa','al',5,2,0,0,0],
+['xuz','徐州','cn',12,0,35,0,'shd|hok|chu|whn','l',2,1,0,0,0],
+['whn','武漢（漢口・武昌・漢陽）','cn',30,0,50,0,'chu|xuz|hok|csh|jyu|yan|jxi','l',3,0,1,0,1],
+['csh','長沙（湖南）','cn',28,0,40,0,'whn|jxi|knn|jyu|kmg','l',3,0,0,0,0],
+['mac','澳門','pt',0.4,0,10,1,'knn|hkg','a',0,0,0,0,0],
+['hai','海南島','lzj',2.5,0,15,1,'knn|fin','ae',1,0,1,0,0],
+['cdu','成都','swn',25,0,50,0,'jyu|kmg|tib|yan','ld',3,0,0,0,0],
+['kmg','昆明（雲南）','swn',12,0,40,0,'jyu|cdu|csh|knn|fin|bir|tib','ld',1,0,0,0,1],
+['yan','延安（陝北）','ccp',1.5,0,30,0,'hok|umo|whn|cdu','d',0.5,0,0,0,0],
+['hkd','北海道','jp',3.2,100,0,0,'thk|kar|nai|csm','',4,2,0,0,0],
+['thk','北東北','jp',3.3,100,0,0,'hkd|nai|chb|sth','',7,0,0,0,0],
+['chb','東海（名古屋）','jp',5.9,100,0,0,'nai|thk|kin|hkr|nri|tyo','',7,0,0,0.5,0],
+['kin','近畿（大阪・京都）','jp',11.6,100,0,0,'chb|cgs|nai|hkr|shk','',6,0,0,0,0],
+['cgs','中國','jp',5.5,100,0,0,'kin|kyu|shk','',6,0,0,0,0],
+['kyu','九州','jp',10.9,100,0,1,'cgs|cho|tai|nai|nsw|shk','',6,4,1,0,0],
+['len','レニングラード','su',6.2,0,80,1,'sue|suo|blt|est|lat|mos|krl','l',2,0,0,0,0],
+['vlg','スターリングラード・ヴォルガ','su',7.5,0,80,0,'sue|ukr|cau|cas|url|mos|tat|cvs|mar|klm|dnb|vgr|mrd','l',15,0,0,0,0],
+['cau','アゼルバイジャン（バクー）','su',5.3,0,70,0,'vlg|ukr|tur|mde|cas|geo|arm|klm|dag|cec|kbr|oss|nkh','l',2,0,0,13,0],
+['url','ウラル','su',5.3,0,80,0,'sue|vlg|wsb|cas|mos|tat|bsk|mar|kom|udm','ld',6,4,5,0,2],
+['rhr','ラインラント・ルール','de',18,0,70,0,'deu|als|fra|bnl|che|bay','ld',10,25,3,0,4],
+['bay','バイエルン（南獨）','de',12,0,50,0,'deu|rhr|aut|che|cze|sud','l',12,0,0,0,1],
+['epr','東普魯西','de',1.4,0,35,1,'deu|pol|blt|pom|ber|kbg','l',3,0,0,0,0],
+['kbg','ケーニヒスベルク','de',1.1,0,50,1,'epr|blt','l',2,0,0,0,0],
+['sil','シュレージエン','de',4.7,0,45,0,'deu|pol|cze|ber|sud','l',3,5,0,0,0],
+['pom','ポンメルン','de',2,0,30,1,'deu|pol|epr|dnk|ber','l',4,0,0,0,0],
+['sit','西伊・シチリア','it',17,0,50,1,'ita|lby|grc|sar|roma','l',8,0,0,0,1],
+['sco','スコットランド','gb',5,0,50,1,'gbr|nor|wal|nir|lon','l',3,4,0,0,1],
+['sfr','南佛（ヴィシー・マルセイユ）','fr',14,0,60,1,'fra|als|nce|spa|che|ita|sar|pri','l',16,0,0,0,3],
+['als','アルザス・ロレーヌ','fr',3.5,0,60,0,'fra|rhr|sfr|che|pri','l',0,4,9,0,0],
+['nce','ニース・サヴォワ','fr',1.2,0,30,1,'sfr|ita|che|sar','l',1,0,0,0,0],
+['wal','ウェールズ','gb',2.5,0,25,0,'gbr|nir|sco|lon','l',1,0,0,0,0],
+['nir','北アイルランド','gb',1.3,0,20,0,'gbr|wal|sco|lon','l',1,0,0,0,0],
+['csm','千島列島','jp',0.1,100,0,1,'hkd|kka|kar|nai','',0,0,0,0,0],
+['nsw','南西諸島（沖繩・先島）','jp',0.7,100,0,1,'kyu|tai|nai','',0,0,0,0,0],
+['hwb','布哇諸島（マウイ・カウアイ）','us',0.1,0,30,1,'haw|nan|gum','ae',0,0,0,0,0],
+['nal','北荒須加（フェアバンクス）','us',0.02,0,20,1,'alk|kka|can','ae',0,0,0,0,0],
+['nsb','中央西伯利亞（ノヴォシビルスク）','su',2.5,0,80,0,'wsb|esb|cas|smo|sin|tsb|kaz','ae',2,2,1,0,0],
+['esb','東西伯利亞（イルクーツク）','su',2,0,80,0,'nsb|tsb|smo|enk|yak|bur','ae',2,1,1,0,0],
+['sar','撒丁（サルディーニャ）','it',0.9,0,30,1,'ita|sit|sfr|spa|nce|roma','l',1,0,0,0,0],
+['est','エストニア','nt',1.1,0,15,0,'len|lat|blt|suo|krl','l',1,0,0,0,0],
+['lat','ラトビア','nt',1.9,0,15,0,'est|blt|blr|len','l',1,0,0,0,0],
+['geo','ジョージア','su',3,0,40,0,'cau|arm|tur|mde|cec|kbr|oss|abk|ajr','l',2,0,0,0,0],
+['arm','アルメニア','su',1.5,0,30,0,'cau|geo|tur|mde|nkh','l',1,0,0,0,0],
+['kaz','カザフ','su',7,0,60,0,'cas|uzb|sin|wsb|nsb|tsb|kgz|vgr|kkp','ae',2,2,1,0,0],
+['uzb','ウズベク','su',5.6,0,60,0,'kaz|cas|sin|taj|kkp','ae',2,0,0,0,0],
+['bsu','房総（千葉）','jp',1.5,100,0,1,'nai|nan|haw|tyo','',2,0,0,0,0],
+['AL','アラバマ','us',3.002,100,12.9,1,'FL|GA|TN|MS','',2.944,0.828,0.483,0.322,0.69],
+['AZ','アリゾナ','us',0.467,100,6,0,'CA|NV|UT|NM|mex','',0.458,0.129,0.075,0.05,0.107],
+['AR','アーカンソー','us',1.962,100,8.4,0,'MO|TN|MS|LA|TX|OK','',1.925,0.541,0.316,0.211,0.451],
+['CA','カリフォルニア','us',6.025,100,25.9,1,'OR|NV|AZ|mex|alk|haw','',5.909,1.662,0.97,0.646,1.385],
+['CO','コロラド','us',1.103,100,6,0,'WY|NE|KS|OK|NM|UT|can','',1.082,0.304,0.178,0.118,0.254],
+['CT','コネティカット','us',1.708,100,7.3,1,'NY|MA|RI|can','',1.675,0.471,0.275,0.183,0.393],
+['DE','デラウェア','us',0.286,100,6,1,'MD|NJ|PA','',0.281,0.079,0.046,0.031,0.066],
+['DC','ワシントン市','us',0.52,100,6,1,'MD|VA','',0.51,0.143,0.084,0.056,0.119],
+['FL','フロリダ','us',1.559,100,6.7,1,'AL|GA|crb','',1.529,0.43,0.251,0.167,0.358],
+['GA','ジョージア','us',3.087,100,13.3,1,'FL|AL|TN|NC|SC','',3.028,0.851,0.497,0.331,0.71],
+['ID','アイダホ','us',0.477,100,6,0,'WA|OR|NV|UT|WY|MT|can','',0.468,0.132,0.077,0.051,0.11],
+['IL','イリノイ','us',8.093,100,34.8,0,'WI|IA|MO|KY|IN','',7.938,2.233,1.302,0.868,1.861],
+['IN','インディアナ','us',3.437,100,14.8,0,'IL|MI|OH|KY','',3.371,0.948,0.553,0.369,0.79],
+['IA','アイオワ','us',2.62,100,11.3,0,'MN|WI|IL|MO|NE|SD','',2.57,0.723,0.422,0.281,0.602],
+['KS','カンザス','us',1.994,100,8.6,0,'NE|MO|OK|CO','',1.956,0.55,0.321,0.214,0.458],
+['KY','ケンタッキー','us',2.768,100,11.9,0,'IL|IN|OH|WV|VA|TN|MO','',2.715,0.764,0.446,0.297,0.636],
+['LA','ルイジアナ','us',2.228,100,9.6,1,'TX|AR|MS','',2.185,0.614,0.358,0.239,0.512],
+['ME','メイン','us',0.838,100,6,1,'NH|can','',0.822,0.231,0.135,0.09,0.193],
+['MD','メリーランド','us',1.729,100,7.4,1,'PA|DE|VA|WV|DC','',1.696,0.477,0.278,0.185,0.397],
+['MA','マサチューセッツ','us',4.508,100,19.4,1,'NY|VT|NH|RI|CT|can','',4.422,1.244,0.725,0.484,1.036],
+['MI','ミシガン','us',5.134,100,22.1,1,'WI|IN|OH|can','',5.036,1.416,0.826,0.551,1.18],
+['MN','ミネソタ','us',2.715,100,11.7,0,'ND|SD|IA|WI|can','',2.663,0.749,0.437,0.291,0.624],
+['MS','ミシシッピ','us',2.132,100,9.2,1,'TN|AL|LA|AR','',2.091,0.588,0.343,0.229,0.49],
+['MO','ミズーリ','us',3.85,100,16.6,0,'IA|IL|KY|TN|AR|OK|KS|NE','',3.777,1.062,0.62,0.413,0.885],
+['MT','モンタナ','us',0.573,100,6,0,'ND|SD|WY|ID|can','',0.562,0.158,0.092,0.061,0.132],
+['NE','ネブラスカ','us',1.464,100,6.3,0,'SD|IA|MO|KS|CO|WY','',1.436,0.404,0.236,0.157,0.337],
+['NV','ネバダ','us',0.095,100,6,0,'OR|ID|UT|AZ|CA|can','',0.094,0.026,0.015,0.01,0.022],
+['NH','ニューハンプシャー','us',0.499,100,6,1,'ME|MA|VT|can','',0.489,0.138,0.08,0.053,0.115],
+['NJ','ニュージャージー','us',4.285,100,18.4,1,'NY|PA|DE','',4.203,1.182,0.69,0.46,0.985],
+['NM','ニューメキシコ','us',0.446,100,6,0,'AZ|UT|CO|OK|TX|mex','',0.437,0.123,0.072,0.048,0.102],
+['NY','ニューヨーク','us',13.354,100,57.4,1,'PA|NJ|CT|MA|VT|can','',13.099,3.684,2.149,1.433,3.07],
+['NC','ノースカロライナ','us',3.362,100,14.5,1,'VA|TN|GA|SC','',3.298,0.928,0.541,0.361,0.773],
+['ND','ノースダコタ','us',0.721,100,6,0,'MT|SD|MN|can','',0.707,0.199,0.116,0.077,0.166],
+['OH','オハイオ','us',7.054,100,30.3,0,'MI|PA|WV|KY|IN','',6.919,1.946,1.135,0.757,1.622],
+['OK','オクラホマ','us',2.546,100,10.9,0,'KS|MO|AR|TX|NM|CO','',2.497,0.702,0.41,0.273,0.585],
+['OR','オレゴン','us',1.008,100,6,1,'WA|ID|NV|CA|alk|haw','',0.988,0.278,0.162,0.108,0.232],
+['PA','ペンシルヴァニア','us',10.215,100,43.9,1,'NY|NJ|DE|MD|WV|OH','',10.019,2.818,1.644,1.096,2.348],
+['RI','ロードアイランド','us',0.721,100,6,1,'CT|MA|can','',0.707,0.199,0.116,0.077,0.166],
+['SC','サウスカロライナ','us',1.846,100,7.9,1,'NC|GA','',1.81,0.509,0.297,0.198,0.424],
+['SD','サウスダコタ','us',0.732,100,6,0,'ND|MT|WY|NE|IA|MN','',0.718,0.202,0.118,0.079,0.168],
+['TN','テネシー','us',2.779,100,11.9,0,'KY|VA|NC|GA|AL|MS|AR|MO','',2.726,0.767,0.447,0.298,0.639],
+['TX','テキサス','us',6.184,100,26.6,1,'NM|OK|AR|LA|mex|crb','',6.066,1.706,0.995,0.663,1.422],
+['UT','ユタ','us',0.541,100,6,0,'ID|WY|CO|NM|AZ|NV|can','',0.531,0.149,0.087,0.058,0.124],
+['VT','ヴァーモント','us',0.382,100,6,0,'NY|MA|NH|can','',0.375,0.105,0.061,0.041,0.088],
+['VA','ヴァージニア','us',2.567,100,11,1,'MD|WV|KY|TN|NC|DC','',2.518,0.708,0.413,0.275,0.59],
+['WA','ワシントン州','us',1.655,100,7.1,1,'OR|ID|alk|can|haw','',1.623,0.456,0.266,0.178,0.38],
+['WV','ウェストヴァージニア','us',1.835,100,7.9,0,'OH|PA|MD|VA|KY','',1.8,0.506,0.295,0.197,0.422],
+['WI','ウィスコンシン','us',3.119,100,13.4,0,'MN|IA|IL|MI','',3.059,0.86,0.502,0.335,0.717],
+['WY','ワイオミング','us',0.276,100,6,0,'MT|SD|NE|CO|UT|ID|can','',0.271,0.076,0.044,0.03,0.063],
+['tyo','東京（埼玉・神奈川を含む）','jp',9.75,100,80,0,'nai|bsu|nri|chb','',0,0,0,0,0],
+['sth','南東北','jp',4.3,100,0,1,'thk|nai|nri','',0,0,0,0,0],
+['hkr','北陸','jp',2.2,100,0,1,'nri|chb|kin','',0,0,0,0,0],
+['nri','内陸（甲信越飛）','jp',4.5,100,0,1,'sth|nai|tyo|hkr|chb','',0,0,0,0,0],
+['shk','四國','jp',3.3,100,0,1,'cgs|kin|kyu','',0,0,0,0,0],
+['ber','伯林','de',3,100,150,0,'deu|epr|sil|pom','',0,0,0,0,0],
+['pri','巴里','fr',3,100,120,0,'fra|als|sfr|bnl|gbr','',0,0,0,0,0],
+['lon','倫敦','gb',8,100,140,0,'gbr|bnl|fra|sco|wal|nir','',0,0,0,0,0],
+['mos','莫斯科','su',4,100,200,0,'sue|len|vlg|url|blr|ukr','',0,0,0,0,0],
+['roma','羅馬','it',0.9,100,60,0,'ita|sit|sar','',0,0,0,0,0]];;
+// id,名,所在,産出,要技術,初期開發
+const DD=[
+['daq','大慶油田','man',{oil:16},'geo',0],['sho','勝利油田','shd',{oil:10},'geo',0],['ksb','南樺太海底油田','kar',{oil:8},'sea',0],
+['fut','弗喉鑛床','cho',{ura:4},'',0],['jun','順川鑛床','cho',{ura:4},'',0],['hei','平山鑛床','cho',{ura:6},'',0],
+['ans','鞍山鑛床','man',{iron:12},'',.3],['fus','撫順炭鑛','man',{coal:16},'',.5],['hon','本溪湖鑛床','man',{coal:6,iron:6},'',.3],
+['oha','北樺太油田','kka',{oil:6},'',0],['pal','パレンバン油田','sum',{oil:12},'',.3],['pil','ピルバラ鐵鑛','aus',{iron:15},'geo',0],['kuz','葛蓮炭田','wsb',{coal:12,iron:4},'',0],['bal','バリクパパン油田','kal',{oil:4},'',.3],
+['str','須取鑛床','tsb',{ura:4},'geo',0],['khg','比亞具鑛床','tsb',{ura:3},'geo',0],
+['ord','尾留炭田','umo',{coal:10,gas:4},'',0],['hor','堀呉留炭田','umo',{coal:6},'',0],['bay','白雲鄂博鐵鑛','umo',{iron:6},'geo',0],['tav','田番炭田','smo',{coal:8},'geo',0],
+['jnc','順川炭田','cho',{coal:4},'',.3],['tok','德川炭田','cho',{coal:3},'',.3],['ago','阿吾地炭田','cho',{coal:3},'',.5],
+['kan','汗透炭田','tsb',{coal:10},'',0],['irk','入久炭田','tsb',{coal:5},'',0],
+['sam','サモトロール油田','wsb',{oil:20},'geo',0],['ure','ウレンゴイ瓦斯田','wsb',{gas:20},'geo',0],
+['ten','テンギス油田','kaz',{oil:8},'geo',0],['kgd','カラガンダ炭田','kaz',{coal:8},'',.3],['gaz','ガズリ瓦斯田','uzb',{gas:8},'geo',0],
+['krm','克拉瑪依油田','sin',{oil:4},'geo',0],['trm','タリム瓦斯田','sin',{gas:4},'geo',0],['skg','樺太沖瓦斯田','kka',{gas:5},'sea',0],
+['pru','プルドーベイ油田','alk',{oil:15,gas:5},'geo',0],['ncl','ニッケル鑛','pfr',{iron:2},'',.4],['png','新祇庭瓦斯田','ngn',{gas:3},'geo',0],
+['bdk','バダック瓦斯田','kal',{gas:5},'geo',0],['kco','東刈滿丹炭田','kal',{coal:6},'',0],['arn','アルン瓦斯田','sum',{gas:4},'geo',0],
+['ath','アサバスカ油砂','can',{oil:10},'geo',0],['alb','アルバータ瓦斯田','can',{gas:6,oil:2},'',.5],['lab','ラブラドル鐵鑛','can',{iron:6},'geo',0],
+['nws','北西大陸棚瓦斯田','aus',{gas:8},'sea',0],['bow','ボウエン炭田','aus',{coal:8},'',.3],
+['txs','テキサス油田','TX',{oil:15,gas:8},'',.6],['cal','加州油田','CA',{oil:5},'',.6],['mes','メサビ鐵鑛','MN',{iron:12},'',.6],['pow','パウダー川炭田','WY',{coal:8},'geo',0],
+['mrc','マラカイボ油田','ven',{oil:10},'',.5],['ita','イタビラ鐵鑛','bra',{iron:8},'',.3],['crj','カラジャス鐵鑛','bra',{iron:10},'geo',0],['cer','セレホン炭田','col',{coal:5},'geo',0],
+['vmu','バカ・ムエルタ瓦斯田','arg',{gas:6},'geo',0],['trd','トリニダード瓦斯田','crb',{gas:3,oil:1},'',.3],['chc','知里銅山','chi',{gold:3},'',.5],['bln','堀比亞錫鑛','bol',{gold:2},'',.5],
+['ruh','ルール炭田','rhr',{coal:20,iron:2},'',.8],['saa','ザール炭田','rhr',{coal:6},'',.7],['leu','ロイナ人造石油','deu',{oil:4},'syn',.5],['sil','シレジア炭田','pol',{coal:12},'',.6],
+['lor','ロレーヌ鐵鑛','als',{iron:12},'',.7],['nfr','北佛炭田','fra',{coal:8},'',.7],['kir','キルナ鐵鑛','swe',{iron:15},'',.7],['plo','プロエシュティ油田','rom',{oil:10},'',.7],
+['zis','ツィスタースドルフ油田','aut',{oil:2},'',.3],['joa','ヨアヒムスタール鈾鑛','sud',{ura:3},'',.3],['bau','洪牙利礬土','hun',{iron:3},'',.4],
+['bak','バクー油田','cau',{oil:20},'',.8],['mai','マイコプ・グロズヌイ油田','cau',{oil:8},'',.6],['vol','ヴォルガ・ウラル油田','vlg',{oil:12},'geo',0],['kur','クルスク鐵鑛','sue',{iron:8},'geo',0],['mag','マグニトゴルスク鐵鑛','url',{iron:10},'',.6],
+['don','ドネツ炭田','dnb',{coal:18},'',.8],['krv','クリヴォイ・ログ鐵鑛','ukr',{iron:12},'',.8],
+['wls','英國炭田','wal',{coal:20},'',.8],['nse','北海油田','sco',{oil:12,gas:8},'sea',0],['gro','フローニンゲン瓦斯田','bnl',{gas:10},'geo',0],['lim','リンブルフ炭田','bnl',{coal:5},'',.7],
+['ast','アストゥリアス炭田','spa',{coal:4},'',.5],['rio','リオ・ティント鑛山','spa',{iron:3,gold:2},'',.5],['wol','葡萄牙重石鑛','por',{gold:2},'',.5],
+['abd','アーバーダーン油田','mde',{oil:10},'',.6],['kkk','キルクーク油田','mde',{oil:8},'',.5],['bor','ボル銅山','yug',{gold:2},'',.5],['zon','ゾングルダク炭田','tur',{coal:4},'',.5],
+['lbo','利比亞油田','lby',{oil:10},'geo',0],['suz','蘇士運河','egy',{gold:4},'',1],
+['app','アパラチア炭田','PA',{coal:15},'',.8],['peo','東部油田','WV',{oil:4,gas:4},'',.7],['cou','コロラド鈾鑛','CO',{ura:3},'geo',0],['gbu','グレートベア鈾鑛','can',{ura:2},'',.3]];
+const TD=[
+['geo','地質探査',60,'','大慶・勝利・ピルバラを發見'],['sea','海洋掘削',90,'geo','南樺太海底油田を開發可能に'],
+['fe1','化學肥料 一',50,'','農業收量 +20%'],['fe2','化學肥料 二',90,'fe1','農業收量 +25%'],['fe3','化學肥料 三',140,'fe2','農業收量 +30%'],
+['fi1','遠洋漁業',50,'','漁獲 +6'],['fi2','母船式漁業',100,'fi1','漁獲 +8'],['syn','人造石油',80,'','毎季 炭4→油2'],
+['med','抗生物質',70,'','健康 +8・人口增加 +0.3%'],['mec','機械化',80,'','陸軍 ×1.25'],['rad','電探',70,'','海空 ×1.2'],['jet','噴進機',120,'rad','航空 ×1.3'],
+['ni','二號研究（陸軍）',400,'','原子核分裂の研究'],['f','F號研究（海軍）',400,'','原子核分裂の研究'],['ab','原子爆彈',1200,'ni,f','世界初の原爆製造が可能に'],
+['pw1','大容量火力發電',70,'','電源開發1基の電力 +50%'],['pw2','超高壓送電',110,'pw1','電源開發1基の電力 さらに +50%'],['nuc','原子力發電',600,'pw2,ni','電源開發1基の電力 ×2']];
+// 列國の民力：勤勉,能力,俊敏,健康,貯蓄,信仰,協調,模倣,情報,醫學
+const NQ={jp:[145,135,300,85,200,150,300,150,100,100],de:[125,125,105,125,90,140,200,140,120,125],it:[75,80,60,100,45,150,50,60,60,40],th:[80,80,60,70,25,150,70,75,20,15],es:[70,80,65,110,20,150,50,70,110,60],pt:[60,70,55,100,10,150,50,50,50,40],gb:[105,95,80,115,60,130,60,90,110,110],us:[70,75,65,90,45,130,50,90,140,120],fr:[80,80,70,100,50,125,0,80,70,80],nl:[120,120,100,120,85,140,75,110,80,110],su:[75,80,65,70,40,150,50,60,80,60],cn:[40,60,55,70,40,60,25,40,20,30],tr:[110,90,80,100,30,110,50,120,60,30]},
+NN={zxl:'張學良',yxs:'閻・馮',lzj:'李宗仁',swn:'西南軍閥',xbj:'新疆',ccp:'中國共産黨',swe:'瑞典',che:'瑞西',tib:'チベット國',prs:'ペルシア',jp:'大日本帝國',de:'獨逸',it:'伊太利',th:'泰',es:'西班牙',pt:'葡萄牙',gb:'英國',us:'米國',fr:'佛國',nl:'蘭國',su:'魯西亞',cn:'支那',tr:'土耳古'},QL=['勤勉','能力','俊敏','健康','貯蓄','信仰','協調','模倣','情報','醫學'],DO=[1,0,2,7,6,3,5,4,8,9],
+qm=o=>{const q=NQ[o];return q?(q[0]+q[1]+q[2]+q[3])/240*(.9+q[6]/1000):1},srT=x=>2500/NQ[x][5],TH={},TN=[['本','本土・外地'],['北','北方'],['支','支那'],['南','南方'],['洋','太平洋・北米'],['米','中南米・狩部海'],['歐','歐州・中東']],cmd=o=>Math.floor((NQ[o][0]+NQ[o][2])/25),af=o=>cmd(o)/4;
+[['本','nai cho tai kar nan man kwa hkd thk sth chb hkr nri kin cgs shk kyu csm nsw bsu tyo'],['北','csm nsb esb bur kaz uzb kkp geo ajr abk arm smo kka enk tsb yak wsb cas taj kgz sue blr ukr mda crm dnb zap len krl vlg mrd vgr klm mar cvs tat cau nkh oss kbr cec dag url udm kom bsk'],['支','umo hok sha chu knn hkg jyu tib sin jxi tjn shd xuz whn csh mac hai cdu kmg yan'],['南','fin thi mal sgp bir sum jaw kal ran ind'],['歐','sar deu aut cze sud slk pol gal blt suo swe nor dnk bnl fra che ita spa por gbr hun rom mol dob buk trn bes yug cro bul grc tur mde egy lby rhr bay epr kbg sil pom sit sco sfr als nce'],['米','mex gua enz sal hon nic cos pan col ven crb ecu per bol chi par uru arg flk guy sur gfr bra']].forEach(([t,l])=>l.split(' ').forEach(x=>TH[x]=t));RD.forEach(d=>{if(!TH[d[0]])TH[d[0]]='洋'});
+NQ.zxl=[46,62,50,74,52,58,34,40,24,30];NQ.yxs=[42,58,50,68,38,60,26,38,22,28];NQ.lzj=[44,55,50,72,40,58,38,42,22,30];NQ.swn=[34,50,45,62,30,48,16,32,16,24];NQ.xbj=[30,44,40,55,28,45,30,30,18,22];NQ.ccp=[48,40,58,60,24,72,50,50,30,38];NQ.swe=[100,100,100,95,110,100,100,95,95,95];NQ.che=[100,105,100,100,110,105,95,95,95,100];NQ.prs=[95,90,95,90,85,95,90,90,80,85];NQ.tib=[80,75,80,80,75,95,80,70,70,75];
+const PLD={jp:{lb:'大日本帝國天皇',n:'大日本帝國',t:'天皇',h1:'皇國經綸',hm:'nai',core:['hkd','thk','chb','kin','cgs','kyu','csm','nsw'],sl:[['cn','支那'],['zxl','張學良'],['yxs','閻・馮'],['lzj','李宗仁'],['swn','西南軍閥'],['xbj','新疆'],['ccp','中國共産黨'],['su','魯西亞'],['us','米英']],wk:{zxl:'zxl',yxs:'yxs',lzj:'lzj',swn:'swn',xbj:'xbj',ccp:'ccp',cn:'cn',su:'su',us:'us',gb:'us',nl:'us',la:'us'},fr:['fr','th'],al:[]},
+de:{lb:'獨逸総統',n:'獨逸國',t:'總統',h1:'獨逸經綸',to:['歐','北','南','支','本','洋','米'],hm:'deu',core:['rhr','bay','epr','kbg','sil','pom'],ar:[160,45,130],imp:{oil:5,iron:6},sl:[['gb','英佛'],['su','魯西亞'],['us','米國'],['jp','大日本帝國'],['cn','支那'],['it','伊太利']],wk:{gb:'gb',fr:'gb',nl:'gb',pol:'gb',us:'us',la:'us',su:'su',jp:'jp',cn:'cn',it:'it'},fr:['nt'],al:['it'],rel:{gb:-10,fr:-20,su:-30,us:-10,jp:30,it:40,es:40,tr:20},g:'行動數は（勤勉＋俊敏）÷25。波蘭を攻めれば英佛と開戰する。羅馬尼亞の石油と瑞典の鐵が要。英佛と戰ふ間は交易が半減し、昭和十七年には米國が參戰する。魯西亞とは不可侵條約（關係50）を結べば背後を突かれにくい。'},
+su:{lb:'魯西亜(蘇聯)書記長',n:'魯西亞（蘇聯）',t:'書記長',h1:'蘇聯經綸',to:['北','歐','支','本','南','洋','米'],hm:'sue',core:['blr','ukr','kka','enk','tsb','wsb','cas','len','vlg','cau','url','nsb','esb','est','lat','blt','geo','arm','kaz','uzb','tat','bsk','cvs','mar','klm','dag','cec','crm','dnb','zap','vgr','mrd','udm','kbr','oss','nkh','kkp','abk','ajr','mda','krl','kom','yak','bur','kgz','taj'],ar:[220,40,120],sl:[['de','獨伊'],['jp','大日本帝國'],['cn','支那'],['gb','英佛'],['us','米國']],wk:{de:'de',it:'de',jp:'jp',cn:'cn',gb:'gb',fr:'gb',nl:'gb',us:'us',la:'us'},fr:['nt','pol'],al:['gb','us'],rel:{de:-30,jp:-30,gb:-10,fr:-10,us:0,tr:0,it:-20},g:'行動數は（勤勉＋俊敏）÷25。一九四一年夏、獨逸が不意に侵攻してくる（不可侵條約で關係80以上なら避けられる）。日本も北進を狙ふ。一九四二年からは米國の援助物資が届く。波蘭・芬蘭・波羅的三國は宣戰なしで攻められる。'},
+us:{lb:'亞米利加合衆國大統領',n:'亞米利加合衆國',t:'大統領',h1:'合衆國經綸',to:['洋','米','本','南','支','歐','北'],hm:'NY',core:['AL','AZ','AR','CA','CO','CT','DE','DC','FL','GA','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC','alk','haw','phi','gum','hwb','nal'],ar:[70,130,70],sl:[['jp','大日本帝國'],['de','獨伊'],['su','魯西亞'],['cn','支那'],['gb','英佛']],wk:{jp:'jp',th:'jp',de:'de',it:'de',su:'su',cn:'cn',gb:'gb',fr:'gb',nl:'gb'},fr:['nt'],al:['gb','fr','nl','su'],rel:{jp:-20,de:-20,gb:40,fr:30,su:-10,it:-10,cn:30},g:'行動數は（勤勉＋俊敏）÷25。一九四一年冬、日本が眞珠灣を奇襲し、獨逸も宣戰する（不可侵條約で避けられる）。工業力で押し勝つのが本筋。英本國を足場に歐州へ渡れる。'},
+ gb:{lb:'大英帝國國王',n:'大英帝國',t:'國王',h1:'大英經綸',to:['歐','南','洋','米','本','支','北'],hm:'gbr',core:['can','aus','nzl','sco','wal','nir'],ar:[60,160,70],sl:[['de','獨伊'],['jp','大日本帝國'],['su','魯西亞'],['us','米國'],['cn','支那']],wk:{de:'de',it:'de',jp:'jp',th:'jp',su:'su',us:'us',la:'us',cn:'cn'},fr:['nt'],al:['fr','nl','pol','us'],rel:{de:-10,it:-10,jp:0,su:-20,us:60,fr:70,nl:60,cn:20,pol:50},g:'行動數は（勤勉＋俊敏）÷25。1939年秋、獨逸が波蘭に侵攻し英國は參戰する。1940年に佛蘭西が降れば英本國は孤立し、本土航空戰が始まる（空軍60未滿だと工業が被害）。1941年冬、日本が馬來・香港を襲ひ、米國が參戰する。加奈陀・豪州・新慈蘭は自治領として忠誠を保つが、印度・緬甸・馬來・埃及などの植民地は年を追って獨立の氣運が高まる。支配が20を割ると獨立を宣言するので、同化と行政で支配を保て。'}};
+const NAV=['gb','us','jp'],HMO={de:'deu',it:'ita',gb:'gbr',fr:'fra',nl:'bnl',us:'NY',su:'sue',jp:'nai',pol:'pol'};
+function TNL(){return(PS().to||['本','北','支','南','洋','米','歐']).map(t=>[t,P!='jp'&&t=='本'?'大日本帝國 本土・外地':P=='su'&&t=='北'?'蘇聯本土・西比利亞':P=='de'&&t=='北'?'魯西亞・西比利亞':TN.find(x=>x[0]==t)[1]])}
+function PS(){return PLD[P]||PLD.jp}function HM(){return PS().hm}
+function isC(i){return P=='jp'?RD[i][8].includes('c'):PS().core.includes(RD[i][0])}
+function SN(x){return P=='jp'?(x=='us'?'米英':ON[x]):((PS().sl.find(s=>s[0]==x)||[])[1]||NN[x]||ON[x]||x)}
+const ns0=()=>({v:31,pl:'jp',y:1937,q:0,ap:17,fund:40,stab:70,ind:102,lab:1,sci:0,cur:'',rq:['geo'],tp:{},tech:{},oil:40,iron:10,coal:10,ura:0,food:10,army:100,navy:100,air:50,bomb:0,kin:145,shun:300,ken:85,nou:135,sav:200,fai:150,kyo:300,imi:150,zai:7.72,inf:100,ika:100,elec:700,arms:4,mun:60,phar:2,medi:30,birth:0,fert:1,fish:1,pr:0,resF:1,wt:0,
+rel:{th:100,tib:100,prs:100,tr:100,es:90,che:90,swe:80,pt:80,it:70,su:60,de:60,nl:60,fr:60,gb:40,us:20,cn:0,zxl:-10,yxs:-20,lzj:-10,swn:-10,xbj:90,ccp:-40},L:{fin:100,mal:100,bir:100,jaw:100,sum:100,phi:100,ind:100},war:{cn:1},E:{cn:100,su:100,us:100,gb:60,de:100,fr:35,nl:20,th:40,zxl:60,yxs:50,lzj:50,swn:40,xbj:40,ccp:50},al:{},ev:{},emb:0,neu:0,offer:{},bk:{},fo:'',dc:'',
+R:RD.map(r=>({id:r[0],o:r[2],p:r[3],c:r[4],or:r[2]})),D:DD.map(d=>({v:d[5]})),log:['昭和十二年正月　御代を差配す。支那事變進行中'],ach:{},over:0,mtg:{},jf:[]});
+
+const PF30={nai:64.45/70.6,csm:64.45/70.6,nsw:64.45/70.6,wal:.98,nir:.98,hkd:64.45/70.6,thk:64.45/70.6,chb:64.45/70.6,kin:64.45/70.6,cgs:64.45/70.6,kyu:64.45/70.6,cho:21.06/22,tai:4.59/5.5,kar:.98,nan:.7,man:30/37,kwa:.95/1.37,ind:338/380,jaw:.893,sum:.893,kal:.893,ran:.893,phi:.84,deu:.96,gbr:.98,fra:1,ita:.94,sue:.9,ukr:.93,blr:.93},
+G30={jp:.59,us:1.04,de:.71,su:.93,gb:.97,fr:.94,it:.87,cn:.76,nl:.84,es:.66,th:.62,pt:.62,tr:1.2,swe:.69,che:.85,prs:.4,tib:.25,zxl:.76,yxs:.76,lzj:.76,swn:.76,xbj:.76,ccp:.76};
+function sc30(o,pl){o.sc=1930;o.y=1930;o.R.forEach(r=>{r.p*=PF30[r.id]??.93});const m=o.R.find(r=>r.id=='man');m.o='zxl';m.or='zxl';m.c=0;{const ya=o.R.find(r=>r.id=='yan');if(ya){ya.o='yxs';ya.or='yxs'}}o.war={};o.E.de=50;o.E.jp=80;o.E.cn=90;
+ if(pl=='jp'){Object.assign(o,{ind:76,elec:520,army:85,navy:95,air:30,zai:1.5,stab:60,fund:90,mun:40});o.rel.de=60;o.rel.us=10;o.rel.gb=10;o.log=['昭和五年正月　昭和恐慌のさなか、御代を差配す']}
+ else{const f={de:[.4,.35,.1],su:[.8,.6,.5],us:[.8,.85,.5],gb:[.8,.9,.5]}[pl];o.army=Math.round(o.army*f[0]);o.navy=Math.round(o.navy*f[1]);o.air=Math.round(o.air*f[2]);o.log=['一九三〇年正月　'+PLD[pl].n+'の'+PLD[pl].t+'として國を率ゐる']}}
+function story30(){if(S.sc!=1930)return;const v=S.ev,d=S.y*4+S.q,E=S.E;
+ if(d<1939*4){E.de=Math.min(100,E.de+2);if(P!='jp'&&E.jp!=null)E.jp=Math.min(100,E.jp+1)}
+ if(P!='jp')return;
+ if(!v.hit&&d>=1933*4){v.hit=1;drel('de',10);lg('獨逸にヒトラー政權成る')}
+ if(!v.ni6&&d>=1936*4){v.ni6=1;up('stab',-5);lg('二・二六事件。陸軍青年將校、蹶起す')}
+ if(!v.acp&&d>=1936*4+3){v.acp=1;drel('de',15);lg('日獨防共協定成る')}
+ if(v.mo&&!v.mko&&d>=1932*4){v.mko=1;const m=rs('man');if(m.o=='jp'){m.c=Math.min(100,m.c+15);lg('滿洲國建國。帝國、これを承認す')}}
+ if(S.dc)return;
+ if(!v.lnt&&d>=1930*4){v.lnt=1;S.dc='lnt'}
+ else if(!v.mk&&d>=1931*4+1&&rs('man').o=='zxl'){v.mk=1;S.dc='mukden'}
+ else if(v.mo&&!v.lea&&d>=1932*4+3){v.lea=1;S.dc='league'}
+ else if(!v.rk&&d>=1937*4+1&&!S.war.cn){v.rk=1;S.dc='rokou'}}
+const OJP={1932:{tai:.0655,cho:.0315,kar:.9825,kwa:.1875,nan:.2575,man:.0075},1937:{tai:.0725,cho:.0455,kar:.9855,kwa:.2225,nan:.5575,man:.0455}};
+function ojInit(o,pl,sc){const T=pl=='jp'?OJP[sc==1930?1932:1937]:{};let oj=0;o.R.forEach(r=>{r.jp=0;if(pl=='jp'){if(r.id==HMO[pl]||(HSPL.includes(r.id)&&r.o==pl))r.jp=r.p;else if(T[r.id]!=null)r.jp=r.p*T[r.id]}if(r.id!=HMO[pl]&&!HSPL.includes(r.id)&&r.jp)oj+=r.jp});return oj}
+/* 外地の大和民族：移民一世の1/4、外地生まれの9/10が現地の人と結婚し、子は大和民族とする（その分の出生は現地人から移る）。
+   外地生まれは生涯で15%ほどが内地へ戻る（近畿6割・九州1割・中國四國1割・東京圏1割・その他1割）。 */
+/* 版圖の「本土・外地」：内地は一行にまとめ、タップで開く。外地は朝鮮から沿海州の順 */
+var naiOpen=false;const JNAI=['csm','kar','hkd','thk','sth','nai','bsu','tyo','hkr','nri','chb','kin','cgs','shk','kyu','nsw','nan'],JGAI=['cho','tai','kwa','man','umo','smo','kka','enk'],JNS=new Set(JNAI),JAL=new Set(JNAI.concat(JGAI));
+function hOrd(t){if(P=='jp'&&t=='本')return JNAI.concat(JGAI).map(id=>S.R.findIndex(r=>r.id==id)).filter(i=>i>=0);return S.R.map((r,i)=>i)}
+function hIn(t,id){if(P=='jp')return t=='本'?JAL.has(id):TH[id]==t&&!JAL.has(id);return TH[id]==t}
+function naiSum(){const L=JNAI.map(id=>rs(id)).filter(r=>r&&r.o==P),p=L.reduce((a,r)=>a+r.p,0),j=L.reduce((a,r)=>a+(r.jp||0),0);return `<div class="row" data-a="nopen" style="cursor:pointer"><div><span class="nm">${naiOpen?'▾':'▸'} 内地</span><span class="o" style="color:${oc(P)}">${L.length}地</span><div class="meta">人口 ${f(p*100)}萬・日本人 ${f(j*100)}萬・タップで${naiOpen?'閉ぢる':'開く'}</div></div></div>`}
+function c100(){S.R.forEach(r=>{if(r.c>=100)r.k1=r.o;else if(r.k1){if(r.k1==r.o)r.c=100;else delete r.k1}})}
+function toHome(x){if(!(x>0))return;const H=S.R.filter(r=>r.o==P&&(r.id==HM()||r.ni));if(!H.length)return;const W={kin:.6,kyu:.1,cgs:.06,shk:.04,tyo:.1};let rest=x;H.forEach(r=>{const w=W[r.id];if(w){r.p+=x*w;r.jp=(r.jp||0)+x*w;rest-=x*w}});const O=H.filter(r=>!W[r.id]),op=O.reduce((a,r)=>a+r.p,0);if(op>0)O.forEach(r=>{const a=rest*r.p/op;r.p+=a;r.jp=(r.jp||0)+a})}
+/* 外地の大和民族は環境が變はり多産：女性一人あたり平均5.5人＝出生率 年40‰、死亡率 年14‰（醫學・醫療研究で下がる）。
+   通婚した者の子は大和民族なので、通婚の割合 m だけ出生が上乘せされる（伸び＝40‰×(1+m)−死亡率） */
+function ojCDR(){return Math.max(8,14-(S.ika-50)*.04-(S.tech&&S.tech.med?2:0))/1000}
+function ojMix(r){const b=r.jp||0,j2=Math.min(b,r.j2!=null?r.j2:b*.3);return b>0?(.25*(b-j2)+.9*j2)/b:0}
+function ojRate(){let a=0,w=0;S.R.forEach(r=>{if(r.o==P&&r.jp>0&&r.id!=HMO[P]&&!r.ni){const b=r.jp,loc=Math.max(0,r.p-b),s=r.p>0?Math.min(1,b/r.p):0,j2=Math.min(b,r.j2!=null?r.j2:b*.3);a+=b*(.04-ojCDR())+Math.min(b*ojMix(r)*.04,loc*.035*.8)-(j2*.0028+b*.064*s*s);w+=b}});return w>0?a/w*100:0}
+/* 開始（昭和五年・十二年）より前に生まれた現地の人は大和民族にならない：その世代は寿命で減るのみ（30年で約半分、90年でゼロ） */
+function yrs0(){return Math.max(0,S.y+S.q/4-(S.sc==1930?1930:1937))}
+function cohAt(t){return Math.pow(Math.max(0,1-t/90),1.6)}
+function l0of(r){const i=ri(r.id);return Math.max(0,RD[i][3]*(S.sc==1930?.88:1)*.97)}
+function ojG(r){const b=r.jp,j2=Math.min(b,r.j2!=null?r.j2:b*.3),m=ojMix(r),gl=Math.min(3.85,1+Math.min(3,L('umi')*.3)*.4)/400,loc=Math.max(0,r.p-b);
+ if(r.lo==null)r.lo=Math.min(loc,l0of(r)*cohAt(yrs0()));{const t=yrs0(),a=cohAt(Math.max(0,t-.25));r.lo=a>0?Math.min(loc,r.lo*cohAt(t)/a):0}
+ /* 通婚の子は現地の出生から移る（現地の出生を超えない）。大和民族の割合が高まるほど土地と職が足りなくなり、内地への流出が大きくなる（半々で年1.3%、九割で年5%） */
+ const tr=Math.max(0,Math.min(b*m*.04/4,loc*.035/4*.8,loc*(1+gl)-r.lo)),dJ=b*(.04-ojCDR())/4+tr,dL=loc*gl-tr,s=r.p>0?Math.min(1,b/r.p):0,ret=j2*.0007+b*.016*s*s;r.jp=Math.max(0,b+dJ-ret);r.j2=Math.max(0,Math.min(r.jp,j2+dJ-ret));r.p=Math.max(r.jp,r.p+dJ+dL-ret);if(!r.yam&&r.p-r.jp<r.p*.005){r.yam=1;r.jp=r.p;r.j2=Math.max(r.j2,r.p*.9);lg(RD[ri(r.id)][1]+'の住民、通婚を重ねて悉く大和民族となる')}toHome(ret);S.oj=(S.oj||0)+dJ-ret}
+/* 自主移民：内地人口の年0.215%が外地と、併合して内地にした地へ移る。出發地は移民の多かった地方（九州・中國・内陸〈長野・新潟〉・四國・南東北〈山形・福島〉・近畿〈和歌山〉・沖繩）が主 */
+const EMW={kyu:.25,cgs:.22,nri:.12,shk:.08,sth:.08,nsw:.08,kin:.07,thk:.05};
+function emHome(){return S.R.filter(r=>r.o==P&&(r.id==HM()||homeR(r.id))&&r.id!='kar'&&r.id!='nan')}
+function emDest(){return S.R.filter((r,i)=>r.o==P&&r.id!=HM()&&(r.id=='kar'||r.id=='nan'||(!homeR(r.id)&&(r.ni||isC(i)||r.an)))&&r.c>=30)}
+function volEm(){if(P!='jp')return;const H=emHome(),hp=H.reduce((a,r)=>a+r.p,0),D=emDest(),dw=D.reduce((a,r)=>a+r.p,0),tot=hp*.00215/4;if(!(tot>0)||!D.length||!(dw>0))return;
+ let wsum=0;const W=H.map(r=>{const w=EMW[r.id]||0;wsum+=w;return w});const rest=Math.max(0,1-wsum),op=H.reduce((a,r,k)=>a+(W[k]?0:r.p),0);
+ H.forEach((r,k)=>{const x=tot*(W[k]?W[k]:(op>0?rest*r.p/op:0))/Math.max(1e-9,(wsum+(op>0?rest:0)));if(!(x>0)||r.p<=x)return;const jr=r.p>0?Math.min(1,(r.jp||0)/r.p):1;r.p-=x;r.jp=Math.max(0,(r.jp||0)-x*jr)});
+ D.forEach(r=>{const x=tot*r.p/dw;r.p+=x;r.jp=(r.jp||0)+x});S.oj=(S.oj||0)+tot}
+/* 人口の自動補正：收容力（1937年の人口×開拓餘地、年1.2%づつ廣がる）を超えて過密になると、隣の空いた地へ移る（内地↔内地・内地↔外地・外地↔外地） */
+const FRM={hkd:3,kar:3,csm:3,kka:3,enk:3,man:2.5,umo:2.5,smo:3,nan:2.5,tai:1.5,cho:1.3,kwa:1.2};
+function capOf(r,i){return Math.max(.05,RD[i][3]*(S.sc==1930?.88:1)*(FRM[r.id]||(homeR(r.id)||r.id==HM()?1.2:1.5))*(1+.012*yrs0()))}
+function denMig(){const R=S.R,d={};R.forEach((r,i)=>{if(r.o==P&&r.p>0)d[i]=r.p/capOf(r,i)});const mv=[];
+ for(const k in d){const i=+k,r=R[i];if(d[i]<=1)continue;const nb=RD[i][7].split('|').map(id=>ri(id)).filter(j=>j>=0&&d[j]!=null&&d[j]*1.15<d[i]);if(!nb.length)continue;const out=r.p*.003*Math.min(1,d[i]-1);nb.forEach(j=>mv.push([i,j,out/nb.length*Math.min(1,(d[i]-d[j])/d[i])]))}
+ mv.forEach(([i,j,x])=>{const a=R[i],b=R[j];if(!(x>0)||a.p<=x*2)return;const jr=a.p>0?Math.min(1,(a.jp||0)/a.p):0,loc=Math.max(1e-9,a.p-(a.jp||0)),ol=a.lo!=null?Math.min(1,a.lo/loc):0,xl=x*(1-jr);a.p-=x;a.jp=Math.max(0,(a.jp||0)-x*jr);if(a.lo!=null)a.lo=Math.max(0,a.lo-xl*ol);b.p+=x;b.jp=(b.jp||0)+x*jr;if(xl*ol>0)b.lo=(b.lo||0)+xl*ol})}
+function colMig(r,i){if(P!='jp'||r.ni||r.id==HM()||!(isC(i)||r.an))return;const loc=Math.max(0,r.p-(r.jp||0)),x=loc*.0005;if(x>0){r.p-=x;if(r.lo!=null)r.lo=Math.max(0,r.lo-x*r.lo/Math.max(1e-9,loc));toHome(x)}}
+const ns=(pl='jp',sc=1937)=>{const o=ns1(pl);if(pl=='jp')o.fund=90;if(sc==1930)sc30(o,pl);o.ap=10+Math.floor((o.kin+o.shun)/25);o.oj=ojInit(o,pl,sc);o.oj0=o.oj;return o};
+const ns1=(pl='jp')=>{const o=ns0();o.E.jp=100;o.E.it=50;o.E.pol=60;if(pl=='jp')return o;const D=PLD[pl],q=NQ[pl];Object.assign(o,{pl,kin:q[0],nou:q[1],shun:q[2],ken:q[3],sav:q[4],fai:q[5],kyo:q[6],imi:q[7],inf:q[8],ika:q[9],zai:0,war:{},army:D.ar[0],navy:D.ar[1],air:D.ar[2],rel:{...D.rel},L:{},ind:null,log:['一九三七年正月　'+D.n+'の'+D.t+'として國を率ゐる']});o.R.forEach(r=>{if(r.o==pl)r.c=r.id==D.hm?100:D.core.includes(r.id)?90:70});o.ap=Math.floor((o.kin+o.shun)/25);return o};
+/* 雲上保存：claude.ai で開いた時は、閲覧者ごとの非公開領域にも自動記録と記録枠を書く。ブラウザの保存が消えても續けられる */
+var CDB=null,CDu=null,cdQ={},cdBusy=0,cdT=0,CSL={},xm='';
+function cdRef(k){return CDB.doc('data/users/'+CDu+'/'+k)}
+function cdPut(k,j){if(!CDB)return;cdQ[k]=j||null;clearTimeout(cdT);cdT=setTimeout(cdFl,1200)}
+async function cdFl(){if(cdBusy||!CDB)return;cdBusy=1;let k;while((k=Object.keys(cdQ)[0])){const j=cdQ[k]||JSON.stringify(S);delete cdQ[k];let o;try{o=JSON.parse(j)}catch(e){continue}try{await cdRef(k).set({j,y:o.y||0,q:o.q||0,pl:o.pl||'jp',t:o.ts||Date.now()})}catch(e){if(e&&e.code=='unavailable'){await new Promise(r=>setTimeout(r,1500+Math.random()*1500));try{await cdRef(k).set({j,y:o.y||0,q:o.q||0,pl:o.pl||'jp',t:o.ts||Date.now()})}catch(e2){}}else if(e&&(e.code=='quota_exceeded'||e.code=='invalid_argument'))toast('雲上へ保存できなかった（容量）')}}cdBusy=0}
+function cdAdopt(j){const pv=S;try{S=JSON.parse(j)}catch(e){S=pv;return 0}mig();if(!S||S.v!==31){S=pv;return 0}fixR();P=S.pl||'jp';relFix();lqMig();rep=[];seen=S.log[0];had=true;try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}return 1}
+let S;try{S=JSON.parse(localStorage.getItem(K))}catch(e){}
+function apMax(){return Math.floor((S.kin+S.shun)/25)}
+function mig(){
+if(S&&S.v===2){S.v=3;S.rel=Object.assign({gb:-10,fr:0,es:10,nl:0,pt:10},S.rel);S.L={fin:10,mal:10,bir:10,ran:10,phi:10,ind:10};Object.entries({cho:90,tai:95,kar:95,nan:95,man:80}).forEach(([k,v])=>{const r=S.R.find(x=>x.id==k);if(r.o==P)r.c=Math.max(r.c,v)})}
+if(S&&S.v===3){S.v=4;Object.entries({kin:125,nou:100,shun:95,ken:66,sav:90,fai:95,imi:100}).forEach(([k,v])=>S[k]=Math.max(S[k]||0,v))}
+if(S&&S.v===4){S.v=5;Object.assign(S,{kin:130,nou:125,shun:125,ken:65,sav:100,fai:150,imi:150})}
+if(S&&S.v===5){S.v=6;S.zai=6}
+if(S&&S.v===6){S.v=7;const x=S.R.find(r=>r.id=='ran');x.p*=59/70}
+if(S&&S.v===7){S.v=8;const x=S.R.find(r=>r.id=='ran');x.p*=67.95/59;S.zai*=7.72/6}
+if(S&&S.v===8){S.v=9;S.inf=100}
+if(S&&S.v===9){S.v=10;S.ika=100}
+if(S&&S.v===10){S.v=11;Object.assign(S,{elec:700,arms:4,mun:60,phar:2,medi:30})}
+if(S&&S.v===11){S.v=12;S.ken=Math.max(S.ken,85)}
+if(S&&S.v===12){S.v=13;const O=Object.fromEntries(S.R.map(r=>[r.id,r])),ra=O.ran,ma=O.mal,ch=O.chu,fx=ra.p/67.95,g=id=>S.R.find(r=>r.id==id);
+ S.R=RD.map(d=>O[d[0]]||{id:d[0],o:d[2],p:d[3],c:d[4],or:d[2]});
+ [['jaw',46.7],['sum',9.3],['kal',2.5]].forEach(([id,q])=>{const r=g(id);r.p=q*fx;if(ra.o!='nl'){r.o=ra.o;r.c=ra.c}});ra.p=9.45*fx;
+ const sp=g('sgp');if(ma.o!='gb'){sp.o=ma.o;sp.c=ma.c}ma.p*=4.3/5;const sh=g('sha');if(ch.o!='cn'){sh.o=ch.o;sh.c=ch.c}ch.p-=3.5;
+ while(S.D.length<DD.length)S.D.push({v:DD[S.D.length][5]});S.offer={};S.L.jaw=S.L.sum=S.L.ran||10;delete S.L.ran;S.ap=apMax()}
+if(S&&S.v===13){S.v=14;Object.assign(S,{kin:135,nou:125,shun:125,ken:85,sav:130,fai:150,imi:150,inf:100,ika:100});S.ap=apMax()}
+if(S&&S.v===14){S.v=15;S.kin=Math.max(S.kin,145);S.shun=Math.max(S.shun,145);S.ap=apMax()}
+if(S&&S.v===15){S.v=16;S.nou=Math.max(S.nou,135)}
+if(S&&S.v===16){S.v=17;S.rq=S.cur&&!S.tech[S.cur]?[S.cur]:[];S.tp={}}
+if(S&&S.v===17){S.v=18;Object.assign(S,{sav:300,shun:250,kyo:300});S.rel.tr=10;S.ap=apMax()}
+if(S&&S.v===18){S.v=19;['kin','nou','shun','ken','sav','fai','kyo','imi','inf','ika'].forEach(k=>S[k]=Math.min(S[k],200));S.ap=Math.min(S.ap,apMax()*2)}
+if(S&&S.v===19){S.v=20;S.shun=300;S.kyo=300;S.ap=apMax()}
+if(S&&S.v===20){S.v=21;if(S.R.find(r=>r.id=='thi').o=='th')S.rel.th=Math.max(S.rel.th,90);S.rel.tr=Math.max(S.rel.tr,80)}
+if(S&&S.v===21){S.v=22;delete S.NI;delete S.NH}
+if(S&&S.v===22){S.v=23;S.bk={};S.fo='';S.dc=''}
+if(S&&S.v===23){S.v=24;const O=Object.fromEntries(S.R.map(r=>[r.id,r])),g=id=>S.R.find(r=>r.id==id);S.R=RD.map(d=>O[d[0]]||{id:d[0],o:d[2],p:d[3],c:d[4],or:d[2]});const su=g('sue'),b=g('blr'),u=g('ukr'),fx=su.p/140;b.p=5.6*fx;u.p=31*fx;su.p=103.4*fx;if(su.o!='su'){b.o=u.o=su.o;b.c=u.c=su.c}}
+if(S&&S.v===24){S.v=25;const O=Object.fromEntries(S.R.map(r=>[r.id,r])),g=id=>S.R.find(r=>r.id==id);S.R=RD.map(d=>O[d[0]]||{id:d[0],o:d[2],p:d[3],c:d[4],or:d[2]});const w=g('wsb'),c=g('cas'),fx=w.p/25;c.p=16.5*fx;w.p=8.5*fx;if(w.o!='su'){c.o=w.o;c.c=w.c;c.an=w.an;c.ni=w.ni}}
+if(S&&S.v===25){S.v=26;S.pl='jp';if(S.NH)['de','it','gb','fr','nl','es','pt','tr'].forEach(o=>S.NH[o]=0)}
+if(S&&S.v===26){S.v=27;S.cs=null;S.un=null;S.pe=null}
+if(S&&S.v===27){S.v=28;S.mtg={};S.jf=[]}
+if(S&&S.v===28){S.v=29;const mv={umo:'yxs',hok:'yxs',knn:'lzj',jyu:'swn',sin:'xbj',tib:'tib'};S.R.forEach(r=>{if(r.o=='cn'&&mv[r.id])r.o=mv[r.id];if(r.or=='cn'&&mv[r.id])r.or=mv[r.id];if(r.id=='man'&&r.o=='cn'){r.o='zxl';r.or='zxl'}if(isI(r.o))r.o='ind_'+r.id;if(r.or=='ind')r.or='ind_'+r.id});S.E=S.E||{};Object.assign(S.E,{zxl:60,yxs:50,lzj:50,swn:40,xbj:40,ccp:50});S.rel=S.rel||{};['zxl','yxs','lzj','swn','xbj','ccp'].forEach(k=>{if(S.rel[k]==null)S.rel[k]=k=='ccp'?-40:-10});delete S.rel.ind}
+if(S&&S.v===29){S.v=30;S.L=S.L||{};Object.keys(S.L).forEach(k=>S.L[k]=100)}
+if(S&&S.v===30){S.v=31;S.oj=ojInit(S,S.pl,1937);S.oj0=S.oj}}
+mig();if(!S||S.v!==31)S=ns();
+/* 旧版の保存：米國の旧地方（東部・西部・中西部…）は州に按分する */
+const USMAP={CA:['usw',5.68], OR:['nwt',0.95], WA:['nwt',1.56], ID:['nwt',0.45], MT:['nwt',0.54], CO:['mtn',1.04], UT:['mtn',0.51], NV:['mtn',0.09], WY:['mtn',0.26], AZ:['swt',0.44], NM:['swt',0.42], TX:['swt',5.83], OK:['swt',2.4], NY:['use',12.59], NJ:['use',4.04], PA:['use',9.63], DE:['use',0.27], MD:['use',1.63], VA:['use',2.42], WV:['use',1.73], NC:['use',3.17], SC:['use',1.74], GA:['use',2.91], FL:['use',1.47], DC:['use',0.49], AL:['sou',2.83], MS:['sou',2.01], LA:['sou',2.1], AR:['sou',1.85], TN:['sou',2.62], IL:['mdw',7.63], IN:['mdw',3.24], OH:['mdw',6.65], MI:['mdw',4.84], WI:['mdw',2.94], MN:['mdw',2.56], IA:['mdw',2.47], MO:['mdw',3.63], KS:['mdw',1.88], NE:['mdw',1.38], SD:['mdw',0.69], ND:['mdw',0.68], KY:['mdw',2.61], CT:['nen',1.61], RI:['nen',0.68], MA:['nen',4.25], VT:['nen',0.36], NH:['nen',0.47], ME:['nen',0.79]};
+function usMig(O){const G={};Object.entries(USMAP).forEach(([c,[pa,cen]])=>{(G[pa]=G[pa]||[]).push([c,cen])});Object.keys(G).forEach(pa=>{const q=O[pa];if(!q)return;const sum=G[pa].reduce((a,x)=>a+x[1],0);G[pa].forEach(([c,cen])=>{const sh=cen/sum;O[c]={id:c,o:q.o,p:q.p*sh,c:q.c,or:'us',jp:(q.jp||0)*sh,ni:q.ni?1:0,an:0}});delete O[pa]})}
+function fixR(){while(S.D.length<DD.length)S.D.push({v:DD[S.D.length][5]});if(S.R.length<RD.length){const O=Object.fromEntries(S.R.map(r=>[r.id,r]));usMig(O);S.R=RD.map(d=>O[d[0]]||{id:d[0],o:d[2],p:d[3],c:d[4],or:d[2]});splitMig(O)}}fixR();P=S.pl||'jp';relFix();lqMig();
+let dpS='',scSel=1937,mode='menu',fromGame=false,cf='',had=false;try{had=!!localStorage.getItem(K)}catch(e){}if(had&&S&&S.v===31&&S.log)mode='game';
+let shF='own',mul=1,tab='nai',nw=0,rep=[],hf='act',stH=false,seen=S.log[0];try{stH=localStorage.getItem(K+'st')=='1'}catch(e){}
+function toast(m){const t=$('#ts');t.textContent=m;t.hidden=false;clearTimeout(toast.h);toast.h=setTimeout(()=>t.hidden=true,2600)}
+const $=s=>document.querySelector(s),ri=id=>S.R.findIndex(r=>r.id==id),rs=id=>S.R[ri(id)],nm=r=>RD[S.R.indexOf(r)][1],
+cl=(v,a,b)=>Math.max(a,Math.min(b,v)),rn=()=>.5+Math.random(),
+kn=n=>{n=Math.floor(n);if(n<10)return NUM[n];const h=n/100|0,t=n%100/10|0,o=n%10;return(h?(h>1?NUM[h]:'')+'百':'')+(t?(t>1?NUM[t]:'')+'十':'')+(o?NUM[o]:'')},
+ds=()=>P=='jp'?`昭和${kn(S.y-1925)}年${QN[S.q]}`:`${S.y}年${QN[S.q]}`,lg=m=>{S.log.unshift(ds()+'　'+m);S.log.length=Math.min(S.log.length,150)},
+up=(k,v)=>S[k]=cl(S[k]+v,0,k=='stab'?100:Math.max(200,S[k])),
+rel=(k,v)=>{S.rel[k]=cl(S.rel[k]+v,-100,100);if(k=='us'&&S.rel.us<-30&&!S.emb&&!S.war.us){S.emb=1;lg('米國、對日石油・屑鐵の禁輸を斷行')}},
+M=()=>(S.kin+S.shun+S.ken+S.nou)/240,oF=()=>(S.oil>0?1:.5)*(S.mun>0?1:.6)*(.9+S.kyo/1000)*eqF(),eqF=()=>Math.pow(Math.max(1,S.ind)/102,.3),
+lnP=()=>(S.army*(S.tech.mec?1.25:1)+S.air*(S.tech.jet?1.3:1)*.4)*M()*oF(),
+nvP=()=>{const r=S.tech.rad?1.2:1;return(S.navy*r+S.air*(S.tech.jet?1.3:1)*r*.5)*M()*oF()},
+sP=()=>{const r=S.tech.rad?1.2:1;return(S.army*.4*(S.tech.mec?1.25:1)+S.navy*.7*r+S.air*.5*r*(S.tech.jet?1.3:1))*M()*oF()},
+fo=id=>{const o=rs(id).o;return o==P||isI(o)},fr=r=>r.o==P||isI(r.o)||(r.o=='th'&&S.al.th)||hasT(r.o,'all'),
+dok=id=>{const i=DD.findIndex(d=>d[0]==id);return S.D[i].v>=1&&rs(DD[i][2]).o==P},
+av=x=>!S.tech[x[0]]&&(!TY[x[0]]||S.y>=TY[x[0]])&&x[3].split(',').every(p=>!p||S.tech[p]),tn=id=>P!='jp'&&id=='ni'?'核分裂研究（陸）':P!='jp'&&id=='f'?'核分裂研究（海）':TD.find(x=>x[0]==id)[1],
+wk=o=>(PS().wk||{})[o]||'',atW=o=>{const k=wk(o);return k&&S.war[k]};
+function calc(){homeNi();const c={food:0,coal:0,iron:0,oil:0,ura:0,gold:0,gas:0},t=S.tech;let pe=0,pop=0;
+ S.R.forEach((r,i)=>{const d=RD[i];let k;
+  if(r.o==P){k=r.c/100;pop+=r.p;pe+=r.id==HM()||r.ni?r.p:r.p*k*(isC(i)||r.an?.4:.2)}
+  else if(isI(r.o))k=.5;else if(r.o=='th'&&(S.al.th||S.rel.th>=60))k=.3+Math.max(0,S.rel.th)/250;else if(r.id=='fin'&&r.o=='fr'&&S.rel.fr>=40)k=.3;else return;
+  let fd=d[9];if(r.id==HM()||(r.ni&&HSPL.includes(r.id)))fd*=S.fert*(1+(t.fe1?.2:0)+(t.fe2?.25:0)+(t.fe3?.3:0));else if(r.o==P)fd*=1+(S.fert-1)*.5;
+  c.food+=fd*k;c.coal+=d[10]*k;c.iron+=d[11]*k;c.oil+=d[12]*k;c.gold+=d[13]*k});
+ S.D.forEach((x,i)=>{const d=DD[i],r=rs(d[2]);if(d[4]&&!t[d[4]])return;const k=r.o==P?r.c/100:isI(r.o)?.5:P=='jp'&&r.id=='man'&&rs('kwa').o=='jp'&&/ans|fus|hon/.test(d[0])?.5:0;for(const q in d[3])c[q]+=d[3][q]*x.v*k*(d[4]=='sea'?1+.05*L('fis'):1)});
+ {const mn=S.mine||0;c.gas+=mn*.5;c.oil+=mn*.5;c.food+=mn;c.coal+=mn*1.5;c.iron+=mn}c.food+=c.gas*.3;c.food+=8*S.fish+(t.fi1?6:0)+(t.fi2?8:0);
+ for(const k in(S.tr||{}))if(S.tr[k].trd&&!atW(k)){c.gold+=2;c.oil+=1;c.iron+=1}if(P=='jp'){c.imp=S.emb?0:3;if(!S.emb){c.oil+=8;c.iron+=4}}else{const im=PS().imp||{},h=P=='de'&&S.war.gb?.5:1;c.imp=im.oil?2:0;c.oil+=(im.oil||0)*h;c.iron+=(im.iron||0)*h}
+ const rl=S.rel;if(rl.gb>=40&&!S.war.gb){c.gold+=4;c.iron+=2}if(rl.nl>=40&&!S.war.us)c.oil+=6;if(rl.pt>=50){c.oil+=2;c.gold+=2}
+ const n=Object.values(S.war).filter(v=>v).length,nw=P=='jp'?S.war.us||S.war.gb:NAV.some(x=>S.war[x]);
+ pop+=S.zai;pe+=S.zai*.8;c.need=naiP()+S.zai*.3+(S.army+S.navy+S.air)*.02;
+ c.oilU=S.ind*.02+S.army*(n?.02:.008)+S.navy*(nw?.06:.02)+S.air*(n?.03:.012);
+ c.coalU=S.ind*.08+S.elec*.004;c.elecD=S.ind*6.5+S.arms*8;c.eF=Math.min(1,(S.elec+c.gas*15)/c.elecD);c.munP=(S.arms*S.ind/100*(1+.03*L('ind'))+S.ind*.03)*c.eF;c.munU=n?S.army*.03+S.navy*.02:0;c.medP=(S.phar+S.ika*.02)*(1+.03*L('ind'));c.medU=n?(S.army+S.navy)*.01:0;c.ironU=S.ind*.05;c.pe=pe;c.pop=pop;
+ c.gnp=S.ind*(pe/87)*(.7+.3*S.stab/100)*(S.resF||1)*(.6+.4*c.eF)*(1+.02*L('ind')+.03*L('elc'));c.mr=Math.pow(M(),1.5)*(1+S.ika/1000)*(.85+S.kyo/400);c.gdp=c.gnp*c.mr;
+ c.inc=c.gdp*.45*(.7+S.sav/300)*(1+L('com')*.03)*(1+.01*(L('kok')+L('fis')+L('fer')+L('ind')+L('yak')+L('elc')))*Math.pow(Math.max(1,S.ind)/102,.4)*Math.pow(pe/87,.2)+c.gold;c.upk=S.army*.05+S.navy*.07+S.air*.05+n*2+c.imp;c.inc*=(1+pvInc())*syn();
+ c.sci=(c.gdp*.04*S.nou/60+S.lab*3+Object.keys(S.tr||{}).filter(k=>S.tr[k].all).length+S.ika*.02+(S.al.ax&&!S.ev.dec?2:0))*(1+S.imi/200)*gmul()*syn();return c}
+const can=c=>S.ap>0&&!S.over&&Object.keys(c).every(k=>S[k]>=c[k]);
+function spend(c){if(!can(c))return 0;for(const k in c)S[k]-=c[k];return 1}
+function decl(x){if(P!='jp')return decl2(x);if(S.war[x])return;tWar(x);S.war[x]=1;S.wq=S.wq||{};S.wq[x]=S.y*4+S.q;S.Eb=S.Eb||{};if(S.Eb[x]==null)S.Eb[x]=S.E[x];if(x=='us'){S.war.gb=1;S.rel.us=-100;S.rel.gb=-100;S.rel.nl=-100;S.emb=1;S.wt=0;lg('米英に宣戰布告')}else if(x=='su'){if(S.neu){up('stab',-3);S.neu=0}S.rel.su=-100;lg('魯西亞と開戰')}else {if(x=='cn')S.ev.cnw=1;lg(SN(x)+'と開戰')}}
+const pOK=x=>x=='cn'?S.R.filter(r=>r.or=='cn'&&r.o==P).length>=3:S.E[x]<50;
+function endW(x){if(S.gue)S.gue[x]=0;if(P!='jp')return endW2(x);S.war[x]=0;S.offer[x]=0;{const n=S.R.filter(r=>r.o==P&&wk(r.or)==x).length;lg(SN(x)+'との戰終はる。占領地'+n+'を保ち、治安は回復に向かふ')}if(x=='us'){S.war.gb=0;S.emb=0;S.rel.us=-20;S.rel.gb=-20;S.rel.nl=-20;S.ev.usw=1}if(x=='su'){S.ev.suw=1;S.rel.su=-20}up('stab',6)}
+function peace(x){if(Math.random()<(x=='cn'?.5:.6)+S.inf/500){endW(x);lg(SN(x)+'と講和成る。占領地は帝國に歸す')}else lg('講和交渉不調')}
+const A={
+elc:{n:'電源開發',c:{fund:10,iron:2},get d(){return'電力 +'+eY()+'萬瓩・全産業の生産性 +3%・税收↑'},f:()=>{S.elec+=eY();lv('elc')}},
+com:{n:'商業振興',c:{fund:8},d:'税收 +3%・人口增加 +0.05%/年・健康 +1・民心 +2',f:()=>{lv('com');up('ken',1);up('stab',2)}},
+ind:{n:'工業振興',c:{fund:10,iron:3,coal:3},d:'工業力 +5・健康 +2・生産性 +2%・軍需と藥品の産出 +3%・税收↑',f:()=>{S.ind+=5;up('ken',2);lv('ind')}},
+lab:{n:'科學振興',c:{fund:9},d:'研究所 +1（毎季 研究+3）・能力 +2・模倣 +2',f:()=>{S.lab++;up('nou',2);up('imi',2)}},
+edu:{n:'教育振興',c:{fund:7},d:'民心 +2',f:()=>{up('stab',2)}},
+hea:{n:'衛生體育',c:{fund:7},d:'健康 +2・俊敏 +1.5・死亡率低下で人口の伸び↑（經年で低下せず）',f:()=>{up('ken',2);up('shun',1.5);lvP('hea')}},
+umi:{n:'人口施策',c:{fund:6},d:'出生 +0.3%/年（十季で漸減・上限3%）・健康 +2・信仰 +2',f:()=>{lv('umi');up('ken',2);up('fai',2)}},
+fer:{n:'資源開發',c:{fund:8,iron:1},d:'毎季 炭+1.5・鐵+1・油+0.5・瓦+0.5・肥料で食+1、人口の伸び↑・税收↑',f:()=>{S.mine=(S.mine||0)+1;lv('fer')}},
+kok:{n:'國土開發',c:{fund:7,coal:1},d:'農業收量 +6%・電力 +20・模倣 +2・人口の伸び↑・税收↑（治水・植林・灌漑）',f:()=>{S.fert+=.06;S.elec+=20;up('imi',2);lv('kok')}},
+fis:{n:'海洋開發',c:{fund:6,oil:1},d:'漁獲 +3・健康 +2・海底油田と瓦斯田の開發と産出↑・電力 +10・税收↑',f:()=>{S.fish+=.375;S.elec+=10;up('ken',2);lv('fis');S.D.forEach((x,i)=>{const d=DD[i];if(d[4]=='sea'&&S.tech.sea&&rs(d[2]).o==P)x.v=Math.min(1,x.v+.1)})}},
+sav:{n:'貯蓄奬勵',c:{fund:5},d:'貯蓄 +3（國帑と工業成長が增す）',f:()=>up('sav',3),e:()=>S.sav<200},
+inf:{n:'情報',c:{fund:6},d:'情報 +5・能力 +2・機密收集で研究點・全分野の伸び率↑（成算・察知・蜂起・講和・撹乱）',f:()=>{up('inf',5);up('nou',2);lv('inf');const v=S.inf*.2*(1+S.imi/300);S.sci+=v;lg('情報活動、機密收集で研究點 +'+Math.round(v))}},
+ika:{n:'醫學研究',c:{fund:7},d:'醫學 +5・健康 +3・能力 +2・死亡率低下で人口の伸び↑（經年で低下せず）',f:()=>{up('ika',5);up('ken',3);up('nou',2);lvP('ika')},e:()=>S.ika<200},
+yak:{n:'藥品生産',c:{fund:6},d:'醫藥品の産出 毎季 +2・健康 +2・死亡率低下で人口の伸び↑・税收↑',f:()=>{S.phar+=2;up('ken',2);lv('yak')}},
+sei:{n:'総動員',c:{fund:8},d:'民心 +8（協調で增す）・勤勉 +1・信仰 +1・全分野の伸び率↑',f:()=>{lv('sei');up('stab',8*(1+S.kyo/400));up('kin',1);up('fai',1)}},
+mu:{n:'軍需生産',c:{fund:8,iron:3},d:'武器彈藥の産出 毎季 +2（工業力に比例、電力を使ふ）',f:()=>S.arms+=2},
+arm:{n:'陸軍擴張',c:{fund:10,iron:4,mun:4},d:'陸軍 +12',f:()=>{S.army+=12;S.milT=S.y*4+S.q}},
+nav:{n:'海軍擴張',c:{fund:14,iron:8,mun:3},d:'海軍 +8',f:()=>{S.navy+=8;S.milT=S.y*4+S.q}},
+ll:{n:'對魯武器貸與',c:{fund:8},d:'陸軍 −6 を魯西亞の戰力 +6 に（同數が移る）',f:()=>{const a=Math.max(0,Math.min(6,S.army,100-(S.E.su||0)));S.army-=a;S.E.su=(S.E.su||0)+a;lg('魯西亞へ武器貸與（陸軍 −'+a.toFixed(0)+'、魯西亞戰力 +'+a.toFixed(0)+'）')},x:()=>P=='us'&&S.y*4+S.q>=1941*4+2&&!S.ev.suc2&&!S.war.su},
+air:{n:'航空擴張',c:{fund:10,iron:2,oil:1,mun:2},d:'航空 +10',f:()=>{S.air+=10;S.milT=S.y*4+S.q}},
+bom:{n:'原子爆彈製造',c:{fund:30,ura:10},d:'原爆 +1',f:()=>S.bomb++,x:()=>S.tech.ab},
+de:{n:'對獨協調',c:{fund:4},d:'獨逸 +15（40で機密を得る）',f:()=>drel('de',15),x:()=>!S.ev.dec},
+it:{n:'對伊協調',c:{fund:3},d:'伊太利 +15',f:()=>drel('it',15),x:()=>!S.ev.dec},
+gb:{n:'對英協調',c:{fund:4},d:'英國 +15（40で日英通商：帑+4 鐵+2）',f:()=>drel('gb',15),x:()=>!S.war.gb},
+fr:{n:'對佛協調',c:{fund:3},d:'佛國 +15（佛印進駐の道を開く）',f:()=>drel('fr',15)},
+fin:{n:'佛印進駐協定',c:{fund:6},d:'戰はずして佛印に進駐（佛國60、佛降伏後は10・米國 −15）',f:()=>{const r=rs('fin');r.o=P;r.c=40+S.L.fin*.4;rel('us',-15);lg('佛印進駐協定成立。帝國軍、佛印に平和進駐')},x:()=>rs('fin').o=='fr',e:()=>S.ev.fall?S.rel.fr>=10:S.rel.fr>=60},
+es:{n:'對西協調',c:{fund:3},d:'西班牙 +15（60・昭和14年以降で直布羅陀牽制）',f:()=>{drel('es',15);if(S.rel.es>=60&&S.y>=1939&&!S.ev.es){S.ev.es=1;S.E.gb=Math.max(5,S.E.gb-10);lg('西班牙、直布羅陀を窺ふ。英艦隊は地中海に釘付け')}}},
+nl:{n:'對蘭協調',c:{fund:4},d:'蘭國 +15（40で日蘭石油協定：油+6）',f:()=>drel('nl',15),x:()=>!S.war.us},
+pt:{n:'對葡協調',c:{fund:3},d:'葡萄牙 +15（50で澳門通商：油+2 帑+2）',f:()=>drel('pt',15)},
+tr:{n:'對土協調',c:{fund:3},d:'土耳古 +15（60以上で高加索から魯西亞を牽制）',f:()=>drel('tr',15)},
+th:{n:'對泰協調',c:{fund:4},d:'泰 +15（70で日泰同盟）',f:()=>{drel('th',15);if(S.rel.th>=70){S.al.th=1;lg('日泰同盟成立。泰の米と通行權を得る')}},x:()=>!S.al.th&&rs('thi').o=='th'},
+ax:{n:'日獨伊三國同盟',c:{fund:5},d:'研究 毎季+2・米國 −25（昭和15年以降、獨60伊50）',f:()=>{S.al.ax=1;rel('us',-25);lg('日獨伊三國同盟締結')},x:()=>!S.al.ax&&!S.ev.dec,e:()=>S.y>=1940&&S.rel.de>=60&&S.rel.it>=50},
+us:{n:'對米交渉',c:{fund:5},d:'米國 +12（−10以上で禁輸解除）',f:()=>{drel('us',12);if(S.emb&&S.rel.us>=-10){S.emb=0;lg('米國、禁輸を解除')}},x:()=>!S.war.us},
+su:{n:'對魯交渉',c:{fund:4},d:'魯西亞 +15（0以上で中立條約）',f:()=>{drel('su',15);if(S.rel.su>=0&&!S.neu){S.neu=1;lg('日魯中立條約締結')}},x:()=>!S.war.su&&!S.ev.suc},
+wus:{n:'對米英開戰',c:{fund:5,oil:4},d:'奇襲で米艦隊を叩く',f:()=>{decl('us');S.E.us=Math.max(5,S.E.us-nvP()*.15);lg('奇襲成功。米太平洋艦隊に大打撃')},x:()=>!S.war.us},
+wsu:{n:'對魯開戰',c:{fund:5},d:'北方へ進む',f:()=>decl('su'),x:()=>!S.war.su&&!S.ev.suc},
+pcn:{n:'對支講和',c:{fund:5},d:'支那の地三つ以上保持で可・成算五割',f:()=>peace('cn'),x:()=>S.war.cn,e:()=>pOK('cn')},
+psu:{n:'對魯講和',c:{fund:5},d:'魯西亞戰力50未滿で可・成算六割',f:()=>peace('su'),x:()=>S.war.su,e:()=>pOK('su')},
+pus:{n:'對米英講和',c:{fund:5},d:'米國戰力50未滿で可・成算六割',f:()=>peace('us'),x:()=>S.war.us,e:()=>pOK('us')}};
+function act(k){const a=A[k];if(amx(k)){toast('効果が上限に達してゐる');return}if((a.x&&!a.x())||(a.e&&!a.e())||!spend(a.c))return;a.f();S.ap--;fin()}
+function multi(fn,v){for(let n=0;n<mul;n++){const a0=S.ap;fn(v);if(S.ap>=a0)break}}
+const ef=o=>{const E=S.E,v=S.ev;return o=='cn'?E.cn/100:o=='su'?E.su/100*(v.barb&&!v.dec&&!v.suc?.5:1)*(v.fe?.7:1):o=='us'?E.us/100:o=='gb'?E.gb/60:o=='fr'?E.fr/30:o=='nl'?E.nl/30:o=='de'?E.de/100:o=='it'?(E.it||60)/60:o=='jp'?(E.jp||100)/100:o=='pol'?(E.pol||60)/60:1};
+function dv(r,i){let x=RD[i][5]*ef(r.o)*qm(r.o)*(1+(NQ[r.o]?NQ[r.o][8]:50)/500)*eqO(r.o);if(RD[i][8].includes('l')&&r.o!='su')x*=1-Math.min(.5,S.pr*.004)-Math.min(.3,(S.L[r.id]||0)*.003);return x}
+const aP=(r,i)=>(RD[i][6]?sP():lnP())*(1+S.inf/500)*mf(TH[r.id])*spl(r,i)*ssn(r,i)*(RD[i][8].includes('d')?.8:1),aD=(r,i)=>dv(r,i)*1.5*(1-(S.bk[r.id]||0)/200),odds=(r,i)=>{const P=aP(r,i),D=aD(r,i);return P+D>0?P/(P+D):0};
+const canAtk=(r,i)=>!fr(r)&&(wk(r.o)||(PS().fr||[]).includes(r.o))&&(RD[i][7]||HM()).split('|').some(id=>{const x=rs(id);return fr(x)||((PS().al||[]).includes(x.o)&&!atW(x.o))});
+function atk(id){const i=ri(id),r=S.R[i],d=RD[i],o=r.o,D=dv(r,i),p=odds(r,i),P0=Math.round(aP(r,i)),D0=Math.round(aD(r,i));if(!spend({fund:5,oil:3,mun:4}))return;
+ const w=wk(o);if(w&&!S.war[w]&&!(w=='su'&&S.ev.suc))decl(w);
+ tWarK(o);if(o=='fr'&&P=='jp')rel('us',-25);if(S.rel[o]!=null&&o!='us'&&o!='su')S.rel[o]=-100;
+ const sea=d[6],l=D*.1*(1-S.ika/400)*(S.medi>0?.85:1.1);
+ if(Math.random()<p){r.o=P;r.c=(d[8].includes('e')?35:15)+(S.L[r.id]||0)*.4;if(S.E[o]!=null)S.E[o]=Math.max(5,S.E[o]-d[5]*.25);S.army-=l*(sea?.5:1);if(sea)S.navy-=l*.4;up('stab',2);if(o=='cn')rel('us',-4);delete S.bk[r.id];lg(d[1]+'作戰成功、占領す（我'+P0+' 對 敵'+D0+'・損耗 陸'+Math.round(l*(sea?.5:1))+(sea?' 海'+Math.round(l*.4):'')+'）')}
+ else{S.army-=l*2*(sea?.5:1);if(sea)S.navy-=l*.8;up('stab',-2);lg(d[1]+'作戰失敗（我'+P0+' 對 敵'+D0+'・損耗 陸'+Math.round(l*2*(sea?.5:1))+(sea?' 海'+Math.round(l*.8):'')+'）')}
+ S.army=Math.max(0,S.army);S.navy=Math.max(0,S.navy);S.ap--;fin()}
+function assim(id){const r=rs(id);if(!spend({fund:6}))return;r.c=Math.min(100,r.c+(RD[ri(id)][8].includes('e')?25:12));S.ap--;fin()}
+function lib(id){const r=rs(id);if(!spend({fund:10}))return;r.o=indK(id);S.pr+=10;up('stab',3);S.ap--;lg(nm(r)+'、獨立を宣言。獨立政府を樹立し帝國の屬國となる');fin()}
+function sup(id){if(!spend({fund:5}))return;S.L[id]=Math.min(100,S.L[id]+20);S.ap--;lg(RD[ri(id)][1]+'の獨立派を支援');fin()}
+function upr(id){const r=rs(id),o=r.o;if(!spend({fund:10}))return;S.ap--;if(Math.random()<Math.min(.95,.5+S.inf/300)){r.o=indK(id);r.c=100;S.pr+=10;up('stab',3);if(S.rel[o]!=null)rel(o,-40);if(o!='us')rel('us',-10);lg(nm(r)+'の獨立派蜂起、獨立を宣言。獨立政府を樹立し帝國の屬國となる')}else{S.L[id]=Math.max(0,S.L[id]-30);lg(nm(r)+'の蜂起、鎭壓さる')}fin()}
+function kr(x){if(!spend({fund:6}))return;S.ap--;S.E[x]=Math.max(5,S.E[x]-S.inf/15);if(x=='us')S.E.gb=Math.max(5,S.E.gb-S.inf/30);lg(SN(x)+'に撹乱工作');fin()}
+function bw(x){if(!spend({fund:8}))return;S.ap--;S.E[x]=Math.max(5,S.E[x]*(1-.1-S.ika/1500));['us','gb','nl','pt','es','fr','th'].forEach(k=>rel(k,-8));if(Math.random()<.2*(1-S.ika/200)){S.army*=.95;up('ken',-2);lg('細菌戰の逆流、自軍にも被害')}lg(SN(x)+'に細菌戰を實施。列國の非難を受く');fin()}
+function anx(id){const r=rs(id);if(!r||S.over)return;if(S.fund<10){toast('帑が足りません');return}S.fund-=10;r.an=1;r.c=Math.min(100,r.c+10);lg(nm(r)+'を帝國に併合');fin()}
+function dw(x){const c=x=='us'&&P=='jp'?{fund:5,oil:4}:{fund:5};if(S.war[x]||!spend(c))return;S.ap--;decl(x);if(x=='us'&&P=='jp'){S.E.us=Math.max(5,S.E.us-nvP()*.15);lg('奇襲成功。米太平洋艦隊に大打撃')}fin()}
+function pc(x){if(!S.war[x]||!pOK(x)||!spend({fund:5}))return;S.ap--;peace(x);fin()}
+function srd(x){openCede(x)}
+function sr(x){if(!canSur(x)){S.ap--;lg(x=='cn'?'支那は米英の援助を受け、重慶に政府を保ち降伏を拒む（援助が續く限り抗戰は續く）':SN(x)+'は米英の援助を受け、降伏を拒む');fin();return}if(S.war[x]&&S.y*4+S.q-((S.wq||{})[x]||0)<4){lg(SN(x)+'：開戰から一年は降伏勧告の效なし');fin();return}if(!S.war[x]||!(S.offer[x]||S.E[x]<srT(x))||!spend({fund:5}))return;S.ap--;const bs=(S.bshock||{})[x];const bonus=bs!=null&&S.y*4+S.q-bs<=2?Math.max(0,.3-(NQ[x]?NQ[x][5]:50)/300):0;const res=Math.min(.45,(NQ[x]?NQ[x][5]:50)/200);if(S.offer[x]||Math.random()<.6+S.inf/500+bonus-res)srd(x);else lg('降伏勧告を拒絶さる');fin()}
+function wRows(){const E=S.E;return PS().sl.map(([x,n])=>[x,n,E[x]]).map(([x,n,e])=>{const w=S.war[x],of=S.offer[x],c5=can({fund:5});let b='';
+ const gone=(x=='cn'&&!S.R.some(r=>r.o=='cn'))||(x=='su'&&S.ev.suc);if(!w){if(!gone)b=`<button class="sm r" data-a="dw:${x}"${can(x=='us'&&P=='jp'?{fund:5,oil:4}:{fund:5})?'':' disabled'}>宣戰布告${x=='us'&&P=='jp'?'（奇襲）帑5油4':' 帑5'}</button>`}
+ else b=`<button class="sm" data-a="pc:${x}"${c5&&pOK(x)?'':' disabled'}>講和交渉 帑5</button><button class="sm" data-a="sr:${x}"${c5&&(of||e<srT(x))?'':' disabled'}>${of?'降伏受諾':'降伏勧告'} 帑5</button><button class="sm" data-a="kr:${x}"${can({fund:6})?'':' disabled'}>撹乱工作 帑6</button>`+(S.ika>=100?`<button class="sm" data-a="bw:${x}"${can({fund:8})?'':' disabled'}>細菌戰 帑8</button>`:'')+(S.bomb?`<button class="sm r" data-a="bu:${x}"${can({})?'':' disabled'}>原爆投下（在庫${S.bomb}）</button>`:'')+(bm.x==x?bombPlanner(x):'');
+ return`<div class="row"><div><span class="nm">${n}</span><span class="o" style="color:${w?'var(--sh)':'var(--mu)'}">${of?'降伏申入れ':w?'交戰中':gone?'平定':'平時'}</span><div class="meta">敵戰力 ${Math.round(e)}（降伏勧告 ${Math.round(srT(x))}未滿）${AIDR.includes(x)&&S.war[x]?(aidOn(x)?' ・米英援助 +'+S.aidR[x].toFixed(1)+'/季':' ・援助なし'):''}${x=='us'&&P=='jp'?' ・英 '+Math.round(E.gb):''}</div></div><div class="bt">${b}</div></div>`}).join('')}
+function ntab(){const L=[[NN[P],[S.kin,S.nou,S.shun,S.ken,S.sav,S.fai,S.kyo,S.imi,S.inf,S.ika],1]].concat(Object.keys(NQ).filter(k=>k!=P&&!isI(k)).map(k=>[NN[k],NQ[k],0])).map(x=>[...x,mrq(x[1])]).sort((a,b)=>b[3]-a[3]);
+ return`<table><tr><th>位</th><th>國</th><th>民力</th>${DO.map(j=>`<th>${QL[j]}</th>`).join('')}<th>行動</th><th>裝備</th></tr>${L.map((x,i)=>`<tr${x[2]?' class="jp"':''}><td>${i+1}</td><td>${x[0]}</td><td>${x[3].toFixed(2)}</td>${DO.map(j=>`<td>${Math.round(x[1][j])}</td>`).join('')}<td>${Math.floor((x[1][0]+x[1][2])/25)}</td><td>${(x[2]?eqF():eqO(Object.keys(NN).find(k=>NN[k]==x[0]))).toFixed(2)}</td></tr>`).join('')}</table>`}
+function slot(i){let x=null;try{x=JSON.parse(localStorage.getItem(K+'s'+i))}catch(e){}const c=CSL['s'+i];if(c){try{const y=JSON.parse(c);if(!x||(y.ts||0)>=(x.ts||0))return y}catch(e){}}return x}
+function dsOf(x){const p=x.pl||'jp';return p=='jp'?`昭和${kn(x.y-1925)}年${QN[x.q]}`:PLD[p].n+'・'+x.y+'年'+QN[x.q]}
+function menu(){const sl=[1,2,3,4].map(i=>{const x=slot(i);return`<div class="row"><div><span class="nm">記録 ${kn(i)}</span><div class="meta">${x?dsOf(x)+' ・方針達成 '+Object.keys(x.ach||{}).length+(x.over?' ・終局':''):'空き'}</div></div><div class="bt">${fromGame?`<button class="sm" data-a="ms:${i}">${cf=='ms'+i?'もう一度押すと上書き':'ここへ記録'}</button>`:''}${x?`<button class="sm" data-a="ml:${i}">${cf=='ml'+i?'もう一度押すと讀込':'この記録から始める'}</button>`:''}</div></div>`}).join('');
+ return`<h2>始め方</h2><div style="display:grid;gap:6px;max-width:320px">${[[1930,'昭和五年正月（昭和恐慌下）'],[1937,'昭和十二年正月（支那事變下）']].map(([y,l])=>`<button class="sm${scSel==y?' on':''}" data-a="msc:${y}">${l}</button>`).join('')}</div><p class="p">${scSel==1930?'滿洲は未だ張學良の支配下で、帝國は關東州と滿鐵附屬地のみ。人口と工業力は昭和12年より少なく、支那とは平時。柳條湖事件・國際聯盟脱退・盧溝橋事件などで道を選ぶ。':'滿洲國は建國濟み、支那事變の最中から始まる。'}</p><div class="g" style="grid-template-columns:1fr 1fr">${Object.keys(PLD).map(k=>`<button class="act" data-a="mn:${k}"><b>${cf=='mn'+k?'もう一度押すと開始':PLD[k].lb}</b><span>${k=='jp'?(scSel==1930?'昭和五年':'昭和十二年'):(scSel==1930?'一九三〇年':'一九三七年')}正月から新たに始める</span></button>`).join('')}</div><div class="g"><button class="act" data-a="mc"><b>${fromGame?'ゲームに戻る':'續きから'}</b><span>${had||fromGame?ds()+'（自動記録）':'記録なし・昭和十二年正月から'}</span></button></div>
+<h2>記録枠</h2><p class="p">${fromGame?'「ここへ記録」で今の進み具合を保存する。':'ゲームの途中、上の「記録・始め方」から保存できる。'}自動記録は行動と裁可のたびに更新される。${CDB?'claude.ai の雲上（あなただけが見られる領域）にも保存してゐるので、ブラウザの保存が消えても、別の端末で開いても續けられる。':'今はこのブラウザの中にだけ保存してゐる。ブラウザの履歴やサイトデータを消すと記録も消えるので、下の「書き出す」で控へを取っておくとよい。'}</p>${sl}<h2>記録の控へ</h2><p class="p">今の記録を文字列にして写し取り、別の端末やブラウザで貼り付けて續けられる。</p><div class="bt"><button class="sm${xm=='xo'?' on':''}" data-a="xo">書き出す</button><button class="sm${xm=='xi'?' on':''}" data-a="xi">貼り付けて讀込</button></div>${xm?`<textarea id="xt" rows="5" style="width:100%;box-sizing:border-box;margin-top:8px;font-size:11px;background:var(--pn2);color:inherit;border:1px solid var(--ln);border-radius:4px" ${xm=='xo'?'readonly':'placeholder="ここに記録の文字列を貼り付ける"'}>${xm=='xo'?JSON.stringify(S).replace(/&/g,'&amp;').replace(/</g,'&lt;'):''}</textarea><div class="bt" style="margin-top:6px">${xm=='xo'?'<button class="sm" data-a="xc">写す</button>':`<button class="sm" data-a="xl">${cf=='xl'?'もう一度押すと讀込（今の局は消える）':'この記録で始める'}</button>`}</div>`:''}`}
+const TMIN={ni:4,f:4,ab:16},TY={ni:1939,f:1939};
+function ntf(m){S.ntf=S.ntf||[];if(!S.ntf.includes(m))S.ntf.push(m);if(S.ntf.length>12)S.ntf.shift()}
+function ntfChk(){if(!S||!S.R)return;const first=!S.ntN;S.ntN=S.ntN||{t:{},d:{}};const na=[];
+ TD.forEach(x=>{if(av(x)&&!S.ntN.t[x[0]]){S.ntN.t[x[0]]=1;na.push(tn(x[0]))}});if(!first&&na.length)ntf(na.join('・')+'の研究が可能になりました');
+ DD.forEach((d,i)=>{const r=rs(d[2]);if(!r||!S.D[i])return;const ok=(!d[4]||S.tech[d[4]])&&r.o==P&&S.D[i].v<1&&r.c>=20;if(ok&&!S.ntN.d[i]){S.ntN.d[i]=1;if(!first)ntf(d[1]+'（'+nm(r)+'）の資源開發が可能になりました')}else if(r.o!=P&&S.ntN.d[i])delete S.ntN.d[i]})}
+function ntfHtml(){const a=S.ntf||[];if(!a.length)return'';return'<div class="ntf">'+a.map((m,i)=>'<div class="nt"><span>'+m+'</span><button class="ntb" data-a="ntx:'+i+'" aria-label="閉じる">×</button></div>').join('')+(a.length>1?'<div class="fl"><button class="sm" data-a="ntx:all">全て閉じる</button></div>':'')+'</div>'}
+function tboost(){const t=(S.imi||0)+(S.inf||0)+(S.kin||0);if(!S.tb0)S.tb0=Math.max(1,t);return Math.max(.7,Math.min(2.5,t/S.tb0+((S.lab||1)-1)*.05))}
+function tcap(id,v){const m=TMIN[id];return m?Math.min(v,TD.find(x=>x[0]==id)[2]/m*tboost()):v}
+function tdone(id){const T=TD.find(x=>x[0]==id);if(S.tp[id]>=T[2]){S.sci+=S.tp[id]-T[2];delete S.tp[id];S.tech[id]=1;S.rq=S.rq.filter(x=>x!=id);lg('研究完成：'+T[1]);ntf(tn(id)+'の研究完了');if(id=='med')up('ken',8)}}
+function rf(id){if(!S.rq.includes(id)||!spend({fund:5}))return;S.ap--;const v=tcap(id,calc().sci);S.tp[id]=(S.tp[id]||0)+v;lg(TD.find(x=>x[0]==id)[1]+'に集中研究、+'+Math.round(v)+'點');tdone(id);fin()}
+const BG={jp:176,us:800,su:359,de:351,gb:284,cn:112,fr:186,it:141,nl:45,es:75,th:13,pt:18,tr:25,swe:40,che:30,prs:25,tib:4,zxl:60,yxs:50,lzj:40,swn:45,xbj:8,ccp:5};
+function pw(o){const og=RD.filter(d=>d[2]==o).reduce((a,d)=>a+d[3],0),nw=S.R.filter(r=>r.o==o).reduce((a,r)=>a+r.p,0),sh=og?nw/og:1,wf=cl(o=='de'?S.E.de/100:o=='su'?S.E.su/100:ef(o),.05,2);return BG[o]*.568*Math.pow((NQ[o][0]+NQ[o][1]+NQ[o][2]+NQ[o][3])/240,1.5)*(.85+NQ[o][6]/400)*(.5+.5*sh)*wf}
+const HP={jp:0,de:0,it:0,th:0,es:0,pt:0,gb:0,us:0,fr:0,nl:0,su:0,cn:0,tr:0,swe:6.3,che:4.2,prs:15,tib:0,zxl:30,yxs:0,lzj:0,swn:0,xbj:0,ccp:0},HR={jp:['nai','hkd','thk','chb','kin','cgs','kyu'],de:['deu','rhr','bay','epr','kbg','sil','pom'],it:['ita','sit','sar'],gb:['gbr','sco','wal','nir'],fr:['fra','sfr','als','nce'],nl:['bnl'],es:['spa'],pt:['por'],tr:['tur'],us:['AL','AZ','AR','CA','CO','CT','DE','DC','FL','GA','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'],su:['sue','blr','ukr','len','vlg','cau','url','wsb','nsb','esb','est','lat','blt','geo','arm','kaz','uzb','cas','tat','bsk','cvs','mar','klm','dag','cec','crm','dnb','zap','vgr','mrd','udm','kbr','oss','nkh','kkp','abk','ajr','mda','krl','kom','yak','bur','kgz','taj'],th:['thi']};
+function npe(o,org){let p=org?HP[o]:S.NH[o];RD.forEach((d,i)=>{if(!(org?d[2]==o:S.R[i].o==o))return;const w=(o=='cn'&&d[2]=='cn')||(HR[o]||[]).includes(d[0])?1:o=='gb'&&['can','aus','nzl'].includes(d[0])?.4:.2;p+=(org?d[3]:S.R[i].p)*w});return p}
+function natInit(){S.NI=S.NI||{};S.NH=S.NH||{};for(const o in BG)if(S.NI[o]==null){S.NH[o]=HP[o];S.NI[o]=S.sc==1930?BG[o]*.568*(G30[o]||1)/((npe(o)/87)*.91):BG[o]*.568/((npe(o,1)/87)*.91)}if(!S.NI0)S.NI0={...S.NI};for(const o in S.NI)if(S.NI0[o]==null)S.NI0[o]=S.NI[o]}
+function eqO(o){if(!BG[o])return 1;natInit();return Math.pow(Math.max(.1,S.NI[o]/S.NI0[o]),.3)}
+/* 列國の人口の伸び（年%）：史實の水準（米1.2・英0.45・獨0.6・佛0.35…）に健康と醫學で少し上下 */
+const HG={us:1.2,gb:.45,de:.6,fr:.35,it:.7,su:1.1,jp:1.2,cn:.8,nl:1.2,es:.8,pt:.9,tr:1.9,th:2.3,swe:.6,che:.6,prs:2,tib:.5};
+/* 移民は景氣次第：成長が弱いと移民が來ず人口の伸びが落ち、内需が細つて成長も弱まる */
+const IMM={us:.45,gb:.15,fr:.2,nl:.15,de:.05,swe:.1,che:.2,es:.05,pt:.05};
+function eref(o){return (NQ[o]?NQ[o][4]:100)/50}
+function ngr(o){const q=NQ[o],b=(HG[o]??.9)+(q?(q[3]-100)*.004+(q[9]-100)*.002:0),im=IMM[o]||0,eg=S&&S.egL&&S.egL[o]!=null?S.egL[o]:eref(o);return Math.max(0,Math.min(3,b-im+im*Math.max(0,Math.min(2,eg/Math.max(.1,eref(o))))))}
+function egr(o){return eref(o)*Math.max(.3,Math.min(1.5,.5+.5*ngr(o)/Math.max(.1,HG[o]??.9)))}
+function gnpO(o){const st=(o=='de'&&S.ev.dec)||(o=='su'&&S.ev.suc)?20:70;return S.NI[o]*(npe(o)/87)*(.7+.3*st/100)}
+function mrq(q){return Math.pow((q[0]+q[1]+q[2]+q[3])/240,1.5)*(1+q[9]/1000)*(.85+q[6]/400)}
+function rkL(c){natInit();return[[NN[P],c.gnp,1]].concat(Object.keys(BG).filter(o=>o!=P).map(o=>[NN[o],gnpO(o),0])).sort((a,b)=>b[1]-a[1])}
+function rank(c){const L=rkL(c),mx=L[0][1];return L.map((x,i)=>`<div class="q qr"><span${x[2]?' style="color:#c9a227;font-weight:700"':''}>${i+1}・${x[0]}</span><div class="bar"><i style="width:${cl(x[1]/mx*100,0,100)}%"></i></div><span>${Math.round(x[1])}</span></div>`).join('')} function drel(k,v){rel(k,v)}
+function fronts(){const a=new Set();S.R.forEach(r=>{if(atW(r.o))a.add(TH[r.id])});return a}
+function mf(t){const n=Math.max(1,fronts().size);return(S.fo?S.fo==t?1.3:.85:1)/(1+.2*(n-1))}
+function spl(r,i){const d=RD[i];if(d[6])return 1;let m=0;(d[7]||HM()).split('|').forEach(id=>{const x=rs(id);m=Math.max(m,x.o==P?x.c:isI(x.o)?100:(x.o=='th'&&S.al.th)||((PS().al||[]).includes(x.o)&&!atW(x.o))?80:0)});return .6+.4*m/100}
+function ssn(r,i){return r.o!='su'||RD[i][6]?1:S.q==0?.7:S.q==3?.85:1}
+function bks(r,i){const nv=nvP()*mf(TH[r.id]);return 20*nv/(nv+dv(r,i)*1.5)}
+function bkc(id){if(S.bk[id]<100)return;const i=ri(id),r=S.R[i],o=r.o;delete S.bk[id];r.o=P;r.c=RD[i][8].includes('e')?50:30;if(S.E[o]!=null)S.E[o]=Math.max(5,S.E[o]-RD[i][5]*.25);up('stab',3);lg(RD[i][1]+'、封鎖に屈して降伏す')}
+function bkd(id){const i=ri(id),r=S.R[i];if(!atW(r.o)||!RD[i][6]||!spend({fund:3,oil:3}))return;S.ap--;S.bk[id]=(S.bk[id]||0)+bks(r,i);lg(RD[i][1]+'を封鎖（'+Math.min(100,Math.round(S.bk[id]))+'%）');bkc(id);fin()}
+const EV={get sur(){const x=S.surx,n=SN(x);return{t:n+'、降伏を申し入る。返答あるまで戰は止む。',o:[['降伏受諾','受諾ののち、割讓地を地圖で選ぶ',()=>srd(x)],['講和','占領地を保ったまま和を結ぶ',()=>endW(x)],['拒否','戰ひを續ける（一年は申入れなし）・民心 −2',()=>{S.offer[x]=0;S.offAsk=S.offAsk||{};S.offAsk[x]=S.y*4+S.q;up('stab',-2)}]]}},get prop(){const p=S.prop||{},n=NN[p.k]||ON[p.k]||p.k,T=TT.find(x=>x[0]==p.t)||TT[0];return{t:n+'より'+T[1]+'締結の申入れあり。（'+T[3]+'）',o:[['受諾',T[1]+'を結ぶ。關係 +5',()=>tAdd(p.k,p.t)],['拒絶','關係 −5',()=>rel(p.k,-5)]]}},lnt:{t:'ロンドン海軍軍縮會議。補助艦の保有を對米英七割弱に抑へる條約案が示さる。',o:[['調印','米英 +10。海軍の不滿で民心 −3',()=>{rel('us',10);rel('gb',10);up('stab',-3)}],['拒否','海軍 +10。米英 −10',()=>{S.navy+=10;rel('us',-10);rel('gb',-10)}]]},
+mukden:{t:'柳條湖事件。關東軍、奉天を制壓し滿洲全域へ兵を進めんとす。',o:[['擴大を認む','滿洲を制壓し支配下に置く。米國 −15・英國 −10',()=>{const m=rs('man');m.o='jp';m.c=40;S.ev.mo=1;rel('us',-15);rel('gb',-10);S.E.cn=Math.max(5,S.E.cn-10)}],['不擴大','兵を引かせる。軍部の不滿で民心 −5・米國 +5',()=>{up('stab',-5);rel('us',5)}]]},
+league:{t:'國際聯盟、リットン報告書を採擇し、滿洲國を認めず。',o:[['聯盟脱退','民心 +5・米英 −10',()=>{up('stab',5);rel('us',-10);rel('gb',-10)}],['聯盟に留まる','米英 +5・民心 −5',()=>{rel('us',5);rel('gb',5);up('stab',-5)}]]},
+rokou:{t:'盧溝橋事件。北支にて日支兩軍衝突す。',o:[['全面戰爭','支那と開戰し、主攻を支那へ',()=>{decl('cn');S.fo='支'}],['局地解決','現地で停戰協定を結ぶ。米國 +5',()=>{rel('us',5)}]]},hoku:{t:'獨逸より對魯參戰の要請が届く。北進か南進か。',o:[['北進','對魯開戰し主攻を北方へ。獨逸との關係も深まる',()=>{decl('su');S.fo='北';drel('de',20)}],['南進','主攻を南方へ置き、資源地帶を狙ふ',()=>{S.fo='南'}],['靜觀','いずれにも與せず國力を蓄へる',()=>{}]]},
+wang:{t:'汪兆銘、重慶を脱して南京に國民政府を樹立せんとす。帝國はこれを支へるか。',o:[['樹立','占領下の支那の地を汪政權に委ねる（親密度100の屬國・資源の半分を得る・支那戰力 −5・米英 −5）',()=>wangSet()],['見送る','占領地は帝國が直接治める',()=>{}]]},hull:{t:'米國より最後通牒（ハル・ノート）。支那・佛印よりの全面撤兵を求む。',o:[['受諾','占領地より撤兵し、禁輸を解かせる（民心 −10）',()=>{S.R.forEach(r=>{if(r.o==P&&(r.or=='cn'||r.or=='fr')&&!r.an){r.o=r.or;r.c=0}});S.war.cn=0;S.offer.cn=0;S.emb=0;S.rel.us=10;up('stab',-10)}],['拒絶','對米英開戰（奇襲）、主攻を太平洋へ',()=>{decl('us');S.E.us=Math.max(5,S.E.us-nvP()*.15);S.fo='洋'}],['交渉繼續','結論を先送りする',()=>{}]]}};
+function bL(k){return S.R.filter((r,i)=>TH[r.id]=='米'&&r.o==P&&(k=='as'?r.c<100&&!r.ni:k=='ni'?r.an&&r.c>=100&&!r.ni:!isC(i)&&!r.an&&r.c>=30))}
+function bulkB(){const a=bL('as').length,n=bL('an').length,z=bL('ni').length;return`<div class="fl"><button class="sm" data-a="ba:ni"${z&&can({fund:z*5})?'':' disabled'}>一括内地編入 ${z}地 帑${z*5}・行動1</button><button class="sm" data-a="ba:as"${a&&can({fund:a*3})?'':' disabled'}>一括同化 ${a}地 帑${a*3}・行動1</button><button class="sm" data-a="ba:an"${n&&can({fund:n*5})?'':' disabled'}>一括併合 ${n}地 帑${n*5}・行動1</button></div>`}
+function bulk(k){const L=bL(k);if(!L.length||!spend({fund:L.length*(k=='as'?3:5)}))return;S.ap--;L.forEach(r=>{const i=S.R.indexOf(r);if(k=='as')r.c=Math.min(100,r.c+(RD[i][8].includes('e')?25:12));else if(k=='ni')r.ni=1;else{r.an=1;r.c=Math.min(100,r.c+10)}});lg('中南米 '+L.length+'地を一括'+({as:'同化',an:'併合',ni:'内地編入'})[k]);fin()}
+function bondR(){const y=S.y;return y<=1925?5:y>=1940?3.5:+(5-(y-1925)*.1).toFixed(2)}
+function bondInt(){return (S.debt||0)*bondR()/400}
+let bA=10,bT='bal';const BA=[10,30,50,100,300,500,1000,3000,5000,10000,30000,50000,100000,300000,500000,1000000,3000000,5000000,10000000,30000000,50000000,100000000,300000000,500000000,1000000000,3000000000,5000000000];
+const bLbl=v=>v>=1e8?(v/1e8)+'京圓':v>=10000?(v/10000)+'兆圓':v+'億圓';
+/* 金額（億圓單位の數）を億・兆・京で示す */
+const yen=v=>{const a=Math.abs(v),r=n=>(Math.round(n*100)/100).toLocaleString('ja-JP');return a>=1e8?r(v/1e8)+'京圓':a>=1e4?r(v/1e4)+'兆圓':Math.round(v).toLocaleString('ja-JP')+'億圓'};
+function bondPanel(){const tabs=[['bal','官債殘高'],['fund','帑蔵'],['iss','國債調達'],['rep','國債償還'],['gif','投資基金']];let h='<div class="fl">'+tabs.map(([k,l])=>'<button class="sm'+(bT==k?' on':'')+'" data-a="bt:'+k+'">'+l+'</button>').join('')+'</div>';
+if(bT=='bal')h+='<p class="p one">官債殘高 '+yen(S.debt||0)+'・利率 '+bondR().toFixed(2)+'%／年（利払 '+yen(bondInt())+'／季）'+((S.debt||0)>0?'':'・國債なし：國帑に預金利子 +'+yen(depInt())+'／季が自動で入る')+'</p>';
+else if(bT=='fund')h+='<p class="p one">帑蔵（國帑）'+yen(S.fund)+'・國課 '+yen(calc().inc)+'／季・預金利子 '+yen(depInt())+'／季・投資基金 '+yen(S.ivest||0)+'（運用益 '+yen(gifRet())+'／季）</p>';
+else if(bT=='gif'){const gp=GP[S.gp]?S.gp:'std';h+='<p class="p one">投資基金 '+yen(S.ivest||0)+'・'+GP[gp][0]+'・年利 '+fR().toFixed(2)+'%（運用益 '+yen(gifRet())+'／季は國帑へ）'+(S.fLast?'・前季の自動運用 '+(S.fLast>0?'基金へ ':'國帑へ ')+yen(Math.abs(S.fLast))+'':'')+'</p>';
+h+='<div class="fl">'+Object.keys(GP).map(k=>'<button class="sm'+(gp==k?' on':'')+'" data-a="gp:'+k+'">'+GP[k][0]+'</button>').join('')+'</div>';
+h+='<div class="fl"><button class="sm'+(S.fAuto?' on':'')+'" data-a="gauto">自動運用 '+(S.fAuto?'入':'切')+'</button>'+[1,2,4,8].map(n=>'<button class="sm'+((S.fRes||2)==n?' on':'')+'" data-a="gres:'+n+'">帑を'+n+'季分殘す</button>').join('')+'</div>';
+h+='<p class="p one">自動運用：國債が0の時、國帑のうち維持費'+(S.fRes||2)+'季分を超える分を毎季基金へ移し、國帑が足りなくなれば基金から戻す。交戰中は利回りが下がる。</p>';
+h+='<div class="fl">'+BA.map(v=>'<button class="sm'+(bA==v?' on':'')+'" data-a="bsel:'+v+'">'+bLbl(v)+'</button>').join('')+'</div><div class="fl"><button class="sm" data-a="gin">基金へ拠出 '+bLbl(bA)+'</button><button class="sm" data-a="gout">基金から引出 '+bLbl(bA)+'</button></div>'}
+else{const iss=bT=='iss';h+='<div class="fl">'+BA.map(v=>'<button class="sm'+(bA==v?' on':'')+'" data-a="bsel:'+v+'">'+bLbl(v)+'</button>').join('')+'</div>';h+='<div class="fl"><button class="sm" data-a="'+(iss?'bi':'br')+'">'+(iss?'國債調達 ':'國債償還 ')+bLbl(bA)+'</button></div>';h+='<p class="p one">'+(iss?'國債調達で資金確保できます（行動1・民心−1）。':'償還は行動を使ひません。債務が0の時の償還は國帑から投資基金への拠出になります。償還額が債務を上回った差額は國帑に戻ります。')+'</p>'}
+return h}
+/* 國債0なら國帑に預金利子が自動で入る。投資基金は運用方針ごとの利回りで運用益を國帑へ */
+var GP={safe:['安全運用（預金・國債）',.5],std:['標準運用（株式・社債）',2],ind:['國内産業投資（工業力の伸び↑）',1]};
+function atWar(){return Object.values(S.war||{}).some(x=>x)}
+function fR(){const g=GP[S.gp||'std']||GP.std;return Math.max(0,bondR()+g[1]*(atWar()?.3:1)*(.5+S.stab/200))}
+function depInt(){return (S.debt||0)>0?0:Math.max(0,S.fund)*bondR()/400}
+function gifRet(){return (S.ivest||0)*fR()/400}
+function bondNet(){return bondInt()-depInt()-gifRet()}
+function gifSeason(c){const iv=S.ivest||0;if(S.gp=='ind'&&iv>0)S.ind*=1+Math.min(.005,iv/(Math.max(1,c.gdp)*400));S.fLast=0;if(!S.fAuto)return;const res=(S.fRes||2)*Math.max(1,c.upk);if((S.debt||0)<=0&&S.fund>res){const m=S.fund-res;S.fund-=m;S.ivest=iv+m;S.fLast=m}else if(S.fund<res&&iv>0){const m=Math.min(iv,res-S.fund);S.ivest=iv-m;S.fund+=m;S.fLast=-m}}
+/* 民營化：[案, 社數, 賣値(季GDP比), 效率(税收+), 專賣益金の喪失(税收−), 民心, 特記(電力=民間が不足を補ふ率／電信=情報)] */
+const PV={den:{n:'電力',jp:'日本發送電・配電',pl:[['一社のまま民營化',1,.5,.01,0,-1,.2],['發電と送配電の二社',2,.45,.015,0,-1,.3],['地域九分割（九電力）',9,.4,.025,0,-2,.5]]},
+tet:{n:'國有鐵道',jp:'鐵道省（國鐵）',pl:[['一社のまま民營化',1,.6,.01,0,-2],['東西二分割',2,.55,.015,0,-3],['旅客六社＋貨物一社',7,.5,.025,0,-4]]},
+sen:{n:'專賣（塩・煙草）',jp:'專賣局',pl:[['煙草のみ民營化（塩は專賣）',1,.7,.005,.03,0],['塩・煙草を一社で民營化',1,.9,.006,.05,0],['塩の自由化＋煙草一社',2,.9,.01,.05,-1]]},
+ttc:{n:'電信電話',jp:'遞信省（電信電話）',pl:[['一社のまま民營化',1,.6,.01,0,-1,5],['長距離と東西地域の三社',3,.55,.015,0,-1,8],['地域十分割＋長距離一社',11,.5,.02,0,-2,10]]}};
+function pvInc(){let x=0;for(const k in S.pv||{}){const p=PV[k]&&PV[k].pl[S.pv[k]];if(p)x+=p[3]-p[4]}for(const id in S.pvc||{}){const q=COLE.find(z=>z[0]==id);if(q)x+=q[4]}return x}
+function pvSeason(){const s=(S.pv||{}).den;if(s==null)return;const c=calc(),sh=c.elecD*1.02-(S.elec+c.gas*15);if(sh>0)S.elec+=sh*PV.den.pl[s][6]}
+/* 内地に編入した朝鮮・臺灣・樺太・滿洲があれば、地域分割の社數と賣値が增える */
+const NIC=[['cho','朝鮮'],['tai','臺灣'],['kar','樺太'],['man','滿洲']];
+function nicL(){return NIC.filter(([id])=>{const r=rs(id);return r&&r.o==P&&r.ni})}
+function naiSc(){const h=S.R.filter(r=>r.o==P&&(r.id==HM()||homeR(r.id))).reduce((a,r)=>a+r.p,0);return h>0?naiP()/h:1}
+function pvPl(k){const e=PV[k],nl=nicL(),m=nl.length,nm=nl.map(x=>x[1]).join('・');return e.pl.map((q,i)=>{if(i!=2||!m||k=='sen')return q;const z=q.slice();z[1]=q[1]+m;z[0]=k=='den'?'地域'+kn(9+m)+'分割（九電力＋'+nm+'）':k=='tet'?'旅客'+kn(6+m)+'社（'+nm+'を含む）＋貨物一社':'地域'+kn(10+m)+'分割（'+nm+'を含む）＋長距離一社';return z})}
+/* 外地・國策會社：[id, 名, 地, 賣値係數, 税收+, 外地なら支配−] */
+const COLE=[['chb','朝鮮銀行','cho',.8,.002,3],['chr','朝鮮鐵道（總督府鐵道局）','cho',1,.003,3],['tyt','東洋拓殖','cho',.5,.001,2],['chd','朝鮮電業','cho',.4,.002,0],
+['twb','臺灣銀行','tai',.6,.002,2],['twd','臺灣電力','tai',.4,.002,0],['twr','臺灣總督府鐵道','tai',.4,.002,2],['krr','樺太廳鐵道','kar',.2,.001,1],
+['mcb','滿洲中央銀行','man',.8,.002,3],['mtk','南滿洲鐵道（滿鐵）','man',2,.004,5],['mju','滿洲重工業開發','man',1,.003,2],['mde','滿洲電業','man',.4,.002,0],
+['nyt','南洋拓殖','nan',.2,.001,1],['hsk','北支那開發','hok',.6,.002,3],['csk','中支那振興','chu',.5,.002,3]];
+function colP(q,c){const r=rs(q[2]);return r?c.gdp*q[3]*Math.max(.02,r.p*(r.ni?1:.5)/Math.max(1,c.pe)):0}
+function pvGet(g){if(S.pvF){S.ivest=(S.ivest||0)+g;return '投資基金へ'}S.fund+=g;return '國帑へ'}
+function pvDo(v){const k=v.slice(0,3),i=+v.slice(3),e=PV[k],pl=e&&pvPl(k);if(!e||!pl[i]||(S.pv||{})[k]!=null)return;if(atWar()){toast('交戰中は民營化できない');return}if(S.ap<1){toast('行動が足りません');return}if(cf!='pv'+v){cf='pv'+v;rd();return}cf='';const p=pl[i],g=Math.round(calc().gdp*p[2]*naiSc());S.ap--;S.pv=S.pv||{};S.pv[k]=i;S.pvL=S.pvL||{};S.pvL[k]=p[0]+'（'+p[1]+'社）';const to=pvGet(g);if(p[5])up('stab',p[5]);if(k=='ttc')up('inf',p[6]);lg(e.n+'を民營化（'+p[0]+'・'+p[1]+'社）、賣却益 '+yen(g)+'は'+to);fin()}
+function colDo(id){const q=COLE.find(x=>x[0]==id),r=q&&rs(q[2]);if(!q||!r||r.o!=P||(S.pvc||{})[id])return;if(atWar()){toast('交戰中は賣却できない');return}if(r.c<50){toast('支配50以上が要る');return}if(S.ap<1){toast('行動が足りません');return}if(cf!='pc'+id){cf='pc'+id;rd();return}cf='';const g=Math.round(colP(q,calc()));S.ap--;S.pvc=S.pvc||{};S.pvc[id]=1;const to=pvGet(g);if(!r.ni&&q[5])r.c=Math.max(0,r.c-q[5]);lg(q[1]+'を賣却、'+yen(g)+'は'+to);fin()}
+function pvPanel(c){const w=atWar(),sc=naiSc(),nl=nicL();let h='<h2>民營化</h2><p class="p">國營事業を賣つて資金を得る（行動1・交戰中は不可・一度きり）。分けるほど賣値は下がるが、競爭で效率が上がり税收が伸びる。專賣を賣ると專賣益金を失ふ。'+(nl.length?'内地に編入した'+nl.map(x=>x[1]).join('・')+'の分、地域分割の社數と賣値（×'+sc.toFixed(2)+'）が增える。':'朝鮮・臺灣・樺太・滿洲を内地に編入すると、地域分割の社數と賣値が增える。')+'</p><div class="fl"><span class="p">賣却益の行き先</span><button class="sm'+(S.pvF?'':' on')+'" data-a="pvf:0">國帑</button><button class="sm'+(S.pvF?' on':'')+'" data-a="pvf:1">投資基金</button></div>';
+for(const k in PV){const e=PV[k],s=(S.pv||{})[k],pl=pvPl(k);h+=`<div class="row"><div><span class="nm">${e.n}</span><div class="meta">${s!=null?'民營化濟：'+((S.pvL||{})[k]||e.pl[s][0]):'國營'+(P=='jp'?'・'+e.jp:'')}</div></div><div class="bt">${s!=null?'':pl.map((q,i)=>`<button class="sm" data-a="pv:${k}${i}"${w||S.ap<1?' disabled':''}>${cf=='pv'+k+i?'もう一度押すと實施':q[0]}</button>`).join('')}</div></div>`;
+ if(s==null)h+='<p class="p">'+pl.map(q=>{const d=(q[3]-q[4])*100;return q[0]+'（'+q[1]+'社）：'+yen(c.gdp*q[2]*sc)+'・税收 '+(d>=0?'+':'')+d.toFixed(1)+'%'+(q[5]?'・民心 '+q[5]:'')+(k=='den'?'・民間が電力不足の'+Math.round(q[6]*100)+'%を毎季補ふ':'')+(k=='ttc'?'・情報 +'+q[6]:'')}).join('／')+'</p>'}
+const cl=COLE.filter(q=>{const r=rs(q[2]);return (S.pvc||{})[q[0]]||(r&&r.o==P)});
+if(cl.length){h+='<h2>外地・國策會社の賣却</h2><p class="p">領有する地の銀行・鐵道・國策會社を賣る（行動1・支配50以上・交戰中は不可）。外地のままの地では賣ると支配が少し下がる。賣値はその地の人口（内地なら滿額、外地は半分）で決まる。</p>';
+ h+=cl.map(q=>{const r=rs(q[2]),sold=(S.pvc||{})[q[0]];return`<div class="row"><div><span class="nm">${q[1]}</span><div class="meta">${sold?'賣却濟':(r.ni?'内地':'外地')+'・'+yen(colP(q,c))+'・税收 +'+(q[4]*100).toFixed(1)+'%'+(!r.ni&&q[5]?'・支配 −'+q[5]:'')}</div></div><div class="bt">${sold?'':`<button class="sm" data-a="pvc:${q[0]}"${w||S.ap<1||r.c<50?' disabled':''}>${cf=='pc'+q[0]?'もう一度押すと賣却':'賣却'}</button>`}</div></div>`}).join('')}
+return h}
+function bondDo(a){if(a>0){if(S.ap<1){toast('行動が足りません');return}S.ap--;S.fund+=a;S.debt=(S.debt||0)+a;lg('國債 '+bLbl(a)+'を調達');up('stab',-1)}else{const b=-a,d=S.debt||0;if(d>0){const pay=Math.min(b,d);if(S.fund<pay){toast('國帑が足りません');return}S.fund-=pay;S.debt=d-pay;lg('國債 '+bLbl(pay)+'を償還'+(b>d?'（差額は國帑へ戻る）':''))}else{if(S.fund<b){toast('國帑が足りません');return}S.fund-=b;S.ivest=(S.ivest||0)+b;lg('國債なし、'+bLbl(b)+'を投資基金へ')}}fin()}
+function hmoJ(){return S.R.filter(r=>r.id==HMO[P]||(r.ni&&r.o==P&&HSPL.includes(r.id))).reduce((a,r)=>a+(r.jp||0),0)}
+function ojT(){return S.R.filter(r=>r.id!=HMO[P]&&r.o==P&&!(r.ni&&HSPL.includes(r.id))).reduce((a,r)=>a+(r.jp||0),0)}
+function extT(){return S.R.filter(r=>r.id!=HMO[P]&&r.o==P).reduce((a,r)=>a+(r.p||0),0)}
+function naiP(){return S.R.filter(r=>r.id==HM()||(r.ni&&r.o==P)).reduce((a,r)=>a+r.p,0)}
+function nik(id){const i=ri(id),r=S.R[i];if(r.o!=P||r.ni||r.c<100||!(isC(i)||r.an)||!spend({fund:10}))return;S.ap--;r.ni=1;lg(RD[i][1]+'を内地に編入');fin()}
+const AD={kwa:'大連市 旅順市 金州民政署 普蘭店民政署 貔子窩民政署',nai:'茨城縣 栃木縣 群馬縣 埼玉縣 東京府 神奈川縣 山梨縣',csm:'國後島 擇捉島 色丹島 占守島 幌筵島',nsw:'沖繩縣 宮古 八重山 奄美大島 大東諸島',hkd:'北海道',thk:'青森縣 岩手縣 宮城縣 秋田縣 山形縣 福島縣',chb:'新潟縣 富山縣 石川縣 福井縣 長野縣 岐阜縣 靜岡縣 愛知縣',kin:'三重縣 滋賀縣 京都府 大阪府 兵庫縣 奈良縣 和歌山縣',cgs:'鳥取縣 島根縣 岡山縣 廣島縣 山口縣 德島縣 香川縣 愛媛縣 高知縣',kyu:'福岡縣 佐賀縣 長崎縣 熊本縣 大分縣 宮崎縣 鹿兒島縣 沖繩縣',cho:'京畿道 忠清北道 忠清南道 全羅北道 全羅南道 慶尚北道 慶尚南道 黃海道 平安南道 平安北道 江原道 咸鏡南道 咸鏡北道',tai:'臺北州 新竹州 臺中州 臺南州 高雄州 臺東廳 花蓮港廳 澎湖廳',kar:'豐原支廳 眞岡支廳 泊居支廳 本斗支廳 留多加支廳 敷香支廳 惠須取支廳',nan:'サイパン支廳 パラオ支廳 ヤップ支廳 トラック支廳 ポナペ支廳 ヤルート支廳',man:'新京特別市 奉天省 吉林省 濱江省 龍江省 三江省 間島省 安東省 錦州省 熱河省 黑河省 牡丹江省 通化省 興安東省 興安西省 興安南省 興安北省'};
+let adF='nai',adO=0;const adSel=new Set();
+let mpF=null;let mapZ='world';
+/* 地圖の表示範圍：地域ごとに選べる（經緯度の範圍で指定） */
+const MZ=[['world','世界',-180,180,-90,90],['jp','日本',118,150,22,50],['cn','支那',95,125,18,45],['fe','極東',100,180,30,75],['ea','東亞',100,150,18,50],['sea','東南亞',92,130,-12,25],['sa','南亞',60,95,5,38],['wa','西亞',25,65,25,50],['ca','中亞',45,90,35,56],['me','中東',-20,60,-5,45],['eu','歐州',-15,50,33,70],['af','阿弗利加',-20,52,-36,38],['oc','大洋州',110,180,-50,10],['na','北米',-170,-50,15,75],['cam','中米',-120,-58,5,33],['sam','南米',-85,-33,-57,13],['su','魯西亞',20,180,40,80]];
+function mzBox(k){const z=MZ.find(q=>q[0]==k)||MZ[0];const x0=(z[2]+180)/360*1000,x1=(z[3]+180)/360*1000,y0=(90-z[5])/180*500,y1=(90-z[4])/180*500;return {x:x0,y:y0,w:x1-x0,h:y1-y0}}
+const MPOS={jxi:[115.5,27],nai:[139.8,36.4],cho:[127,38],tai:[121,23.5],kar:[143,49],nan:[150,7],man:[124,46],kwa:[122,39],umo:[110,42],hok:[116.4,39.9],sha:[121.5,31],chu:[118.8,32.1],knn:[113.3,23.1],hkg:[114.2,22.3],jyu:[106.5,29.6],tib:[90,31],sin:[84,42],smo:[104,47],kka:[143,55],enk:[134,46],tsb:[100,56],wsb:[73,55],cas:[59,39],sue:[37.6,55.8],blr:[28,53.5],ukr:[32,49],alk:[-150,61.2],can:[-100,58],mex:[-102,23],gua:[-90.5,15.5],enz:[-86.5,14],sal:[-89,13.5],hon:[-86.5,15],nic:[-85,12.5],cos:[-84,10],pan:[-80,8.5],col:[-74,4],ven:[-66,8],crb:[-75,19],ecu:[-78.5,-1.5],per:[-75,-10],bol:[-64.5,-16.5],chi:[-71,-33],par:[-58,-23],uru:[-56,-33],arg:[-64,-38],flk:[-59,-51.5],guy:[-59,5],sur:[-56,4],gfr:[-53,4],bra:[-52,-12],deu:[13.4,52.5],aut:[14,47.5],cze:[15,49.8],pol:[19.5,52],blt:[23.9,55.2],suo:[26,64],swe:[16,62],nor:[10,62],dnk:[9.5,56],bnl:[4.5,51.5],fra:[2.3,48.9],che:[8,46.8],ita:[11.5,43.8],spa:[-4,40],por:[-8,39.5],gbr:[-1.5,52.6],hun:[19.5,47],rom:[25,46],yug:[20.5,44],slk:[19.2,48.7],sud:[13.4,50.6],cro:[16,45.1],trn:[24.5,46.3],bes:[28.6,47.1],mol:[27.2,47],dob:[28.4,44.4],buk:[25.8,48],tat:[49.1,55.6],bsk:[56,54.2],cvs:[47.2,55.4],mar:[48,56.7],klm:[45.5,46.3],dag:[47.3,42.8],cec:[45.6,43.3],crm:[34.1,44.9],dnb:[38.5,48.2],zap:[35.6,47.3],gal:[24.4,49.4],krl:[33,63.5],kom:[54,64],yak:[129.7,62],bur:[108.5,52.5],kgz:[74.6,41.4],taj:[71,38.7],vgr:[46.5,51.2],mrd:[44.5,54.2],udm:[53,57],kbr:[43.4,43.5],oss:[44.4,43],nkh:[45.4,39.2],kkp:[59.6,42.5],abk:[41,43.1],ajr:[41.7,41.6],mda:[29.5,47.3],bul:[25,42.7],grc:[22,39],tur:[33,39],mde:[44,33],egy:[30,27],lby:[17,27],fin:[106,15],thi:[101,15],mal:[102,4],sgp:[104,1.3],bir:[96,20],sum:[101,0],jaw:[110,-7.5],kal:[115,0],ran:[128,-2],ngn:[141,-4],phi:[122,12],gum:[144.8,13.4],haw:[-158,21.3],pgb:[170,-15],pfr:[-150,-17],ind:[78,22],aus:[134,-25],nzl:[172,-41],tjn:[117.7,39],shd:[118,36.4],xuz:[117.2,34.3],whn:[114.3,30.6],csh:[112.9,28.2],mac:[113.4,22],hai:[109.8,19.2],cdu:[104.1,30.7],kmg:[102.7,25],yan:[109.5,36.6],hkd:[142.8,43.3],thk:[140.9,40.2],sth:[140.4,37.9],hkr:[136.7,36.5],nri:[138.4,36.6],shk:[133.4,33.7],chb:[137.4,35.0],kin:[135.5,34.7],cgs:[132.6,34.9],kyu:[130.7,32.6],len:[30.3,59.9],vlg:[44.5,48.7],cau:[48.5,40.4],url:[60.6,56.8],rhr:[7,51.3],bay:[11.6,48.4],epr:[21,54.5],kbg:[20.5,54.7],sil:[17,51],pom:[15.5,53.8],sit:[15,38.6],sco:[-4,56.6],sfr:[4.5,44],als:[6.9,48.6],nce:[7.1,44.2],wal:[-3.7,52.4],nir:[-6.6,54.6],csm:[149.5,44.5],nsw:[126.5,25.5],hwb:[-156.5,20.5],nal:[-147.7,64.8],nsb:[90,56],esb:[106,52],sar:[9,40],bsu:[140.1,35.2],est:[25,58.6],lat:[24.6,57],geo:[43.4,42.3],arm:[44.5,40.2],kaz:[68,48],uzb:[64,41.4],AL:[-86.8,32.8],AZ:[-111.7,34.3],AR:[-92.4,34.9],CA:[-119.5,37.2],CO:[-105.5,39],CT:[-72.7,41.6],DE:[-75.5,39],DC:[-77,38.9],FL:[-81.7,28.6],GA:[-83.4,32.7],ID:[-114.5,44.4],IL:[-89.2,40],IN:[-86.3,39.9],IA:[-93.5,42],KS:[-98.4,38.5],KY:[-85.3,37.5],LA:[-91.9,31],ME:[-69.2,45.3],MD:[-76.7,39],MA:[-71.8,42.3],MI:[-85,44.3],MN:[-94.3,46.3],MS:[-89.7,32.7],MO:[-92.5,38.4],MT:[-110,47],NE:[-99.8,41.5],NV:[-116.7,39.3],NH:[-71.6,43.7],NJ:[-74.5,40.1],NM:[-106,34.4],NY:[-75.5,42.9],NC:[-79.4,35.5],ND:[-100.5,47.5],OH:[-82.8,40.3],OK:[-97.5,35.6],OR:[-120.5,43.9],PA:[-77.6,40.9],RI:[-71.5,41.7],SC:[-80.9,33.9],SD:[-100.2,44.4],TN:[-86.6,35.8],TX:[-99.3,31.5],UT:[-111.7,39.3],VT:[-72.7,44],VA:[-78.7,37.5],WA:[-120.5,47.4],WV:[-80.6,38.6],WI:[-89.8,44.6],WY:[-107.5,43],tyo:[139.7,35.7],ber:[13.4,52.5],pri:[2.35,48.85],lon:[-0.1,51.5],mos:[37.6,55.8],roma:[12.5,41.9]};
+const UNC=[['gen','寿府'],['ny','紐育'],['mos','莫斯科'],['lon','倫敦'],['ber','伯林'],['par','巴里'],['mad','馬徳里'],['rom','羅馬'],['tok','東京'],['nan','南京']],UNPREF={us:'ny',su:'mos',gb:'lon',fr:'par',de:'ber',it:'rom',cn:'nan',che:'gen'};
+const BDC=[['osa','大阪'],['kyo','京都'],['tok','東京'],['sha','上海'],['hkg','香港']];
+const HCM=[[1937,'支那事變は泥沼の長期戰となる。',()=>P!='jp'||S.war.cn],[1939,'歐州に戰雲。獨逸の進撃に世界が揺れる。'],[1941,'太平洋に戰火が擴がる。',()=>P=='jp'?!!(S.war.us||S.ev.usw):P=='us'?!!(S.war.jp||S.ev.v_jp):true],[1945,'長き戰ひ終はり、新たな國際秩序を探る時代となる。'],[1948,'亞細亞・阿弗利加に獨立の波が高まる。'],[1955,'冷戰の對立が世界を二分する。'],[1960,'技術と經濟が新たな時代を拓く。']];
+function histNote(){const h=HCM.filter(([y,,c])=>S.y>=y&&(!c||c())).pop();return h?h[1]:''}
+const CNG=['cn','zxl','yxs','lzj','swn','xbj','ccp'];
+function candOf(x){const g=x=='cn'?CNG:null;return S.R.filter(r=>(r.o==x||(g&&g.includes(r.o))||wk(r.o)==x)&&r.o!=P&&!isI(r.o)&&r.id!=HMO[r.o]).map(r=>r.id)}
+function cedeMax(x){return 999}
+function openCede(x){tab='han';S.offer[x]=0;S.cs={x,sel:[],max:cedeMax(x),n0:Math.max(1,candOf(x).length)};lg(SN(x)+'降伏。割讓地を地圖で選ぶ（候補'+S.cs.n0+'地、數に制限なし）');fin()}
+function cedeDo(){const cs=S.cs;if(!cs)return;S.cs=null;cs.sel.forEach(id=>{const r=rs(id);if(r){r.o=P;r.c=30}});const share=cs.sel.length/Math.max(1,cs.n0||1),rest=candOf(cs.x).length,res=Math.min(.45,(NQ[cs.x]?NQ[cs.x][5]:50)/200);const pr=share>.2?Math.min(.9,(share-.2)*1.2*(1-res)):0;if(Math.random()<pr){S.gue=S.gue||{};S.gue[cs.x]=1;S.offAsk=S.offAsk||{};S.offAsk[cs.x]=S.y*4+S.q;S.offer[cs.x]=0;up('stab',-3);lg(SN(cs.x)+'は講和文書への合意を拒否（要求過大）。割讓地'+cs.sel.length+'地を失ひ、ゲリラ戰に移る');fin();return}S.ev['v_'+cs.x]=1;endW(cs.x);lg(SN(cs.x)+'との戰終はる。割讓地'+cs.sel.length+'地を得る');fin()}
+function mpClick(id){if(S.cs&&candOf(S.cs.x).includes(id)){const r=rs(id);r.o=P;r.c=30;S.cs.sel.push(id);lg(RD[ri(id)][1]+'を割讓により日本領に編入');if(!candOf(S.cs.x).length){cedeDo();return}}mpF=id;fin()}
+function ownerName(o){return o==P?'帝國':(ON[o]||SN(o)||o)}
+const LAND=[[-9, 43, -2, 43, -1, 46, -4, 48, 2, 51, 5, 53, 8, 54, 9, 57, 11, 54, 14, 54, 19, 54, 21, 57, 24, 59, 30, 60, 23, 60, 21, 63, 25, 65, 21, 66, 18, 62, 16, 56, 12, 56, 9, 58, 5, 59, 5, 62, 14, 67, 20, 70, 30, 70, 40, 68, 44, 68, 60, 69, 70, 73, 80, 73, 100, 77, 112, 74, 130, 71, 150, 71, 160, 70, 180, 68, 180, 65, 178, 62, 170, 60, 163, 58, 162, 55, 156, 51, 156, 57, 160, 61, 150, 59, 142, 59, 137, 54, 141, 52, 140, 48, 135, 43, 130, 42, 129, 36, 126, 35, 126, 38, 125, 40, 122, 40, 118, 38, 120, 36, 122, 31, 120, 27, 117, 23, 110, 21, 106, 20, 109, 12, 105, 9, 104, 12, 100, 13, 100, 8, 103, 1, 98, 8, 98, 16, 94, 17, 92, 22, 88, 22, 80, 15, 77, 8, 73, 17, 67, 25, 57, 25, 56, 27, 50, 30, 48, 30, 52, 24, 56, 26, 59, 22, 52, 16, 43, 13, 39, 20, 35, 28, 33, 30, 35, 36, 30, 36, 26, 40, 23, 38, 20, 40, 19, 42, 13, 45, 12, 44, 16, 41, 16, 38, 12, 40, 8, 44, 3, 43, -1, 43], [-17, 21, -16, 28, -10, 30, -6, 36, 10, 37, 11, 33, 20, 31, 32, 31, 34, 28, 38, 20, 43, 12, 51, 12, 48, 5, 40, -3, 40, -15, 35, -22, 33, -26, 27, -34, 19, -35, 16, -28, 12, -17, 13, -10, 9, -1, 9, 4, 4, 6, -4, 5, -8, 4, -13, 8, -17, 14], [-168, 66, -156, 71, -140, 70, -128, 70, -115, 68, -95, 68, -85, 70, -80, 63, -94, 59, -92, 57, -82, 55, -79, 52, -77, 58, -72, 61, -64, 60, -60, 55, -56, 52, -66, 45, -70, 42, -76, 38, -76, 34, -81, 31, -80, 25, -83, 29, -89, 30, -97, 27, -97, 21, -90, 21, -87, 21, -88, 16, -84, 15, -83, 9, -79, 8, -80, 9, -85, 11, -92, 14, -97, 16, -105, 20, -110, 23, -114, 30, -118, 34, -122, 37, -124, 42, -124, 48, -130, 54, -137, 58, -146, 61, -152, 59, -158, 57, -164, 55, -158, 58, -165, 62], [-73, 78, -60, 82, -30, 83, -18, 78, -20, 70, -40, 65, -44, 60, -52, 64, -55, 70, -62, 76], [-77, 8, -72, 12, -63, 11, -52, 5, -50, 0, -35, -5, -39, -14, -41, -22, -48, -26, -53, -34, -58, -38, -65, -42, -68, -50, -72, -54, -75, -48, -73, -37, -71, -18, -76, -14, -81, -5, -80, 0, -78, 3], [114, -22, 122, -18, 130, -12, 137, -12, 142, -11, 146, -19, 153, -26, 150, -37, 145, -39, 138, -35, 131, -31, 115, -34, 114, -26], [172, -35, 178, -38, 175, -42, 170, -46, 167, -46, 172, -41], [-5, 50, 1, 51, 2, 53, -1, 55, -2, 57, -5, 58, -6, 56, -4, 54, -5, 52], [130, 31, 131, 34, 135, 34, 140, 35, 141, 38, 142, 41, 140, 41, 139, 38, 136, 37, 133, 35, 130, 33], [140, 42, 141, 45, 145, 43, 143, 42], [95, 5, 98, 4, 106, -6, 102, -4, 95, 1], [109, 2, 115, 5, 119, 5, 118, 0, 116, -4, 110, -3], [105, -6, 114, -7, 114, -8, 106, -7], [131, -1, 141, -2, 150, -10, 141, -9, 137, -5], [44, -25, 47, -25, 50, -15, 49, -12, 44, -17], [-24, 65, -14, 66, -14, 64, -22, 63], [120, 18, 122, 18, 124, 12, 126, 7, 122, 7, 120, 14], [120.2, 23, 121.5, 25, 121.9, 24, 120.8, 22]];
+const LANDSVG=LAND.map(a=>{let pts=[];for(let i=0;i<a.length;i+=2)pts.push(((a[i]+180)/360*1000).toFixed(1)+','+((90-a[i+1])/180*500).toFixed(1));return '<polygon points="'+pts.join(' ')+'"/>'}).join('');
+function cedeView(cs,cd){if(!cd.length)return '<div class="mapw"><p class="p one">'+SN(cs.x)+'が割讓できる地が殘っていません（全て他国の手にあるか獨立しています）。確定すると戰は終はります。</p><div class="fl"><button class="sm r" data-a="cedo">割讓を確定</button></div></div>';
+const pts=cd.map(id=>MPOS[id]).filter(p=>p).map(p=>[(p[0]+180)/360*1000,(90-p[1])/180*500]);
+let x0=Math.min(...pts.map(q=>q[0]))-60,x1=Math.max(...pts.map(q=>q[0]))+60,y0=Math.min(...pts.map(q=>q[1]))-60,y1=Math.max(...pts.map(q=>q[1]))+60;
+const w=Math.max(x1-x0,160),h=Math.max(y1-y0,120);
+const dots=cd.map(id=>{const r=S.R.find(q=>q.id==id),p=MPOS[id],i=ri(id);if(!r||!p)return'';const X=(p[0]+180)/360*1000,Y=(90-p[1])/180*500,sl=cs.sel.includes(id);
+ return `<g class="mp cd${sl?' sl':''}" data-a="mp:${id}"><circle cx="${X}" cy="${Y}" r="${sl?w/40:w/55}" fill="${oc(r.o)}"/><text x="${X+w/50}" y="${Y+h/30}" style="font-size:${(w/34).toFixed(1)}px">${RD[i][1]}</text></g>`}).join('');
+const list=cd.map(id=>{const r=S.R.find(q=>q.id==id),i=ri(id),sl=cs.sel.includes(id);return `<button class="sm${sl?' r':''}" data-a="mp:${id}">${sl?'✔ ':''}${RD[i][1]}　${r.p.toFixed(1)}百萬</button>`}).join('');
+return `<div class="mapw"><div class="rep"><b>割讓地を選ぶ（${SN(cs.x)}）</b><p class="p one">地圖の地または下の地名をタップすると、その場で日本領になります。取得 ${cs.sel.length}地（數に制限はありません）。候補が無くなるか、下の按鈕で割讓を終へると、講和文書への合意を求めます。要求が過大であれば和は成らず、ゲリラ戰に移ります。</p><div class="fl"><button class="sm r" data-a="cedo">割讓を終へる</button></div></div><svg class="mapsv" viewBox="${x0.toFixed(1)} ${y0.toFixed(1)} ${w.toFixed(1)} ${h.toFixed(1)}" role="img" aria-label="${SN(cs.x)}の地圖">${LANDSVG}${dots}</svg><div class="fl">${list}</div></div>`}
+function mapHtml(){const cs=S.cs,cd=cs?candOf(cs.x):[];if(cs)return cedeView(cs,cd);
+ const bx=mzBox(mapZ),kz=Math.max(.12,bx.w/1000);const dots=S.R.map((r,i)=>{const p=MPOS[r.id];if(!p)return'';const X=((p[0]+180)/360*1000).toFixed(1),Y=((90-p[1])/180*500).toFixed(1),sl=cs&&cs.sel.includes(r.id),c=cd.includes(r.id),cu=mpF==r.id,lab=sl||c||cu;
+  return`<g class="mp${c?' cd':''}${sl?' sl':''}${cu?' cu':''}" data-a="mp:${r.id}"><circle cx="${X}" cy="${Y}" r="${((cu||sl?20:c?16:12)*kz).toFixed(1)}" fill="${oc(r.o)}"/>${lab?`<text x="${(+X+22).toFixed(1)}" y="${(+Y+9).toFixed(1)}">${RD[i][1]}</text>`:''}</g>`}).join('');
+ const ban=cs?`<div class="rep"><b>割讓地を選ぶ（${SN(cs.x)}）</b><p class="p">地圖上の地を押して選ぶ。選んだ ${cs.sel.length}地。確定すると講和文書への合意を求めます（要求が過大であれば和は成らず、ゲリラ戰に移ります）。</p><div class="fl"><button class="sm r" data-a="cedo">割讓を確定</button></div></div>`:'';
+ let info='';if(mpF&&rs(mpF)){const r=rs(mpF),i=ri(mpF);info=`<p class="p">${RD[i][1]}　${ownerName(r.o)}　人口 ${r.p.toFixed(1)}百萬　支配 ${Math.round(r.c)}</p>`}
+ const sp=settPool('');return`<div class="mapw">${ban}<div class="fl">${P!='jp'?'':SZ.map(([v,l])=>`<button class="sm${settSize()==v?' r':''}" data-a="sz:${v}">${l}</button>`).join('')}</div><div class="fl">${MZ.map(([k,l])=>`<button class="sm${mapZ==k?' r':''}" data-a="mz:${k}">${l}</button>`).join('')}</div><svg class="mapsv" viewBox="${bx.x.toFixed(1)} ${bx.y.toFixed(1)} ${bx.w.toFixed(1)} ${bx.h.toFixed(1)}" role="img" aria-label="地圖"><rect x="${bx.x.toFixed(1)}" y="${bx.y.toFixed(1)}" width="${bx.w.toFixed(1)}" height="${bx.h.toFixed(1)}" fill="var(--pn2)"/>${LANDSVG}${dots}</svg>${info}${P=='jp'?`<p class="p one">入植は選んだ人数を、人口の多い地から外地へ移す（帑4・行動1、どの人数も同じ）。子は入植人口の10%で外地に生まれ、そのうち25%が内地へ戻る。</p>`:''}${P=='jp'?`<p class="p one">外地の日本人　${Math.round((S.oj||0)*100)}萬人（開始時 ${Math.round((S.oj0||0)*100)}萬人）</p>`:''}</div>`}
+const SZ=[[0.1,'10萬人'],[0.2,'20萬人'],[0.3,'30萬人'],[0.5,'50萬人'],[0.8,'80萬人'],[1.2,'120萬人']];
+function settSize(){return S.sz||.3}
+function setSz(v){S.sz=+v;fin()}
+/* 入植の送り出し：内地の各地から人口割。滿洲へは半分を朝鮮半島から（朝鮮の人はその中の日本人の割合だけ大和民族として数へる） */
+function settSrc(id,a){const H=S.R.filter(r=>r.o==P&&(r.id==HM()||r.ni)&&r.id!=id),hp=H.reduce((x,r)=>x+r.p,0),ch=rs('cho');let kc=0;if(id=='man'&&ch&&ch.o==P)kc=Math.min(a/2,Math.max(0,ch.p-1));const ah=a-kc;if(!H.length||hp<ah+1)return null;return{H,hp,kc,ah,ch}}
+function settPool(id){const a=settSize(),s=settSrc(id,a);return s?{s,a}:null}
+function settle(id){if(P!='jp')return;const t=rs(id),q=settPool(id);if(!t||!q||!spend({fund:4}))return;S.ap--;const a=q.a,{H,hp,kc,ah,ch}=q.s;let jm=0;
+ H.forEach(r=>{const x=ah*r.p/hp,jr=r.p>0?Math.min(1,(r.jp||0)/r.p):1;r.p-=x;r.jp=Math.max(0,(r.jp||0)-x*jr);jm+=x*jr});
+ if(kc>0){const jr=ch.p>0?Math.min(1,(ch.jp||0)/ch.p):0;ch.p-=kc;ch.jp=Math.max(0,(ch.jp||0)-kc*jr);jm+=kc*jr}
+ const b=a*.1,jb=b*jm/a,ret=jb*.25,home=rs(HMO[P]),j0=t.jp||0;t.p+=a+b-ret;t.jp=j0+jm+jb-ret;t.j2=(t.j2!=null?t.j2:j0*.3)+jb-ret;home.p+=ret;home.jp=(home.jp||0)+ret;S.oj=(S.oj||0)+jm+jb-ret;t.c=Math.min(100,t.c+1.5);
+ lg((kc>0?'朝鮮より'+Math.round(kc*100)+'萬人・':'')+'内地より'+Math.round(ah*100)+'萬人、'+RD[ri(id)][1]+'へ入植。子'+Math.round(b*100)+'萬人（'+Math.round(ret*100)+'萬人は内地へ歸還）');fin()}
+function victors(){return[P,...Object.keys(S.tr||{}).filter(k=>k!=P&&hasT(k,'all'))]}
+function unPick(c){if(S.un||!can({fund:15}))return;const v=victors(),no=v.filter(k=>k!=P&&!(UNPREF[k]==c||(S.rel[k]||0)>=40)),nm=UNC.find(x=>x[0]==c)[1];
+ if(v.length-no.length<=v.length/2){lg(nm+'案は戰勝國の合意を得られず');fin();return}
+ spend({fund:15});S.ap--;S.un={hq:c,perm:v,mem:Object.keys(S.rel).filter(k=>k!=P&&!v.includes(k)&&(S.rel[k]||0)>=0)};up('stab',3);lg('國際連合を創設。本部は'+nm+'に定まる');fin()}
+function bandung(c){const bc=BDC.find(x=>x[0]==c);if(!bc||S.ev.bd||!can({fund:8}))return;spend({fund:8});S.ap--;S.ev.bd=bc[1];S.R.forEach(r=>{if(isI(r.o))r.c=Math.min(100,r.c+5)});Object.keys(S.rel).forEach(k=>{if(k!=P&&!atW(k))S.rel[k]=Math.min(100,(S.rel[k]||0)+5)});up('stab',3);lg('亞阿會議、'+bc[1]+'に開かる。獨立の氣運高まる');fin()}
+function mtgOn(k){const n=S.y*4+S.q,m=S.mtg&&S.mtg[k];return m!=null&&n>=m&&n<=m+4}
+/* 交戰中は毎季、軍への投資（陸軍・海軍・航空の擴張）が無ければ軍事力が摩耗する。ゲリラ戰はさらに激しい */
+/* 降伏後に講和を拒んでゲリラ戰に移った敵は、戦力が尽きれば（拒否から一年後以降）援助や首都に關はらず戦を止める */
+function gueEnd(){Object.keys(S.gue||{}).forEach(x=>{if(S.gue[x]&&S.war[x]&&!offCD(x)&&(S.E[x]||0)<10){lg(SN(x)+'のゲリラ戰、力盡きて終息。割讓地はそのまま');endW(x)}})}
+function gueCost(){const w=Object.keys(S.war||{}).filter(k=>S.war[k]);if(!w.length)return;const ef=k=>S.gue&&S.gue[k]?.95:.97;w.forEach(k=>{if(S.E[k]!=null)S.E[k]=Math.max(5,S.E[k]*ef(k))});if(S.milT===S.y*4+S.q)return;const g=w.some(k=>S.gue&&S.gue[k]);const f=g?.92:.97;S.army=Math.round(S.army*f);S.navy=Math.round(S.navy*f);S.air=Math.round(S.air*f);lg(g?'ゲリラ戰の消耗、軍事力が大きく減る（軍への投資なし）':'交戰の消耗、軍事力が減る（軍への投資なし）')}
+function warDrift(){Object.keys(S.war||{}).forEach(k=>{if(!S.war[k]||S.E[k]==null)return;const b=(S.Eb||{})[k]||S.E[k];const e=S.E[k]+(Math.random()-.5)*3+(AIDR.includes(k)?0:(b-S.E[k])*.03)+((S.gue||{})[k]?1:0);S.E[k]=Math.max(5,Math.min(300,e))})}
+function jfEff(){const n=S.y*4+S.q;S.jf=(S.jf||[]).filter(j=>n<=j.q);S.jf.forEach(j=>{if(S.war[j.vs])S.E[j.vs]=Math.max(0,(S.E[j.vs]||0)-4)})}
+function letter(k,kind,x){
+ if(!k||k==P||!(NN[k]||ON[k]))return;
+ if(kind=='joint'&&(!x||x==k||x==P)){toast('共同戰線の相手國を選んでください');return}
+ if(!spend({fund:2}))return;S.ap--;
+ const r=S.rel[k]||0,n=tN(k),now=S.y*4+S.q;S.mtg=S.mtg||{};S.jf=S.jf||[];
+ if(kind=='good'){rel(k,6);if(r>=50){S.mtg[k]=now+1;lg(n+'より返書。次回の會談を約す')}else lg(n+'より丁重な返書。關係 +6')}
+ else if(kind=='threat'){const p=.25+Math.min(.4,(S.army+S.navy)/800);
+  if(Math.random()<p){rel(k,-12);S.fund+=15;lg(n+'、脅迫に屈して譲歩す。國帑 +15・關係 −12')}
+  else{rel(k,-20);up('stab',-2);lg(n+'、脅迫を拒絶。關係 −20・民心 −2')}}
+ else{const xn=SN(x)||tN(x),p=cl(.15+(r+(hasT(k,'all')?30:0))/200+(mtgOn(k)?.1:0),.05,.9);
+  if(Math.random()<p){S.jf=S.jf.filter(j=>j.k!=k);S.jf.push({k,vs:x,q:now+12});rel(k,8);lg(n+'、'+xn+'との共同戰線に應ず。戰時は'+xn+'の戰力を削ぐ')}
+  else{rel(k,-4);lg(n+'、'+xn+'との共同戰線を見送る')}}
+ fin()}
+function envoyPanel(){const ks=Object.keys(S.rel).filter(k=>k!=P&&k!='ind'&&(NN[k]||ON[k])),now=S.y*4+S.q,ok=can({fund:2})?'':' disabled';
+ const opts='<option value="">相手國…</option>'+ks.map(x=>`<option value="${x}">${tN(x)}</option>`).join('');
+ return`<h2>親書</h2><p class="p">同盟國にも非同盟國にも送れる。親善は關係を高め、脅迫は譲歩を迫り、共同戰線は相手國の名を挙げて對應を練る。關係が高いほど應じやすく、親善が續くと次回の會談が開かれ、會談中は合意に至りやすい。1通は帑2・行動1。</p>`+ks.map(k=>{const m=mtgOn(k)?'　會談中':S.mtg&&S.mtg[k]!=null&&now<S.mtg[k]?'　會談予定':'';
+  return`<div class="row"><div><span class="nm">${tN(k)}</span><div class="meta">關係 ${Math.round(S.rel[k]||0)}${m}</div></div><div class="bt"><button class="sm" data-a="lt:${k}:good"${ok}>親善</button><button class="sm" data-a="lt:${k}:threat"${ok}>脅迫</button><select id="ej${k}" aria-label="共同戰線の相手">${opts}</select><button class="sm" data-a="lt:${k}:joint"${ok}>共同戰線</button></div></div>`}).join('')}
+function postEcon(v){if(!can({})||(S.pe!=null&&S.y*4+S.q-S.pe<8))return;S.pe=S.y*4+S.q;S.ap--;if(v=='dem'){S.fund+=15;S.army=Math.round(S.army*.9);up('stab',3);lg('軍需から民需へ轉換す')}else{S.fund+=30;up('stab',-2);lg('復興公債を發行す')}fin()}
+function postPanel(){const cd=S.pe!=null&&S.y*4+S.q-S.pe<8,off=cd||!can({})?' disabled':'';let h='<h2>戰後の國際秩序</h2>';
+ if(!S.un){h+=`<p class="p">國際連合の本部地を戰勝國の合意で定める。戰勝國（本國と軍事同盟國）は常任理事國となり、ほかの友好國は加盟國となる。本部地は常任理事國の過半の賛成で決まる（常任理事國 ${victors().length}）。</p><div class="fl">${UNC.map(([k,n])=>`<button class="sm" data-a="unp:${k}"${can({fund:15})?'':' disabled'}>${n}を本部に提案 帑15</button>`).join('')}</div>`}
+ else h+=`<p class="p">國際連合　本部：${UNC.find(x=>x[0]==S.un.hq)[1]}　常任理事國：${S.un.perm.map(tN).join('・')}　加盟國：${S.un.mem.length}</p>`;
+ h+=`<p class="p">${S.ev.bd?'亞阿會議　'+S.ev.bd+'にて開催濟':'亞阿會議の開催地を選ぶ。獨立地の支配と友好國との關係が上がる。'}</p>`+(S.ev.bd?'':`<div class="fl">${BDC.map(([k,n])=>`<button class="sm" data-a="bnd:${k}"${can({fund:8})?'':' disabled'}>${n}で開く 帑8</button>`).join('')}</div>`);
+ h+=`<p class="p">戰後經濟の運營（8季に一度）</p><div class="fl"><button class="sm" data-a="pe:dem"${off}>軍需から民需へ 帑+15・民心+3・軍 −1割</button><button class="sm" data-a="pe:bond"${off}>復興公債 帑+30・民心 −2</button></div>`;
+ return h}
+
+const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+function adEl(r,i){return r.o==P&&(r.id==HM()||isC(i)||r.an||(r.ni&&HSPL.includes(r.id)))}
+function adBase(id){if(AD[id])return AD[id].split(' ');const i=ri(id),r=S.R[i],nm0=RD[i][1].replace(/[・（].*/,''),n=cl(Math.round(r.p/5),1,5);return n==1?[nm0]:['中部','北部','南部','東部','西部'].slice(0,n).map(x=>nm0+x)}
+function adSync(){if(!S.ad){S.ad=[];S.adn=1}const el=new Set(S.R.filter(adEl).map(r=>r.id));S.ad.forEach(d=>d.u=d.u.filter(u=>el.has(u[0])));S.ad=S.ad.filter(d=>d.u.length);const has=new Set(S.ad.flatMap(d=>d.u.map(u=>u[0])));el.forEach(id=>{if(!has.has(id))adBase(id).forEach(n=>S.ad.push({k:S.adn++,n,u:[[id,n]]}))})}
+const adD=k=>S.ad.find(d=>d.k==k);
+function adMerge(){const ds=S.ad.filter(d=>adSel.has(d.k));if(ds.length<2)return;const a=ds[0];a.u=ds.flatMap(d=>d.u);S.ad=S.ad.filter(d=>d===a||!adSel.has(d.k));adSel.clear();lg('行政區を統合：'+a.n+'（'+a.u.map(u=>u[1]).join('・')+'）');sv();rd()}
+function adSplit(k,m){const d=adD(k);if(!d)return;const sf=m=='m'?['北','南']:m=='r'?['東','西']:['北東','北西','南東','南西'];let parts;
+ if(d.u.length>=2){const g=Math.min(sf.length,d.u.length);parts=sf.slice(0,g).map((x,j)=>({k:S.adn++,n:d.n+x,u:d.u.filter((u,i)=>i%g==j)}))}
+ else{const[rid,un]=d.u[0];parts=sf.map(x=>{const nn=un+x+'部';return{k:S.adn++,n:nn,u:[[rid,nn]]}})}
+ S.ad.splice(S.ad.indexOf(d),1,...parts);adO=0;lg('行政區を分割：'+d.n+' → '+parts.map(p=>p.n).join('・'));sv();rd()}
+function adDet(k,ui){const d=adD(k);if(!d||d.u.length<2)return;const u=d.u.splice(ui,1)[0];S.ad.splice(S.ad.indexOf(d)+1,0,{k:S.adn++,n:u[1],u:[u]});lg(u[1]+'を'+d.n+'より切り離す');sv();rd()}
+function adMove(k,ui,k2){const d=adD(k),t=adD(k2);if(!d||!t||d===t)return;const u=d.u.splice(ui,1)[0];t.u.push(u);if(!d.u.length)S.ad.splice(S.ad.indexOf(d),1);lg(u[1]+'を'+t.n+'へ移す');sv();rd()}
+function adReset(id){S.ad.forEach(d=>d.u=d.u.filter(u=>u[0]!=id));S.ad=S.ad.filter(d=>d.u.length);adSync();lg(RD[ri(id)][1]+'の區割を元に戻す');sv();rd()}
+function adEff(){adSync();const cnt={},mix={};S.ad.forEach(d=>{const rr=[...new Set(d.u.map(u=>u[0]))];rr.forEach(id=>cnt[id]=(cnt[id]||0)+1);if(rr.length>1&&rr.some(id=>id==HM()||rs(id).ni))rr.forEach(id=>{if(id!=HM()&&!rs(id).ni)mix[id]=(mix[id]||0)+1})});
+ let fd=0;for(const id in cnt){const r=rs(id),n0=adBase(id).length,n=cnt[id];if(id!=HM()&&!r.ni)r.c=cl(r.c+(mix[id]||0)+(n>n0?Math.min(.6,(n/n0-1)*.3):-(1-n/n0)*.3),0,100);fd+=n>n0?-.2*(n-n0):.1*(n0-n)}S.fund+=fd}
+function adPanel(){adSync();const el=S.R.filter(adEl);if(!el.find(r=>r.id==adF))adF=HM();const cnt={};S.ad.forEach(d=>new Set(d.u.map(u=>u[0])).forEach(id=>cnt[id]=(cnt[id]||0)+1));
+ const ds=S.ad.filter(d=>d.u.some(u=>u[0]==adF));
+ const svg=k=>`<svg class="sv" viewBox="0 0 200 120"><rect x="4" y="4" width="192" height="112" fill="var(--pn2)" stroke="var(--ln)"/><path class="ln m" d="M4 62 L28 48 L52 68 L78 46 L104 66 L130 47 L156 67 L180 50 L196 60"/><path class="hit" data-a="asp:${k}:m" d="M4 62 L28 48 L52 68 L78 46 L104 66 L130 47 L156 67 L180 50 L196 60"/><path class="ln r" d="M100 4 C76 30,126 44,96 70 S112 100,102 116"/><path class="hit" data-a="asp:${k}:r" d="M100 4 C76 30,126 44,96 70 S112 100,102 116"/><text x="8" y="44">山脈線</text><text x="108" y="112">河川線</text></svg>`;
+ return`<p class="p">行政區は行動を使はずにいつでも改められる。内地の區と外地・併合地を1つの區にまとめると、その地の支配度が毎季+1。區を細かく分ければ支配が上がりやすいが帑がかかり、まとめれば帑が浮くが支配は伸びにくい。區を選んで統合すれば、地域をまたいで1つにできる（例：福岡縣と慶尚南道）。</p>
+<div class="fl">${el.map(r=>`<button class="sm${adF==r.id?' on':''}" data-a="adf:${r.id}">${RD[ri(r.id)][1]} ${cnt[r.id]||0}區</button>`).join('')}</div>
+<div class="fl"><button class="sm r" data-a="adm"${adSel.size>=2?'':' disabled'}>選んだ ${adSel.size} 區を統合</button><button class="sm" data-a="adc"${adSel.size?'':' disabled'}>選擇を解く</button><button class="sm" data-a="adx:${adF}">${RD[ri(adF)][1]}を元の區割に戻す（原 ${adBase(adF).length}區）</button></div>`+
+ ds.map(d=>{const sel=adSel.has(d.k),op=adO==d.k,rr=[...new Set(d.u.map(u=>RD[ri(u[0])][1]))];return`<div class="row"><div><span class="nm">${esc(d.n)}</span><div class="meta">${rr.length>1?'混成 '+rr.join('・')+' ・':''}${d.u.length}地：${esc(d.u.slice(0,6).map(u=>u[1]).join('・'))}${d.u.length>6?'…':''}</div></div><div class="bt"><button class="sm${sel?' on':''}" data-a="ads:${d.k}">${sel?'選擇中':'選ぶ'}</button><button class="sm" data-a="ado:${d.k}">${op?'閉じる':'分割・編成'}</button></div></div>`+(op?`<div class="adp"><div class="meta">線を押すと、その線で區を分けて確定する。</div>${svg(d.k)}<div class="fl"><button class="sm" data-a="asp:${d.k}:m">山脈で南北に</button><button class="sm" data-a="asp:${d.k}:r">河川で東西に</button><button class="sm" data-a="asp:${d.k}:b">山河で四つに</button></div>
+ <div class="fl"><input id="adn${d.k}" value="${esc(d.n)}" maxlength="16" aria-label="區名"><button class="sm" data-a="adr:${d.k}">名稱を改む</button></div>
+ ${d.u.map((u,ui)=>`<div class="row"><div><span class="nm">${esc(u[1])}</span><div class="meta">${RD[ri(u[0])][1]}</div></div><div class="bt">${d.u.length>1?`<button class="sm" data-a="adt:${d.k}:${ui}">切り離す</button>`:''}<select data-mv="${d.k}:${ui}" aria-label="移す先"><option value="">他の區へ移す…</option>${S.ad.filter(x=>x.k!=d.k).map(x=>`<option value="${x.k}">${esc(x.n)}</option>`).join('')}</select></div></div>`).join('')}</div>`:'')}).join('')}
+function lv(k,n=1){S.lq=S.lq||{};(S.lq[k]=S.lq[k]||[0,0,0,0,0,0,0,0,0,0])[0]+=n;S.lt=S.lt||{};S.lt[k]=(S.lt[k]||0)+n}
+/* 投資の効き目は年を經ても減らない（工場の償却は事業の利益で賄ふ）。積み重ねるほど伸びは緩やかに。全ての投資は相乗して稅收・雇用・研究を押し上げる */
+const INV=['kok','fis','fer','elc','ind','com','yak','ika','hea','umi','inf','sei'];
+function ivx(){return INV.reduce((a,k)=>a+L(k),0)}
+function syn(){return 1+.03*Math.sqrt(Math.max(0,ivx()))}
+function lqAge(){for(const k in S.lq){const a=S.lq[k];a.unshift(0);a.length=10;if(!a.some(x=>x))delete S.lq[k]}}
+function lqMig(){if(S.lv){for(const k in S.lv)lv(k,S.lv[k]);delete S.lv}if(S.com){lv('com',S.com);S.com=0}if(S.birth){lv('umi',S.birth/.3);S.birth=0}if(S.mine&&!S.lqm){lv('fer',S.mine)}S.lqm=1;if(!S.lt){S.lt={};for(const k in S.lq||{}){const a=S.lq[k];let v=0;for(let i=0;i<10;i++)v+=(a[i]||0)*(10-i)/10;if(v>0)S.lt[k]=v<=10?v:10*Math.exp(v/10-1)}}}
+function L(k){let v=0;if(S.lt){const T=S.lt[k]||0;v=T<=10?T:10*(1+Math.log(T/10))}else{const a=S.lq&&S.lq[k];if(a)for(let i=0;i<10;i++)v+=a[i]*(10-i)/10}return v+(S.pm&&S.pm[k]||0)*.5}
+function lvP(k){S.pm=S.pm||{};S.pm[k]=(S.pm[k]||0)+1}
+function gmul(){return Math.min(2,1+.02*(L('inf')+L('sei')))}
+function pgr(fam){const t=S.tech;return Math.min(3.85,gmul()*(1.2+Math.min(3,L('umi')*.3)+L('com')*.05+(S.ken-55)*.03+(S.ika-50)*.006+(t.med?.3:0)-(fam?2.5:0)+.03*L('kok')+.02*L('fer')+.03*L('yak')+.03*L('hea')+.03*L('ika')))}
+function homeNi(){S.R.forEach(r=>{if(!r.ni&&r.o==P&&r.or==P&&HSPL.includes(r.id))r.ni=1})}
+/* 舊い保存：新しい地は親の地の所有者・人口比・邦人を引き繼ぐ */
+function splitMig(O){const B=Object.fromEntries(S.R.map(r=>[r.id,r])),RI=Object.fromEntries(RD.map((d,i)=>[d[0],i])),base={};Object.values(SPLIT).forEach(pa=>{if(O[pa])base[pa]=O[pa].p});const k13=!!O.hkd;let ch=0;Object.entries(SPLIT).forEach(([id,pa])=>{if(O[id]||!O[pa])return;const r=B[id],q=B[pa],d=RD[RI[id]];ch=1;const np=Math.min(k13&&!SPR.has(id)?d[3]:d[3]*base[pa]/(SPLIT0[pa]||1),q.p*.9),p0=q.p;r.p=np;q.p=p0-np;r.o=d[2]==RD[RI[pa]][2]?q.o:d[2];r.c=r.o==q.o?q.c:0;if(q.jp){r.jp=q.jp*np/p0;q.jp-=r.jp}else r.jp=0});if(ch&&S.pl=='jp'&&!O.hkd)S.ad=null}
+function isI(o){return o=='ind'||(typeof o=='string'&&o.startsWith('ind_'))}
+NN.ind_wjw=ON.ind_wjw='汪兆銘政權';
+/* 汪兆銘政權（南京國民政府、1940年3月）：帝國占領下の支那の地（滿洲・内蒙古を除く）を委ねる */
+function frFall(){if(P=='fr'||P=='de')return;const a=rs('als'),n=rs('nce');let t=[];if(a&&a.o=='fr'){a.o='de';t.push('アルザス・ロレーヌは獨逸')}if(n&&n.o=='fr'){n.o='it';t.push('ニース・サヴォワは伊太利')}if(t.length)lg(t.join('、')+'に割讓さる')}
+function deFall(){if(P=='de')return;const t=[];[['kbg','su','ケーニヒスベルクは魯西亞'],['epr','pol','東普魯西南部は波蘭'],['sil','pol','シュレージエンは波蘭'],['pom','pol','ポンメルンは波蘭']].forEach(([id,to,m])=>{const r=rs(id);if(r&&r.o=='de'){r.o=to;t.push(m)}});if(t.length)lg(t.join('、')+'に割讓さる')}
+function wangSet(){const rs0=S.R.filter(r=>r.o==P&&CNG.includes(r.or)&&!['man','umo'].includes(r.id));rs0.forEach(r=>{r.o='ind_wjw';r.c=Math.max(r.c,60)});S.rel.ind_wjw=100;if(S.E.cn!=null)S.E.cn=Math.max(5,S.E.cn-5);rel('us',-5);lg('汪兆銘政權（南京國民政府）成立。占領地'+rs0.length+'地を委ね、支那軍の一部これに歸順す')}
+function indK(id){const k='ind_'+id;const d=RD.find(x=>x[0]==id);ON[k]=NN[k]=(d?d[1]:id)+'獨立政府';if(!S.rel)S.rel={};if(S.rel[k]==null)S.rel[k]=100;return k}
+function indSync(){S.R.forEach(r=>{if(isI(r.o))indK(r.id)});delete S.rel.ind}
+/* 電力：研究で1基あたりの電力が增え、自動整備を入れると不足分を毎季建てる */
+function eY(){const t=S.tech||{};return Math.round(60*(1+(t.pw1?.5:0)+(t.pw2?.5:0))*(t.nuc?2:1))}
+function eAuto(now){if(!S.eAuto)return;const c=calc(),need=c.elecD*1.03-(S.elec+c.gas*15);if(need<=0)return;const y=eY(),n=Math.min(Math.ceil(need/y),Math.floor((S.fund-10)/10),Math.floor((S.iron||0)/2));if(n<=0){if(now)toast('帑か鐵が足りず電源を建てられない');return}S.fund-=10*n;S.iron-=2*n;S.elec+=y*n;lg('電源を自動整備 '+n+'基（電力 +'+f(y*n)+'萬瓩・帑 −'+10*n+'・鐵 −'+2*n+'）');if(now)toast('電源 '+n+'基を建てた')}
+/* 本國の地（首府から分けた地とその下の地）は最初から内地：併合・獨立の對象にしない */
+function homeR(id){if(P=='jp'&&(id=='kar'||id=='nan'))return true;let x=id;for(let k=0;k<8&&x;k++){if(x==HM())return true;x=SPLIT[x]}return false}
+function homeFix(){if(!S||!S.R)return;S.R.forEach(r=>{if(r.o==P&&r.id!=HM()&&!r.ni&&homeR(r.id)){r.ni=1;r.c=Math.max(r.c||0,90)}})}
+/* 一度きりの調整：①他國の人口が史實の伸びを超えてゐた分を戻す ②國債なしの「預け」が國帑から引かれてゐなかった分と、その利子を取り消す */
+function kjN(s){if(/^\d+$/.test(s))return +s;const D='〇一二三四五六七八九';let n=0,c=0;for(const ch of s){if(ch=='十'){n+=(c||1)*10;c=0}else{const d=D.indexOf(ch);if(d>=0)c=c*10+d}}return n+c}
+function dsParse(x){const m=x.match(/^(昭和)?([〇一二三四五六七八九十\d]+)年(正月|四月|七月|十月)/);if(!m)return null;return (kjN(m[2])+(m[1]?1925:0))*4+QN.indexOf(m[3])}
+/* 東京に埼玉・神奈川を含める（東京府＋埼玉＋神奈川、北關東＝茨城・栃木・群馬、房総＝千葉）：關東の人口を一度だけこの比で分け直す */
+/* 一度きり：大和民族の数がその地の人口を超えてゐた分を改める（現地の人は少なくとも一割残る） */
+function fxJ(){if(!S||S.fxJ)return;try{rs;RD}catch(e){return}S.fxJ=1;S.R.forEach(r=>{if(r.jp>r.p&&!r.ni&&r.id!=HMO[P]){r.jp=r.p;if(r.j2>r.jp)r.j2=r.jp}})}
+/* 前版で九割に抑えた地は、通婚が進んでゐたものとして全て大和民族に戻す */
+function fxJ2(){if(!S||S.fxJ2)return;try{rs;RD}catch(e){return}S.fxJ2=1;if(!S.fxJ)return;S.R.forEach(r=>{if(r.p>0&&r.jp>0&&Math.abs(r.jp/r.p-.9)<1e-6&&!r.ni&&r.id!=HMO[P])r.jp=r.p})}
+function fxK2(){if(!S||S.fxK2)return;try{rs;RD}catch(e){return}S.fxK2=1;const a=rs('nai'),b=rs('tyo'),c=rs('bsu');if(!a||!b||!c||a.o!=b.o||a.o!=c.o)return;const T=a.p+b.p+c.p,J=(a.jp||0)+(b.jp||0)+(c.jp||0);[[a,3.85],[b,9.75],[c,1.5]].forEach(([r,w])=>{r.p=T*w/15.1;r.jp=J*w/15.1})}
+function fxK(){if(!S||S.fxK)return;try{rs;RD}catch(e){return}S.fxK=1;const a=rs('nai'),b=rs('tyo'),c=rs('bsu');if(!a||!b||!c||b.p>=3||a.o!=b.o||a.o!=c.o)return;const T=a.p+b.p+c.p,J=(a.jp||0)+(b.jp||0)+(c.jp||0);[[a,3.85],[b,9.75],[c,1.5]].forEach(([r,w])=>{r.p=T*w/15.1;r.jp=J*w/15.1})}
+function fxJ3(){if(!S||S.fxJ3)return;try{rs;RD}catch(e){return}S.fxJ3=1;let n=0;S.R.forEach(r=>{if(r.o!=P||r.ni||r.id==HMO[P]||!(r.jp>0))return;const lo=Math.min(r.p*.98,l0of(r)*cohAt(yrs0())),loc=r.p-r.jp;r.lo=lo;if(loc<lo){r.jp=r.p-lo;if(r.j2>r.jp)r.j2=r.jp;r.yam=0;n++}});if(n)lg('記録の調整：開始前に生まれた現地の人は大和民族に數へない（'+n+'地）')}
+function fx24(){fxK();fxK2();fxJ2();fxJ();fxJ3();if(!S||S.fx24)return;try{BG;HG;HP;RD;QN}catch(e){return}S.fx24=1;const yr=Math.max(0,S.y+S.q/4-(S.sc==1930?1930:1937));if(yr<1)return;let pc=0;
+ S.R.forEach((r,i)=>{if(!BG[r.o]||r.o==P)return;const e=RD[i][3]*Math.pow(1+ngr(r.o)/100,yr);if(r.p>e*1.05){pc+=r.p-e;r.p=e}});
+ if(S.NH)for(const o in S.NH){const e=(HP[o]||0)*Math.pow(1+ngr(o)/100,yr);if(S.NH[o]>e*1.05){pc+=S.NH[o]-e;S.NH[o]=e}}
+ let dep=0,int=0;const now=S.y*4+S.q;(S.log||[]).forEach(x=>{const m=x.match(/　國債なし、([\d.]+)(兆圓|億圓)を預けて利子を得る/);if(!m)return;const a=+m[1]*(m[2]=='兆圓'?1e4:1),t=dsParse(x);dep+=a;if(t!=null)for(let k=t;k<now;k++){const y=Math.floor(k/4);int+=a*(y<=1925?5:y>=1940?3.5:5-(y-1925)*.1)/400}});
+ const take=Math.min(S.ivest||0,dep);if(take>0){S.ivest-=take;const back=Math.min(int,Math.max(0,S.fund));S.fund-=back;lg('記録の調整：國帑から引かれずに預けられてゐた '+yen(take)+' と、その利子 '+yen(back)+' を取り消した')}
+ if(pc>1)lg('記録の調整：列國の人口を史實の伸びに戻した（計 '+Math.round(pc*100).toLocaleString('ja-JP')+'萬人減）')}
+function relFix(){homeFix();fx24();indSync();['che','tib','prs','swe'].forEach(k=>{if(S.rel[k]==null)S.rel[k]=10});if(P=='jp')return;['jp','de','it','gb','fr','us','su','cn','tr','es','th'].forEach(k=>{if(k!=P&&S.rel[k]==null)S.rel[k]=0});delete S.rel[P]}
+function plInit(){S.ind=100;S.elec=700;const c=calc();S.ind=Math.round(BG[P]*.568*(S.sc==1930?G30[P]:1)/((c.pe/87)*(.7+.3*S.stab/100)));S.elec=Math.round(S.ind*6.5+S.arms*8)}
+function cnHold(){return S.R.filter(r=>CNG.includes(r.o)&&!isI(r.o)).length}
+/* 史實：支那・魯西亞は米英の援助で抗戰を續けた。援助が續く間は降伏しない（支那は九割の地を失へば崩れる、魯西亞は首都を失へば崩れる） */
+function cn0(){return Math.max(1,S.R.filter(r=>CNG.includes(r.or)).length)}
+function cnOK(){return !aidOn('cn')||cnHold()<=cn0()*.1}
+function canSur(x){if(x=='cn')return cnOK();if(x=='su')return !aidOn('su')||rs(HMO.su).o!='su';return true}
+const AIDR=['cn','su'];
+function aidOn(x){return ((S.aidR||{})[x]||0)>.05}
+function aidFight(x){const v=S.ev,d=S.y*4+S.q;if(x==P)return Object.keys(S.war).some(k=>S.war[k]&&['de','jp','it'].includes(k));if(S.war[x])return true;if(x=='su'){if(P=='jp')return !!v.barb&&!v.dec&&!v.suc;if(P=='us')return d>=1941*4+2&&!v.suc2}return false}
+function aidFrom(k,x){if(k==P||k==x||S.E[k]==null||S.E[k]<=20)return false;if(S.ev['v_'+k]||(k=='us'&&S.ev.usw))return false;if(x==P)return !S.war[k]&&(S.rel[k]||0)>=0;if(S.war[x]&&(hasT(k,'all')||(S.rel[k]||0)>=50))return false;return true}
+/* 援蔣ルート：廣東・香港、佛印、緬甸を攻め手が押さへると細る（ハンプ空輸で一割五分は殘る） */
+function aidRoute(x){const h=id=>{const r=rs(id);return r&&r.o==P&&S.war[x]};if(x=='su')return h('enk')?.7:1;return Math.max(.15,1-(h('knn')||h('hkg')?.2:0)-(h('fin')?.25:0)-(h('bir')||h('kmg')?.35:0))}
+/* 援助國の餘力：米は100・80・60、英は40・30・20を下回ると援助を半分・四分の一・停止 */
+function aidScale(k){const e=S.E[k],t=k=='us'?[100,80,60]:[40,30,20];return e<t[2]?0:e<t[1]?.25:e<t[0]?.5:1}
+function aidFlow(){const d=S.y*4+S.q;S.aidR=S.aidR||{};const prev={...S.aidR};if(P!='us'&&S.E.us!=null&&S.y>=1942&&!S.ev.usw&&(S.war.us||S.ev.ue||S.ev.usj||S.ev.us2))S.E.us=Math.min(300,S.E.us+4);AIDR.forEach(x=>{S.aidR[x]=0;if(x!=P&&S.E[x]==null)return;if(!aidFight(x)||d<(x=='cn'?1938*4:1941*4+2))return;const rt=aidRoute(x);let tot=0;['us','gb'].forEach(k=>{if(!aidFrom(k,x))return;let a=(k=='us'?(S.y>=1942?3:2):1)*rt*aidScale(k);if(x!=P)a=Math.min(a,(x=='su'?100:150)-S.E[x]);if(a<=0)return;S.E[k]-=a;if(x==P)S.army+=a;else S.E[x]+=a;tot+=a});S.aidR[x]=tot;if(x!=P&&tot<=.05)S.E[x]=Math.max(5,S.E[x]-2);if(tot>.05&&!(prev[x]>.05))lg('米英、'+SN(x)+'へ援助を始む（毎季 戰力 +'+tot.toFixed(1)+'、米英は同じだけ減る）');if(tot<=.05&&prev[x]>.05)lg(SN(x)+'への米英の援助途絶え、繼戰能力衰ふ')});['us','gb'].forEach(k=>{if(k==P||S.E[k]==null||S.war[k])return;const base=k=='us'?100:60;if(S.E[k]<base)S.E[k]=Math.min(base,S.E[k]+(k=='us'?2.5:1.2))});}
+function decl2(x){if(!x||S.war[x])return;if(x=='cn'&&S.cn0==null)S.cn0=cnHold();tWar(x);S.war[x]=1;S.rel[x]=-100;S.wq=S.wq||{};S.wq[x]=S.y*4+S.q;S.Eb=S.Eb||{};if(S.Eb[x]==null)S.Eb[x]=S.E[x];lg(SN(x)+'と開戰')}
+function endW2(x){if(S.gue)S.gue[x]=0;S.war[x]=0;S.offer[x]=0;S.rel[x]=-20;up('stab',6);const n=S.R.filter(r=>r.o==P&&wk(r.or)==x).length;lg(SN(x)+'との戰終はる。占領地'+n+'を保つ')}
+function dipB(k){if(atW(k))return'';const n=NN[k]||ON[k]||k;return`<button class="act" data-a="dp:${k}"${can({fund:4})&&S.rel[k]<100?'':' disabled'}><b>對${n}協調</b><span>關係 +15</span><i>帑4</i></button>`}
+function dip(k){if(atW(k)||!spend({fund:4}))return;S.ap--;rel(k,15);fin()}
+function war2(){const W=S.war,E=S.E;S.wt2=S.wt2||{};
+ if(Object.values(W).some(v=>v)&&Math.random()<.08*(1-S.ika/200)*(S.medi>0?.5:1)){S.army*=.96;up('ken',-2);lg('戰地に疫病流行')}
+ natInit();PS().sl.forEach(([x])=>{if(!W[x]||S.offer[x])return;const t=S.wt2[x]=(S.wt2[x]||0)+1,nav=NAV.includes(x),ep=(E[x]||50)*qm(x)*eqO(x),my=nav?(lnP()+nvP())/2:lnP(),a=rn(),b=rn();
+  S.army=Math.max(0,S.army-ep*.025*a);if(nav){S.navy=Math.max(0,S.navy-ep*.02*a);S.air=Math.max(0,S.air-ep*.01*a)}
+  const g=x=='us'?(2+Math.min(10,t*.5))*(gnpO('us')/450)*(S.ev.jpw?.7:1)*.68:1.2*af(x)*eqO(x);
+  E[x]=cl((E[x]||50)-my*.03*b+g,5,x=='us'?300:200);
+  if(ep>my*1.2&&Math.random()<.3*af(x)){const h=S.R.filter((r,i)=>r.o==P&&(wk(r.or)==x||(RD[i][7]||HM()).split('|').some(id=>wk(rs(id).o)==x))).sort((p,q)=>(p.id==HM())-(q.id==HM())||p.c-q.c);
+   const r0=h[0],dm=r0&&(r0.id==HM()?2:isC(S.R.indexOf(r0))?1.4:1);if(h.length&&ep>my*dm*1.2){const r=h[0];r.o=wk(r.or)==x?r.or:x;r.c=0;r.ni=0;lg(SN(x)+'軍、'+nm(r)+'を奪ふ');if(r.id==HM()){up('stab',-30);lg('本國陷落')}}}
+  up('stab',-.4);if(E[x]<2000/(NQ[x]?NQ[x][5]:100)&&!S.offer[x]&&!offCD(x)&&canSur(x)){S.offer[x]=1;lg(SN(x)+'、降伏を申し入る')}});
+ for(const id in S.bk){const i=ri(id),r=S.R[i];if(!atW(r.o)){delete S.bk[id];continue}S.oil=Math.max(0,S.oil-1);const nx=NAV.filter(x=>W[x]).some(x=>(E[x]||0)*qm(x)*eqO(x)*.9>nvP()*1.3);if(nx)S.bk[id]=Math.max(0,S.bk[id]-15);else S.bk[id]+=bks(r,i)*.5;bkc(id)}
+ S.army=Math.max(0,S.army)}
+function gbStory(v,d,E,pc){
+ if(!v.pl&&d>=1939*4+3&&!S.war.de){v.pl=1;if(pc.de&&S.rel.de>=80)lg('獨逸、波蘭に侵攻す。英國は宥和を續け參戰せず');else{decl2('de');lg('獨逸、波蘭に侵攻す。英國、獨逸に宣戰す')}}
+ if(!v.ff&&d>=1940*4+2&&S.war.de){v.ff=1;S.army*=.85;up('stab',-5);lg('佛蘭西降伏、ダンケルクより撤退す。英本國は孤立す');frFall()}
+ if(!v.bob&&d>=1940*4+3&&S.war.de){v.bob=1;if(S.air>=60){up('stab',5);lg('英本土航空戰に勝ち、獨逸の上陸を挫く')}else{up('stab',-8);S.ind=Math.round(S.ind*.93);lg('英本土航空戰に苦戰、工業地帶が爆撃を受く')}}
+ if(!v.jpa&&d>=1941*4+3&&!S.war.jp&&!(pc.jp&&S.rel.jp>=60)){v.jpa=1;decl2('jp');lg('日本、馬來・香港を襲ふ')}
+ if(!v.usj&&d>=1941*4+3&&!S.war.us){v.usj=1;S.rel.us=Math.max(S.rel.us||0,90);lg('米國、參戰す')}
+ if(v.usj){if(S.war.de)E.de=Math.max(5,E.de-1.5);if(S.war.jp)E.jp=Math.max(5,(E.jp||0)-1.2);S.oil+=2;S.mun+=2}
+ if(S.war.de&&E.de<=10&&!S.offer.de){S.offer.de=1;lg('獨逸、降伏を申し入る')}
+ if(S.war.jp&&(E.jp||0)<=10&&!S.offer.jp){S.offer.jp=1;lg('日本、降伏を申し入る')}
+ const cols=S.R.filter(r=>r.o==P&&r.id!=HM()&&!r.ni&&!PS().core.includes(r.id)),ur=1+(d>=1942*4?.6:0)+(Object.keys(S.war).some(k=>S.war[k])?.3:0)+(S.stab<50?.4:0);
+ cols.forEach(r=>{r.c=Math.max(0,r.c-ur);if(r.c<20&&Math.random()<.15){const n=nm(r);r.o=indK(r.id);up('stab',-3);lg(n+'、英國より獨立を宣言す');ntf(n+'、獨立を宣言')}});
+ if(!v.gbw&&cols.some(r=>r.c<35)){v.gbw=1;ntf('植民地に獨立の氣運高まる（支配が20を割ると獨立宣言）')}}
+function world2(){const v=S.ev,d=S.y*4+S.q,E=S.E,pc=pactMap();
+ if(P=='de'){if(!v.us2&&S.war.gb&&d>=1942*4&&!S.war.us&&!pc.us){v.us2=1;decl2('us');lg('米國、英佛を援けて參戰す')}
+  if(!v.su2&&!S.war.su&&!pc.su&&d>=1942*4&&Math.random()<.25){v.su2=1;decl2('su');lg('魯西亞、背後より侵攻す')}
+  if(!v.jpw&&d>=1941*4+3&&S.rel.jp>=50){v.jpw=1;lg('日本、對米英開戰。米英は太平洋にも兵を割く')}
+  if(v.jpw){E.us=Math.max(5,E.us-1.5);E.gb=Math.max(5,E.gb-1)}}
+ if(P=='su'){if(!v.barb2&&d>=1941*4+2&&!S.war.de&&!(pc.de&&S.rel.de>=80)){v.barb2=1;decl2('de');S.army*=.85;lg('獨逸、不意に侵攻す。大祖國戰爭始まる')}
+  if(!v.jp2&&d>=1941*4+2&&!S.war.jp&&!pc.jp&&Math.random()<.2){v.jp2=1;decl2('jp');lg('日本、北進す')}
+  if(S.war.de){E.de=Math.max(5,E.de-(d>=1940*4?1.5:0)-(d>=1942*4?2.5:0));if(d>=1942*4&&S.rel.us>=0){S.oil+=4;S.mun+=3}}}
+ if(P=='us'){if(!v.ph&&d>=1941*4+3&&!S.war.jp&&!pc.jp){v.ph=1;decl2('jp');S.navy*=.8;lg('日本、眞珠灣を奇襲す')}
+  if(!v.dw&&S.war.jp&&!S.war.de&&!pc.de){v.dw=1;decl2('de');lg('獨逸、米國に宣戰す')}
+  if(d>=1941*4+2&&!v.suc2&&E.de>5){E.su=Math.min(100,E.su-4*E.de/100+1+(S.war.de?1:0));E.de=Math.max(5,E.de-3*E.su/100-(S.war.de?1.5:0));if(E.su<=15){v.suc2=1;lg('魯西亞、獨逸に屈す')}}
+  if(S.war.de&&E.de<=10&&!S.offer.de){S.offer.de=1;lg('獨逸、降伏を申し入る')}}
+ if(P=='gb')gbStory(v,d,E,pc)}
+function GL(){if(P=='jp')return G;return[['ab','原子爆彈完成','核分裂研究を經て原爆を得る',()=>S.tech.ab],['p1','本國人口一億','',()=>naiP()>=100],['p2','本國人口二億','',()=>naiP()>=200],['rk','國力第一位','國力番付の首位に立つ',()=>rkL(calc()).findIndex(x=>x[2])==0]].concat(PS().sl.map(([x,n])=>['v_'+x,n+'に勝利',n+'を降伏させる',()=>S.ev['v_'+x]])).concat([['life','二〇二七年まで國を保つ','',()=>S.over==2]])}
+function lqView(){const N={kok:'國土開發',fis:'海洋開發',fer:'資源開發',elc:'電源開發',ind:'工業振興',com:'商業振興',yak:'藥品生産',ika:'醫學研究',hea:'衛生體育',umi:'人口施策',inf:'情報',sei:'総動員'};const ks=Object.keys(N).filter(k=>L(k)>0);return '<br>效き目（十割＝1回分）：'+(ks.length?ks.map(k=>N[k]+' '+L(k).toFixed(1)).join('・'):'なし')}
+const invK=new Set();let lastTab='';
+const qa=q=>document.querySelectorAll?[...document.querySelectorAll(q)]:[];
+function keepSc(){return{t:lastTab,y:typeof scrollY=='number'?scrollY:0,s:qa('#pn .sc').map(e=>e.scrollTop)}}
+function restSc(k){const same=k.t==tab;lastTab=tab;if(!same)return;qa('#pn .sc').forEach((e,i)=>{if(k.s[i]!=null)e.scrollTop=k.s[i]});if(typeof scrollY=='number'&&Math.abs(scrollY-k.y)>1)scrollTo(0,k.y)}
+function offCD(x){return S.offAsk&&S.offAsk[x]!=null&&S.y*4+S.q-S.offAsk[x]<4}
+function chkSur(){if(S.dc||S.over)return;const x=Object.keys(S.offer||{}).find(k=>S.offer[k]&&S.war[k]);if(x){S.surx=x;S.dc='sur'}}
+function dvOK(i){const d=DD[i],r=rs(d[2]);return S.D[i].v<1&&(!d[4]||S.tech[d[4]])&&r.o==P&&r.c>=20}
+const TT=[['trd','通商條約',10,'毎季 帑+2・油+1・鐵+1'],['nap','不可侵條約',25,'相手からの宣戰を防ぐ'],['neu','中立條約',40,'不可侵に加へ、敵側に立たない'],['all','軍事同盟',65,'共に戰ひ敵戰力を削る・相手の地を足場にできる・研究+1・相手の敵國との關係 −15']],
+ENM={de:['gb','fr','su','us'],it:['gb','fr'],jp:['us','gb','su','cn'],su:['de','jp'],us:['jp','de'],gb:['de','it','jp'],fr:['de','it'],nl:['jp'],cn:['jp'],th:[],tr:[],es:[],pt:[]};
+const tN=k=>NN[k]||ON[k]||k;
+function hasT(k,t){const x=S.tr&&S.tr[k];return!!(x&&x[t])}
+function pactMap(){const m={};for(const k in(S.tr||{})){const x=S.tr[k];if(x.nap||x.neu||x.all)m[k]=1}return m}
+function tSync(){S.tr=S.tr||{};if(S.pact){for(const k in S.pact)(S.tr[k]=S.tr[k]||{}).nap=1;delete S.pact}if(P=='jp'){const st=(k,t)=>(S.tr[k]=S.tr[k]||{})[t]=1;if(S.al.th)st('th','all');if(S.al.ax){st('de','all');st('it','all')}if(S.neu)st('su','neu')}}
+function tMap(k,t,on){if(P!='jp')return;if(k=='th'&&t=='all')S.al.th=on;if(k=='de'&&t=='all')S.al.ax=on;if(k=='su'&&t=='neu')S.neu=on}
+function tAcc(k,t){if(hasT(k,t)||atW(k))return 0;const thr=TT.find(x=>x[0]==t)[2],r=S.rel[k]||0;if(r<thr-20)return 0;return cl(.25+(r-thr)/50+S.inf/1000+S.kyo/2000+(mtgOn(k)?.15:0),0,.95)}
+function tAdd(k,t){S.tr=S.tr||{};(S.tr[k]=S.tr[k]||{})[t]=1;rel(k,5);tMap(k,t,1);if(t=='all')(ENM[k]||[]).forEach(e=>{if(e!=P&&S.rel[e]!=null)rel(e,-15)});lg(tN(k)+'と'+TT.find(x=>x[0]==t)[1]+'を結ぶ')}
+function tProp(k,t){const p=tAcc(k,t);if(!p||!spend({fund:3}))return;S.ap--;if(Math.random()<p)tAdd(k,t);else{rel(k,-3);lg(tN(k)+'、'+TT.find(x=>x[0]==t)[1]+'の申入れを斷る')}fin()}
+function tBrk(k,t){if(!hasT(k,t))return;delete S.tr[k][t];tMap(k,t,0);rel(k,-20);up('stab',-2);lg(tN(k)+'との'+TT.find(x=>x[0]==t)[1]+'を破棄す');fin()}
+function tWarK(k){const x=S.tr&&S.tr[k];if(!x||!Object.keys(x).length)return;Object.keys(x).forEach(t=>tMap(k,t,0));S.tr[k]={};Object.keys(S.rel).forEach(o=>{if(o!=k)rel(o,-5)});up('stab',-5);lg(tN(k)+'との條約を破りて開戰す。列國の信用を失ふ')}
+function tWar(x){Object.keys(S.tr||{}).forEach(k=>{if(k==x||wk(k)==x)tWarK(k)})}
+function allyHelp(){Object.keys(S.tr||{}).forEach(k=>{if(!hasT(k,'all')||atW(k))return;Object.keys(S.war).forEach(x=>{if(S.war[x]&&x!=k&&wk(k)!=x&&S.E[x]!=null)S.E[x]=Math.max(5,S.E[x]-1.2*(NQ[k]?qm(k):1))})})}
+function tAI(){if(S.dc||Math.random()>.15)return;const ks=Object.keys(S.rel).filter(k=>k!=P&&!atW(k));for(const k of ks.sort(()=>Math.random()-.5)){const r=S.rel[k]||0,t=[...TT].reverse().find(x=>!hasT(k,x[0])&&!(x[0]!='trd'&&(hasT(k,'all')||(x[0]=='nap'&&hasT(k,'neu'))))&&r>=x[2]+15);if(t){S.prop={k,t:t[0]};S.dc='prop';return}}}
+function tPanel(){S.tr=S.tr||{};const ks=Object.keys(S.rel).filter(k=>k!=P);if(!ks.includes(dpS))dpS=ks[0];const k=dpS,w=atW(k);
+ return`<h2>條約</h2><p class="p">申入れは行動1つと帑3。受諾の見込みは關係・情報・協調で決まり、斷られると關係 −3。條約を結んだ相手に宣戰すると條約は破れ、民心と列國の信用を失ふ。相手から申入れが來ることもある。</p>
+ <div class="fl">${ks.map(x=>`<button class="sm${x==k?' on':''}" data-a="dps:${x}">${tN(x)}${Object.keys(S.tr[x]||{}).length?' ◆':''}</button>`).join('')}</div>
+ <div class="adp"><div><span class="nm">${tN(k)}</span> <span class="meta">關係 ${Math.round(S.rel[k]||0)}${w?' ・交戰中':''}</span></div>${TT.map(([t,n,thr,ds])=>{const has=hasT(k,t),p=tAcc(k,t);return`<div class="row"><div><span class="nm">${n}</span><div class="meta">${ds}${has?' ・締結中':' ・關係'+thr+'前後から'}</div></div><div class="bt">${has?`<button class="sm r" data-a="tbk:${k}:${t}">破棄</button>`:`<button class="sm" data-a="tpr:${k}:${t}"${!w&&p>0&&can({fund:3})?'':' disabled'}>申入れ 見込み${Math.round(p*100)}%</button>`}</div></div>`}).join('')}</div>`}
+function dev(i){const x=S.D[i];invK.add(i);if(x.v>=1||!spend({fund:10,iron:2}))return;x.v=Math.min(1,Math.round((x.v+.35)*100)/100);S.ap--;lg(DD[i][1]+'を開發（'+Math.round(x.v*100)+'%）');fin()}
+function bombP(x){return Math.max(.05,Math.min(.95,S.air/(S.air+(S.E[x]||0)*1.5)))}
+let bm={x:null,t:null};
+function bfsH(a,b){if(a==b)return 0;const seen={[a]:0};const q=[a];while(q.length){const n=q.shift();const adj=(RD[ri(n)][7]||'').split('|').filter(Boolean);for(const m of adj){if(seen[m]!=null)continue;seen[m]=seen[n]+1;if(m==b)return seen[m];q.push(m)}}return 99}
+/* 制空権：敵の航空力（國力の推定）が我が航空力を上回るとき敵が制空権を握る */
+function enemyAir(x){return x&&S.war[x]?(S.E[x]||0)*.6>S.air:false}
+function bombOpts(t){const tr=rs(t),tx=tr&&tr.o,lost=enemyAir(tx);const ally=Object.keys(S.tr||{}).filter(k=>hasT(k,'all')&&!S.war[k]&&k!=P);const navyOK=S.navy>=40;
+ return S.R.filter(r=>r.o==P||ally.includes(r.o)).map(r=>{const h=bfsH(r.id,t),isAl=r.o!=P;if(isAl&&h>=3&&!navyOK)return null;let p=h<=1?.75:Math.max(.05,.75-.15*(h-1));if(h>=3&&!navyOK)p*=.15;p=lost?.97:.03;return{o:r.id,h,ally:isAl,p}}).filter(Boolean)}
+function bombGo(t,o){const r=rs(t),x=bm.x||(r&&r.o);const op=bombOpts(t).find(q=>q.o==o);if(!op||!S.bomb||!can({})||!S.war[x])return;S.ap--;
+ if(Math.random()>op.p){S.air=Math.max(0,S.air-5);lg('原爆搭載機、'+RD[ri(o)][1]+'から'+RD[ri(t)][1]+'へ投下、迎撃され失敗（在庫は減らず）');bm={x:null,t:null};fin();return}
+ S.bomb--;const en=NQ[x]?NQ[x][5]:50;S.E[x]=Math.max(5,(S.E[x]||0)*Math.min(.9,.35+en/400));r.p*=.6;r.c=Math.max(0,r.c-40);S.bshock=S.bshock||{};S.bshock[x]=S.y*4+S.q;up('stab',5);
+ lg('原子爆彈を'+RD[ri(t)][1]+'に投下（'+(op.ally?'同盟國':'自領')+'より）。'+SN(x)+'は戰意を失ふが、持久力により直ぐには降伏せず');bm={x:null,t:null};fin()}
+function bomb(x){bm={x,t:null};rd()}
+function bombPlanner(x){const ts=candOf(x);let h='<div class="rep"><b>原爆の投下先（'+SN(x)+'）</b><div class="fl">'+ts.map(id=>'<button class="sm'+(bm.t==id?' r':'')+'" data-a="bmt:'+id+'">'+RD[ri(id)][1]+'</button>').join('')+'</div>';
+ if(bm.t&&ts.includes(bm.t)){const ops=bombOpts(bm.t);h+='<p class="p one">投下元を選ぶ（距離が遠いほど難しい。海軍力40未満では同盟國から遠距離は届かず、自領からは成功率が極端に下がる）</p><div class="fl">'+(ops.length?ops.map(o=>'<button class="sm" data-a="bmo:'+o.o+'">'+RD[ri(o.o)][1]+'（'+(o.ally?'同盟國':'自領')+'・'+o.h+'地先）成功率'+Math.round(o.p*100)+'%</button>').join(''):'<p class="p one">出撃できる地がありません</p>')+'</div>'}
+ return h+'<div class="fl"><button class="sm" data-a="bmx">閉じる</button></div></div>'}
+function war(){const W=S.war,E=S.E;
+ if(Object.values(W).some(v=>v)&&Math.random()<.08*(1-S.ika/200)*(S.medi>0?.5:1)){S.army*=.96;up('ken',-2);lg('戰地に疫病流行')}
+ if(W.cn){if(E.cn<100)E.cn=Math.min(100,E.cn+.3*af('cn'));S.army-=1.5*(1-S.ika/300);up('stab',-.4);const h=S.R.filter(r=>r.o==P&&r.or=='cn'&&r.c<30);
+  if(h.length&&Math.random()<.12*af('cn')){h[0].o='cn';h[0].c=0;lg('支那軍、'+nm(h[0])+'を奪回')}
+  if(!S.R.some(r=>r.o=='cn')){const cq=rs('jyu');if(cq&&cq.o!=P&&CNG.includes(cq.o)){cq.o='cn';cq.c=Math.max(cq.c||0,60);lg('國民政府、重慶に遷都し抗戰を續く')}else{endW('cn');S.E.cn=0;lg('支那全土平定。支那事變は終結す')}}}
+ if(W.su){const fe=E.su*(S.ev.barb&&!S.ev.dec?.35:.8)*(S.ev.fe?.6:1)*qm('su')*eqO('su'),jl=lnP()*mf('北');
+  if(jl>fe){E.su=Math.max(5,E.su-(jl-fe)*.03);S.army-=fe*.03}
+  else{S.army-=fe*.05;if(Math.random()<.3*af('su')){const h=S.R.filter(r=>r.o==P&&r.or=='su').sort((a,b)=>a.c-b.c);
+   if(h.length){h[0].o='su';h[0].c=0;lg('魯西亞軍、'+nm(h[0])+'を奪回')}else{const m=rs('man');m.c=Math.max(5,m.c-10);lg('魯西亞軍、滿洲に侵入')}}}
+  up('stab',-.4)}
+ if(W.us){S.wt++;const un=E.us*.9*qm('us')*eqO('us')+(W.gb?E.gb*.4*qm('gb')*eqO('gb'):0),jn=nvP()*mf('洋'),a=rn(),b=rn();
+  S.navy=Math.max(0,S.navy-un*.04*a);S.air=Math.max(0,S.air-un*.02*a);E.us-=jn*.04*b;if(W.gb)E.gb=Math.max(5,E.gb-jn*.015*b);
+  natInit();E.us=Math.max(5,E.us+(2+Math.min(10,S.wt*.5))*(gnpO('us')/450)*(S.ev.ue?.6:1)*(NQ.us[0]+NQ.us[4])/170);
+  if(un>jn*1.5&&Math.random()<.35*af('us')){const h=S.R.filter((r,i)=>r.o==P&&RD[i][6]).sort((x,y)=>(x.or==P)-(y.or==P)||x.c-y.c);
+   if(h.length){const r=h[0];r.o=r.or==P?'us':r.or;r.c=0;lg('米軍、'+nm(r)+'を奪取')}}
+  if(un>jn*2.5){S.ind*=.96;up('stab',-4);lg('米軍機、本土を空襲')}
+  up('stab',-.5)}
+ for(const id in S.bk){const i=ri(id),r=S.R[i];if(!atW(r.o)){delete S.bk[id];continue}S.oil=Math.max(0,S.oil-1);if(W.us&&E.us*.9*qm('us')*eqO('us')>nvP()*1.3)S.bk[id]=Math.max(0,S.bk[id]-15);else S.bk[id]+=bks(r,i)*.5;bkc(id)}
+ ['cn','su','us'].forEach(x=>{if(W[x]&&S.E[x]<2000/NQ[x][5]&&!S.offer[x]&&!offCD(x)&&canSur(x)){S.offer[x]=1;lg(SN(x)+'、降伏を申し入る')}});
+ S.army=Math.max(0,S.army)}
+function euro(){const E=S.E,v=S.ev,d=S.y*4+S.q;if(!v.bal&&d>=1940*4+2){v.bal=1;const t=['est','lat','blt'].map(id=>rs(id)).filter(r=>r&&r.o=='nt');if(t.length){t.forEach(r=>r.o='su');lg('魯西亞、波羅的海三國を併合す（獨ソ密約に基づく）')}}
+ if(!v.eu&&d>=1939*4+3){v.eu=1;E.gb-=20;lg('獨逸、波蘭に侵攻。歐州大戰勃發')}
+ if(!v.fall&&d>=1940*4+2){v.fall=1;E.fr=8;E.nl=10;lg('佛蘭兩國、獨逸に屈す。南方の守り手薄となる');frFall()}
+ if(!v.int&&d>=1941*4){v.int=1;if(S.rel.de>=40||S.inf>=80)lg('密電：獨逸、本年夏に魯西亞侵攻を計畫。極東魯軍は西送の見込み')}
+ if(!v.barb&&d>=1941*4+2){v.barb=1;if(!S.war.su)S.dc='hoku';lg('獨逸、魯西亞に侵攻。獨魯戰開始')}
+ if(S.rel.ind_wjw!=null)S.rel.ind_wjw=100;if(!v.wjw&&d>=1940*4+1&&S.war.cn&&!S.dc&&(rs('sha').o==P||rs('chu').o==P)){v.wjw=1;S.dc='wang'}if(!v.hull&&d>=1941*4+3&&S.emb&&!S.war.us&&!S.dc){v.hull=1;S.dc='hull'}
+ if(!v.ue&&!S.ev.usw&&((S.war.us&&S.al.ax&&d>=1941*4+3)||d>=1943*4)){v.ue=1;lg(S.war.us&&S.al.ax?'獨逸、米國に宣戰。米國は二正面戰爭へ':'米國、歐州戰に參戰')}
+ if(v.barb&&!v.mos&&d>=1941*4+3&&!v.dec&&!v.suc){v.mos=1;if(S.war.su||(!S.neu&&S.army>=150)){E.su-=15;lg('極東魯軍、帝國を恐れて動けず。獨軍、莫斯科に迫る')}else{E.su+=8;v.fe=1;lg('極東魯軍、西へ轉進し莫斯科は持ち堪ふ。極東は手薄となる')}}
+ if(v.barb&&!v.dec&&!v.suc){const gW=v.eu&&!S.ev.usw?.3*cl(E.gb/60,0,1):0,uW=v.ue&&!S.ev.usw?.8*(S.war.us?.6:1):0,es=1/(1+gW+uW),ll=0;S.esh=es;E.su=Math.min(100,E.su-6*E.de/100*Math.sqrt(qm('de')*eqO('de')/(qm('su')*eqO('su')))*es+1+ll-(S.rel.tr>=60?1:0));E.de-=5*E.su/100*Math.sqrt(qm('su')*eqO('su')/(qm('de')*eqO('de')))*es+gW*2+uW*5;
+  if(E.su<=15){v.suc=1;if(S.NI)S.NI.su*=.5;E.su=10;if(S.war.su){S.offer.su=1;lg('魯西亞崩壞。極東魯軍、降伏を申し入る')}else lg('魯西亞崩壞。西比利亞は無主の地となる')}
+  else if(E.de<=0){v.dec=1;if(S.NI)S.NI.de*=.5;E.de=0;E.su=Math.min(100,E.su+40);lg('獨逸降伏。魯西亞の目が東へ向く');deFall()}}
+ if(v.dec&&!v.suc&&!S.war.su&&!v.sudw){const p=((S.war.us||S.rel.su<0)?(S.neu?.1:.3):0)*(1-S.inf/300);if(Math.random()<p){v.sudw=1;decl('su');lg('魯西亞、中立を破り滿洲へ殺到す')}}}
+function next(){if(S.over)return;invK.clear();chkSur();if(S.cs){rd();toast('割讓地を選んでください');return}if(S.dc){rd();toast('降伏の申入れに答へてください');return}if(S.dc){toast('御聖斷を待つ事案がある');return}const c=calc(),t=S.tech,top=S.log[0];
+ S.oil+=c.oil-c.oilU;S.mun=Math.max(0,S.mun+c.munP-c.munU);S.medi=Math.max(0,S.medi+c.medP-c.medU);if(c.medU&&!S.medi)up('ken',-1);S.coal+=c.coal-c.coalU;S.iron+=c.iron-c.ironU;S.ura+=c.ura;
+ if(t.syn&&S.coal>=4){S.coal-=4;S.oil+=2}
+ S.resF=S.coal<0||S.iron<0?.85:1;S.coal=Math.max(0,S.coal);S.iron=Math.max(0,S.iron);
+ if(S.oil<0){S.oil=0;if(!S.os)lg('石油枯渇。軍の行動力半減');S.os=1}else S.os=0;
+ S.fund+=c.inc-c.upk-bondNet();gifSeason(c);if(S.fund<0){up('stab',-3);lg('國帑缺乏、民心離反')}
+ S.food+=c.food-c.need;let fam=0;if(S.food<0){S.food=0;fam=1;up('ken',-2*(1-S.ika/200));up('stab',-3);lg('食糧不足、國民の健康損なはる')}
+ const gr=pgr(fam);
+ S.R.forEach((r,i)=>{if(r.o!=P)return;if(r.id==HM()){r.p*=1+gr/400;S.zai*=1+gr/400;return}if(r.ni){r.p*=1+gr/400;r.c=100;if(HSPL.includes(r.id))r.jp=r.p;return}
+  const gh=Math.min(3.85,1+Math.min(3,L('umi')*.3)*.4-(fam?1:0));colMig(r,i);if(r.jp>0&&r.id!=HMO[P])ojG(r);else{r.p*=1+gh/400;if(r.id==HMO[P])r.jp=r.p}r.c=Math.min(100,r.c+(isC(i)||r.an?.4:atW(r.or)?-.8:.3)+(RD[i][8].includes('e')?1:0)+S.ika/500);
+  if(r.c<5){r.o=r.or;r.c=0;lg(RD[i][1]+'で叛亂、支配を失ふ')}});
+ volEm();denMig();if(S.ken<S.ika)up('ken',(S.ika-S.ken)*.02);S.rq=S.rq.filter(id=>!S.tech[id]);if(S.rq.length){const sh=c.sci+S.sci/S.rq.length;S.sci=0;S.rq.slice().forEach(id=>{S.tp[id]=(S.tp[id]||0)+tcap(id,sh);tdone(id)})}else S.sci+=c.sci;
+ adEff();natInit();S.egL=S.egL||{};S.gL=S.gL||{};for(const o in BG){S.NH[o]*=1+ngr(o)/400;S.NI[o]*=1+egr(o)/400;const g=gnpO(o),g0=S.gL[o];if(g0>0){const ob=Math.max(-20,Math.min(20,(g/g0-1)*400));S.egL[o]=(S.egL[o]??eref(o))*.75+ob*.25}S.gL[o]=g}S.R.forEach(r=>{if(BG[r.o]&&r.o!=P)r.p*=1+ngr(r.o)/400});
+ c100();story30();if(P=='jp'){war();euro()}else{war2();world2()}allyHelp();tAI();jfEff();aidFlow();warDrift();gueCost();gueEnd();eAuto();pvSeason();if(!fam&&S.stab<50+S.fai*.3)up('stab',.4+S.fai/200+S.kyo/400);if(!fam&&S.stab<100)up('stab',Math.min(.8,.08*Math.sqrt(ivx())));
+ S.ind*=1+S.sav/20000*gmul();lqAge();if(++S.q>3){S.q=0;S.y++}
+ if(!S.q){const h=HCM.find(([y])=>y==S.y);if(h)lg('〔'+S.y+'〕'+h[1])}
+ S.ap=Math.min(S.ap+apMax(),apMax()*5);
+ if(S.y>2027||(S.y==2027&&S.q>=2)){S.over=2;lg(P=='jp'?'昭和百二年、聖壽百二十六にて崩御。御代終はる':'二〇二七年、'+PS().t+'の任を終ふ')}
+ {const k=S.log.indexOf(top);rep=S.log.slice(0,k<0?12:k);seen=S.log[0]}fin();scrollTo(0,0)}
+const G=[
+['nsi','内鮮一體','朝鮮の支配度を百に',()=>rs('cho').c>=100],
+['man','滿洲支配強化','滿洲國の支配度を九十以上に',()=>rs('man').c>=90],
+['oil','三大油田確保','大慶・勝利・南樺太海底油田を全面開發',()=>['daq','sho','ksb'].every(dok)],
+['ura','鈾鑛確保','弗喉・順川・平山を全面開發',()=>['fut','jun','hei'].every(dok)],
+['fe','鐵炭確保','鞍山・撫順・本溪湖を全面開發',()=>['ans','fus','hon'].every(dok)],
+['nor','北方先制','獨魯開戰前に北樺太・外蒙古・西比利亞鐵道を押さへる',()=>!S.ev.barb&&['kka','smo','tsb'].every(fo)],
+['ura2','裏塁以東','裏塁山脈以東を全て東洋の手に',()=>['smo','kka','enk','tsb','wsb','cas'].every(fo)],
+['cn','支那事變解決','支那との戰を終へる',()=>!S.war.cn&&(S.sc!=1930||S.ev.cnw)],
+['th','日泰同盟','泰と同盟を結ぶ',()=>S.al.th],
+['ax','三國同盟','獨伊と同盟を結ぶ',()=>S.al.ax],
+['aus','豪州占領','豪州の資源を得る',()=>rs('aus').o==P],
+['asia','亞細亞解放','南方の植民地を全て歐米から解放する',()=>['fin','mal','bir','jaw','sum','phi','ind'].every(fo)],
+['ab','原子爆彈完成','二號・F號研究を經て世界初の原爆',()=>S.tech.ab],
+['p1','内地人口一億','産めよ殖やせよ',()=>naiP()>=100],
+['p2','内地人口二億','人口爆發',()=>naiP()>=200],
+['us','對米勝利','米國を講和に追ひ込む',()=>S.ev.usw],
+['su','北方平定','魯西亞の崩壞または講和',()=>S.ev.suc||S.ev.suw],
+['life','聖壽百二十六','昭和百二年まで御代を全うする',()=>S.over==2]];
+function check(){GL().forEach(g=>{if(!S.ach[g[0]]&&g[3]()){S.ach[g[0]]=ds();lg('方針達成：'+g[1])}});if(S.stab<=0&&!S.over){S.over=1;lg('民心盡き、帝國瓦解す')}}
+function sv(){if(S)S.ts=Date.now();try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}cdPut('auto')}
+function snapQ(){const k=S.y*4+S.q;if(S.sk===k)return;S.sk=k;try{const a=JSON.parse(localStorage.getItem(K+'snap')||'[]');a.push(JSON.stringify(S));while(a.length>2)a.shift();localStorage.setItem(K+'snap',JSON.stringify(a))}catch(e){}}
+function snapBack(){try{const a=JSON.parse(localStorage.getItem(K+'snap')||'[]');if(a.length<2){toast('前期の記録がありません');return}const prev=a[a.length-2];localStorage.setItem(K+'snap',JSON.stringify([prev]));S=JSON.parse(prev);P=S.pl;fin();toast('前期の開始時に戻りました')}catch(e){toast('戻せませんでした')}}
+function fin(){c100();ntfChk();S.R.forEach(r=>{if(r.id==HMO[P]&&r.jp!=null)r.jp=r.p});chkSur();check();snapQ();sv();rd();if(S.log[0]!==seen){seen=S.log[0];toast(seen.replace(/^[^\u3000]*\u3000/,''))}}
+const f=n=>Math.round(n).toLocaleString('ja-JP'),sg=n=>(n>=0?'+':'−')+Math.abs(n).toFixed(1),
+cs=c=>Object.entries(c).map(([k,v])=>CN[k]+v).join(' '),
+cell=(l,v,s,n)=>`<div class="c"><em>${l}</em><b>${v}</b>${s!=null?`<s class="${n?'n':''}">${s}</s>`:''}</div>`,
+oc=o=>o==P?'var(--au)':isI(o)?'var(--ok)':atW(o)?'var(--sh)':'var(--mu)',
+score=c=>Math.round(c.gdp+c.pop*.5+Object.keys(S.ach).length*50+(S.kin+S.shun+S.ken+S.nou)/4);
+/* 効果が上限に達した施策は押せない（能力は200・民心と關係は100が上限） */
+const MXA={inf:()=>S.inf>=200&&S.nou>=200,edu:()=>S.stab>=100,hea:()=>S.ken>=200&&S.shun>=200,umi:()=>S.ken>=200&&S.fai>=200&&L('umi')*.3>=3,ika:()=>S.ika>=200&&S.ken>=200&&S.nou>=200,sav:()=>S.sav>=200};
+['de','it','gb','fr','es','nl','pt','tr','us','su'].forEach(k=>MXA[k]=()=>(S.rel[k]||0)>=100);
+function amx(k){return MXA[k]?!!MXA[k]():false}
+function ab(k){const a=A[k];if(a.x&&!a.x())return'';const mx=amx(k),en=!mx&&can(a.c)&&(!a.e||a.e());return`<button class="act" data-a="do:${k}"${en?'':' disabled'}><b>${a.n}</b><span>${a.d}</span><i>${mx?'効果は上限':cs(a.c)}</i></button>`}
+const mrBars=c=>`<h2>民力</h2><div>${[['能力','nou'],['勤勉','kin'],['俊敏','shun'],['模倣','imi'],['協調','kyo'],['健康','ken'],['信仰','fai'],['貯蓄','sav'],['情報','inf'],['醫學','ika']].map(([n,k])=>qb(n,S[k],200)).join('')}</div><p class="p">民力 ${M().toFixed(2)}　行動數は（勤勉＋俊敏）÷25、使ひ殘しは毎季5倍まで。<br>工業力 ${f(S.ind)}・出生奬勵 +${Math.min(3,L('umi')*.3).toFixed(1)}%/年・食糧 生産 ${c.food.toFixed(1)} ／ 需要 ${c.need.toFixed(1)}</p>`;
+const qb=(n,v,m)=>`<div class="q"><span>${n}</span><div class="bar"><i style="width:${cl(v/m*100,0,100)}%"></i></div><span>${Math.round(v)}</span></div>`;
+const PN={
+adm:()=>adPanel(),
+nai:c=>`${bondPanel()}<p class="p one">内政の效き目は年を經ても減らない（工場の償却は事業の利益で賄ふ）。重ねるほど積み上がり、伸びは次第に緩やかになる。全ての投資は相乗して稅收・研究を押し上げ（×${syn().toFixed(2)}）、雇用で民心が毎季 +${Math.min(.8,.08*Math.sqrt(ivx())).toFixed(2)}。${lqView()}</p><p class="p one">生産性 +${Math.round((.02*L('ind')+.03*L('elc'))*100)}%・税收 +${(L('kok')+L('fis')+L('fer')+L('ind')+L('yak')+L('elc')+L('com')*3).toFixed(1)}%・工業と人口の相乘 ×${(Math.pow(Math.max(1,S.ind)/102,.4)*Math.pow(c.pe/87,.2)).toFixed(2)}・全分野の伸び率 ×${gmul().toFixed(2)}・内地人口の伸び 年${pgr(0).toFixed(2)}%${P=='jp'?'・外地の大和民族 年'+ojRate().toFixed(2)+'%（出生 平均5.5人・通婚の子を含む）・自主移民 年0.215%（約'+Math.round(emHome().reduce((a,r)=>a+r.p,0)*.215)+'萬人）':''}</p><div class="fl"><button class="sm${S.eAuto?' on':''}" data-a="eauto">電力の自動整備 ${S.eAuto?'入':'切'}</button></div><p class="p">電力 ${Math.round(c.eF*100)}%（供給 ${f(S.elec+c.gas*15)}／需要 ${f(c.elecD)}萬瓩）。入にすると、不足する季ごとに帑と鐵で電源を建てて需要に合はせる（1基 +${eY()}萬瓩・帑10・鐵2、行動は使はない）。1基の電力は研究（大容量火力・超高壓送電・原子力）で增える。</p><h2>内政</h2><div class="g">${['kok','fis','fer','elc','ind','com','edu','lab','ika','yak','hea','umi','sav','inf','sei'].map(ab).join('')}</div>${pvPanel(c)}`,
+gun:c=>{const E=S.E,ws=P=='jp'?[['cn','支那',E.cn],['su','魯西亞',E.su],['us','米國',E.us],['gb','英國',E.gb]]:PS().sl.map(([x,n])=>[x,n,E[x]]);
+ return`<div class="st">${cell('裝備',eqF().toFixed(2))}${cell('陸軍',f(S.army))}${cell('海軍',f(S.navy))}${cell('航空',f(S.air))}${cell('陸戰力',f(lnP()))}${cell('海戰力',f(nvP()))}${cell('原爆',S.bomb)}</div>
+<h2>軍備</h2><div class="g">${['mu','arm','nav','air','bom','ll'].map(ab).join('')}</div>
+<h2>列強戰力</h2><div>${ws.map(w=>qb(w[1]+(S.war[w[0]]?' ⚔':''),w[2],150)).join('')}${P=='jp'?qb('獨逸',E.de,150):''}</div>
+<h2>作戰方針</h2><p class="p">主攻方面は戰力1.3倍、他の方面は0.85倍。交戰する方面が多いほど戰力は分散する。陸の奥地は補給（隣の地の支配度）・冬季と泥濘（魯西亞の正月・十月）・縱深で成算が落ちる。海に圍まれた地は封鎖を續ければ攻めずとも降る。方針の變更に行動1つ。</p><div class="fl">${TNL().filter(x=>P!='jp'||x[0]!='本').concat([['0','なし']]).map(([k,n])=>`<button class="sm${(S.fo||'0')==k?' on':''}" data-a="fo:${k}">${n}</button>`).join('')}</div><div>${TNL().filter(x=>P!='jp'||x[0]!='本').map(([t,n])=>`<div class="q"><span>${n}${fronts().has(t)?' ⚔':''}</span><div class="bar"><i style="width:${mf(t)/1.3*100}%"></i></div><span>×${mf(t).toFixed(2)}</span></div>`).join('')}</div><p class="p"${P=='jp'?'':' hidden'}>獨逸の對魯比重 ${Math.round((S.esh||1)*100)}%（英米が西で戰ふほど下がる）。${S.ev.ue?'米國は歐州にも參戰中で、太平洋への増援は6割。':''}${S.ev.fe?'極東魯軍は西へ去り手薄。':''}</p><h2>宣戰と講和</h2><p class="p">宣戰布告で戰が始まる。講和交渉は敵戰力50未滿で可、占領地を保って和を結ぶ。降伏勧告は敵戰力が一定未滿（信仰の低い國ほど早く降る）か、敵の降伏申入れの後に可。支那が降れば殘る地に獨立政府を立てて屬國とし、魯西亞・米英が降れば領土を割讓させ、魯西亞・白魯・烏克蘭・米國本土・印度を屬國とする。</p>${wRows()}`},
+han:()=>mapHtml()+`<div class="fl">${[['act','行動できる地'],['own','帝國と屬國'],['all','全て']].map(([k,l])=>`<button class="sm${hf==k?' on':''}" data-a="hf:${k}">${l}</button>`).join('')}</div><p class="p">進攻は前提の地を押さへてから。成算は戰力と守備で決まる。外地は同化で支配が上がり、占領地は放置すると叛亂する。人口の少ない地は同化が容易い。全ての占領地は支配30以上で、併合して外地とするか、獨立政府を樹立して屬國にできる。外地は支配100で内地に編入できる。</p>`+TNL().map(([t,tn])=>{const rows=hOrd(t).map(i=>[S.R[i],i]).map(([r,i])=>{if(!hIn(t,r.id))return'';if(P=='jp'&&t=='本'&&!naiOpen&&JNS.has(r.id))return'';const d=RD[i];let b='';
+ if(P=='jp'&&r.o==P&&r.id!=HM()&&!S.cs)b+=`<button class="sm" data-a="sett:${r.id}"${can({fund:4})&&settPool(r.id)?'':' disabled'}>入植 帑4・行動1</button>`;if(r.o==P&&r.id!=HM()){if((isC(i)||r.an)&&r.c>=100&&!r.ni)b+=`<button class="sm" data-a="ni:${r.id}"${can({fund:10})?'':' disabled'}>内地編入 帑10</button>`;if(r.c<100)b+=`<button class="sm" data-a="as:${r.id}"${can({fund:6})?'':' disabled'}>${isC(i)||r.an?'同化教育':'宣撫工作'} 帑6</button>`;
+  if(!isC(i)&&r.id!=HM()&&r.c>=30&&!r.ni)b+=`<button class="sm" data-a="li:${r.id}"${can({fund:10})?'':' disabled'}>獨立政府樹立 帑10</button>`;if(!isC(i)&&!r.an&&!r.ni&&r.id!=HM()&&r.c>=30)b+=`<button class="sm" data-a="an:${r.id}"${S.fund>=10&&!S.over?'':' disabled'}>併合 帑10</button>`}
+ if(canAtk(r,i)){const w=wk(r.o),nwr=w&&!S.war[w]&&!(w=='su'&&S.ev.suc);b+=`<button class="sm r" data-a="atk:${r.id}"${can({fund:5,oil:3,mun:4})?'':' disabled'}>${nwr?'宣戰・':''}進攻 成算${Math.round(odds(r,i)*100)}% 帑5油3彈4</button>`;if(d[6]&&atW(r.o))b+=`<button class="sm" data-a="bk:${r.id}"${can({fund:3,oil:3})?'':' disabled'}>${S.bk[r.id]!=null?'封鎖強化 '+Math.round(S.bk[r.id])+'%':'封鎖'} 帑3油3</button>`}
+ if(!(P=='jp'&&naiOpen&&JNS.has(r.id))&&((hf=='act'&&!b)||(hf=='own'&&!fr(r))))return'';return`<div class="row"><div><span class="nm">${d[1]}</span><span class="o" style="color:${oc(r.o)}">${r.o==P?(r.id==HM()||r.ni?'内地':isC(i)||r.an?'外地':'占領'):ON[r.o]}</span><div class="meta">人口 ${f(r.p*100)}萬${r.jp>0.0005?' ・日本人 '+f(r.jp*100)+'萬':''}${d[8].includes('e')?' ・同化容易':''}${r.o==P&&r.id!=HM()?' ・支配 '+Math.round(r.c):''}${fr(r)?'':' ・守備 '+Math.round(dv(r,i))}</div>${r.o==P&&r.id!=HM()?`<div class="bar"><i style="width:${r.c}%"></i></div>`:''}</div><div class="bt">${b}</div></div>`}).join('');return rows||(P=='jp'&&t=='本')?`<h2>${tn}</h2>${t=='米'?bulkB():''}${P=='jp'&&t=='本'?naiSum():''}${rows}`:''}).join(''),
+shi:c=>`<div class="st">${cell('石油 産出',c.oil.toFixed(1),'消費 '+c.oilU.toFixed(1),c.oil<c.oilU)}${cell('鐵 産出',c.iron.toFixed(1),'消費 '+c.ironU.toFixed(1),c.iron<c.ironU)}${cell('石炭 産出',c.coal.toFixed(1),'消費 '+c.coalU.toFixed(1),c.coal<c.coalU)}${cell('鈾 産出',c.ura.toFixed(1))}${cell('電力 供給',f(S.elec+c.gas*15),'需要 '+f(c.elecD),c.eF<1)}${cell('彈藥 産出',c.munP.toFixed(1),'消費 '+c.munU.toFixed(1),c.munP<c.munU)}${cell('醫藥 産出',c.medP.toFixed(1),'消費 '+c.medU.toFixed(1),c.medP<c.medU)}</div>
+<p class="p">${P!='jp'?'中立國との交易で石油・鐵を得る（英佛と交戰すれば半減）。':S.emb?'對日禁輸中。米國からの石油・屑鐵は途絶。':'米國より毎季 石油8・屑鐵4 を輸入中（帑3）。南進・三國同盟で禁輸の恐れ。'}</p><h2>鑛床・油田・瓦斯田</h2><div class="fl"><button class="sm${shF=='inv'?' on':''}" data-a="shf:inv">投資できる ${DD.filter((d,i)=>dvOK(i)).length}</button><button class="sm${shF=='own'?' on':''}" data-a="shf:own">帝國と屬國</button><button class="sm${shF=='all'?' on':''}" data-a="shf:all">全て</button></div><p class="p">瓦斯は發電（1につき15萬瓩）と肥料（食糧+0.3）に使ふ。數値の大きい順に竝ぶ。</p><div class="sc">${shF=='inv'&&!DD.some((d,i)=>dvOK(i))?'<p class="p">今は開發できる鑛床がない。地質探査・海洋掘削の研究や、鑛床のある地の支配20以上が要る。</p>':''}`+DD.map((d,i)=>[d,i]).sort((a,b)=>Object.values(b[0][3]).reduce((p,v)=>p+v,0)-Object.values(a[0][3]).reduce((p,v)=>p+v,0)).map(([d,i])=>{const x=S.D[i],r=rs(d[2]),kn2=!d[4]||S.tech[d[4]],ow=r.o==P,out=Object.entries(d[3]).map(([k,v])=>CN[k]+v).join(' ');
+ if(shF=='own'&&!ow&&!isI(r.o))return'';if(shF=='inv'&&!dvOK(i)&&!invK.has(i))return'';const st=!kn2?'未發見（要 '+tn(d[4])+'）':'開發 '+Math.round(x.v*100)+'%';
+ const b=kn2&&ow&&x.v<1&&r.c>=20?`<button class="sm" data-a="dev:${i}"${can({fund:10,iron:2})?'':' disabled'}>開發 帑10鐵2・あと${Math.ceil((1-x.v)/.35-1e-6)}回</button>`:'';
+ return`<div class="row"><div><span class="nm">${d[1]}</span><span class="o" style="color:${oc(r.o)}">${RD[ri(d[2])][1]}</span><div class="meta">${out}／季 ・${st}${ow?'':' ・'+ON[r.o]+'領'}</div><div class="bar"><i style="width:${x.v*100}%"></i></div></div><div class="bt">${b}</div></div>`}).join('')+'</div>',
+ken:c=>`<p class="p one">原爆研究の突貫：模倣・情報・勤勉と研究所（科學振興）で最短期間が縮む。現在 ×${tboost().toFixed(2)}・原子爆彈 最短${Math.ceil(16/tboost())}季、二號・F號 最短${Math.ceil(4/tboost())}季</p><p class="p">研究點 毎季 +${c.sci.toFixed(1)}・研究所 ${S.lab}${S.sci>=1?`・未配分 ${f(S.sci)}`:''}。着手中の研究は、それぞれ毎季この研究點をまるごと得る。幾つ同時に着手しても遲れない。「集中研究」で行動を1つ使ふと、その研究に1季分の研究點を上乘せできる。未配分の點（機密收集や完成時の餘り）は着手中の研究に分けて足す。中斷しても進み具合は殘る。</p>`+TD.map(x=>{const id=x[0],dn=S.tech[id],cu=S.rq.includes(id),a=av(x),pg=Math.min(100,(S.tp[id]||0)/x[2]*100),n=Math.max(1,S.rq.length);
+ const st=dn?'完成':cu?`研究中 ${Math.round(pg)}%・あと約${Math.max(1,Math.ceil((x[2]-(S.tp[id]||0))/Math.max(.1,tcap(id,c.sci))))}季`:pg>0?`中斷中 ${Math.round(pg)}%`:a?'':(TY[id]&&S.y<TY[id]?TY[id]+'年より（核分裂の發見後）':'要 '+x[3].split(',').map(tn).join('・'));
+ return`<div class="row"><div><span class="nm">${tn(x[0])}</span><div class="meta">${x[4]} ・${x[2]}點${st?' ・'+st:''}</div>${!dn&&pg>0?`<div class="bar"><i style="width:${pg}%"></i></div>`:''}</div><div class="bt">${cu?`<button class="sm on" data-a="rf:${id}"${can({fund:5})?'':' disabled'}>集中研究 帑5</button>`:''}${a?`<button class="sm" data-a="rs:${id}">${cu?'中斷':'研究に着手'}</button>`:''}</div></div>`}).join(''),
+gai:()=>`<h2>國力番付</h2><div>${rank(calc())}</div>${S.y>=1945?postPanel():''}${envoyPanel()}<p class="p">國内總生産＝工業力 × 人口 × 民心 × 電力。全ての國を同じ式で算出し、列國の工業力は貯蓄で、人口は健康と醫學で毎季伸びる。領土を失へば人口が減り、外地・植民地の人口は本國より輕く數へる。國力はこの國内總生産に民力を掛けたもの。</p><h2>民力番付</h2><div class="tw">${ntab()}</div><p class="p">民力＝（能力・勤勉・俊敏・健康の平均）の1.5乘 × 協調 × 醫學。國力に掛かり、敵の守備と戰力にも乘る。敵の情報は守備に、米國の勤勉と貯蓄は戰時の増産に、信仰は降伏の遲速に、協調は國力と戰力に、行動數（勤勉＋俊敏を25で割る）は敵の反攻と回復の頻度に効く。</p><h2>關係</h2><div>${Object.keys(S.rel).filter(k=>k!=P&&k!='ind').map(k=>[k,NN[k]||ON[k]||k]).sort((a,b)=>(S.rel[b[0]]||0)-(S.rel[a[0]]||0)).map(([k,n])=>{const rv=S.rel[k]||0,st=P!='jp'?(atW(k)?'交戰':(S.pact||{})[k]?'不可侵':''):k=='th'&&S.al.th?'同盟':k=='de'&&S.al.ax?'同盟':(k=='us'||k=='gb'||k=='nl')&&S.war.us?'交戰':k=='gb'&&rv>=40?'通商':k=='nl'&&rv>=40?'協定':k=='pt'&&rv>=50?'通商':k=='tr'&&rv>=60?'協力':k=='es'&&S.ev.es?'協力':k=='fr'&&S.ev.fall?'維希':k=='us'&&S.emb?'禁輸':k=='su'&&S.ev.suc?'崩壞':k=='su'&&S.war.su?'交戰':k=='su'&&S.neu?'中立':'';return qb(n+(st?' '+st:''),rv+100,200).replace(/<span>\d+<\/span><\/div>$/,`<span>${Math.round(rv)}</span></div>`)}).join('')}</div>
+<h2>外交</h2><div class="g">${P=='jp'?['de','it','th','ax','gb','fr','fin','es','nl','pt','tr','us','su'].map(ab).join(''):Object.keys(S.rel).filter(k=>k!=P).map(dipB).join('')}</div>${tPanel()}
+<div${P=='jp'?'':' hidden'}><h2>植民地の獨立派指導者</h2><p class="p">支援すると攻略が容易になり、占領後の支配も高まる。信頼80以上で宗主國が弱れば蜂起工作が可能（成算は情報次第）。</p></div>`+Object.keys(P=='jp'?S.L:{}).map(id=>{const r=rs(id),v=S.L[id],o=r.o,ok=!fr(r);return`<div class="row"><div><span class="nm">${RD[ri(id)][1]} 獨立派</span><span class="o" style="color:${oc(o)}">${ON[o]}</span><div class="meta">信頼 ${Math.round(v)}</div><div class="bar"><i style="width:${v}%"></i></div></div><div class="bt">${ok?`<button class="sm" data-a="sp:${id}"${can({fund:5})&&v<100?'':' disabled'}>支援 帑5</button><button class="sm r" data-a="up:${id}"${can({fund:10})&&v>=80&&ef(o)<=.7?'':' disabled'}>蜂起工作 帑10</button>`:''}</div></div>`}).join(''),
+ho:c=>`${P=='jp'?'':`<p class="p">${PS().g}</p>`}<p class="p"${P=='jp'?'':' hidden'}>行動數は勤勉と俊敏の合計を25で割った數。使ひ殘しは毎季の5倍まで持ち越せる。裁可で季が進む。國力は工業力・民力・人口・民心で決まる。石油は米國頼みゆゑ大慶油田を急げ（地質探査で發見）。昭和16年夏、獨逸は魯西亞に侵攻し極東魯軍は手薄になる。解放した地は盟邦となり資源の半ばを供す。原爆は二號・F號研究と原子爆彈研究の後、鈾10で製造。</p>
+<h2>帝國方針</h2>`+GL().map(g=>{const a=S.ach[g[0]];return`<div class="row"><div><span class="nm" style="color:${a?'var(--au)':'var(--fg)'}">${a?'◉':'○'} ${g[1]}</span><div class="meta">${g[2]}</div></div><div class="meta">${a||''}</div></div>`}).join('')+`<p class="p">總合點 ${f(score(c))}</p>`,
+nen:()=>`<div class="fl"><button class="sm" data-a="back">前期の開始時に戻る</button></div><p class="p">${histNote()}</p><div class="log">${S.log.map(l=>`<div>${l}</div>`).join('')}</div><div><button class="sm" data-a="menu">記録・始め方</button></div>`};
+const TB=[['nai','内政'],['gun','軍事'],['han','版圖'],['adm','行政'],['shi','資源'],['ken','研究'],['gai','外交'],['ho','方針'],['nen','年表']];
+function rd(){tSync();$('h1').textContent=PS().h1;RD[ri('man')][1]=S.sc==1930&&!S.ev.mko&&rs('man').o!=P?'滿洲':'滿洲國';ON.jp=P=='jp'?'帝國':'大日本帝國';if(S.ind==null)plInit();const c=calc(),n=c.inc-c.upk-bondNet(),mx=apMax();
+ $('#dt').innerHTML=mode=='menu'?`<span>${scSel==1930?'昭和五年正月':'昭和十二年正月'}</span><small>${scSel==1930?'西暦1930年':'西暦1937年'}</small>`:`<span>${ds()}</span><small>${P=='jp'?'西暦'+S.y+'年 ・ 聖壽 數へ'+kn(S.y-1900):PS().n+'の'+PS().t}</small>`;
+ const ws=PS().sl.map(x=>x[0]).filter(k=>S.war[k]);
+ $('#wars').innerHTML=mode=='menu'?'':(ws.length?ws.map(k=>`<span class="chip">${S.offer[k]?'降伏申入れ':'交戰中'}・${SN(k)}</span>`).join(''):'<span class="chip k">平時</span>')+``+(S.emb?'<span class="chip">對日禁輸</span>':'')+(S.al.th?'<span class="chip k">日泰同盟</span>':'')+(S.al.ax?'<span class="chip k">三國同盟</span>':'')+(S.neu?'<span class="chip k">日魯中立</span>':'')+`<span class="chip k">國内總生産 第${kn(rkL(c).findIndex(x=>x[2])+1)}位</span><span class="chip k">民力 第${kn(Object.keys(NQ).filter(k=>k!=P&&mrq(NQ[k])>c.mr).length+1)}位</span>`;
+ $('#st').innerHTML=`<div class="sl">${`<div class="srow">${cell('國力',f(c.gdp))+cell('國民總生産',f(c.gnp))+cell('國帑',yen(S.fund),(n>=0?'+':'−')+yen(Math.abs(n)),n<0)+cell('國課 /季',yen(c.inc))}</div>`+`<div class="srow">${cell('帝國人口 萬',f(c.pop*100))+cell(P=='jp'?'内地人口(內邦人) 萬':'本國人口 萬',f((P=='jp'?hmoJ():naiP())*100))+cell(P=='jp'?'外地人口(內邦人) 萬':'外地人口 萬',f(ojT()*100))+(P=='jp'?cell('在外邦人 萬',f(extT()*100)):'')}</div>`+`<div class="srow">${cell('食糧',f(S.food),sg(c.food-c.need),c.food<c.need)+cell('醫藥品',f(S.medi),sg(c.medP-c.medU),c.medP<c.medU)+cell('民心',f(S.stab),S.stab<30?'危險':null,1)+cell('民力',c.mr.toFixed(2))}</div>`+`<div class="srow">${cell('石油',f(S.oil),sg(c.oil-c.oilU),c.oil<c.oilU)+cell('石炭',f(S.coal),sg(c.coal-c.coalU),c.coal<c.coalU)+cell('瓦斯 毎季',c.gas.toFixed(1))+cell('鐵',f(S.iron),sg(c.iron-c.ironU),c.iron<c.ironU)}</div>`+`<div class="srow">${cell('武器彈藥',f(S.mun),sg(c.munP-c.munU),c.munP<c.munU)+cell('鈾',f(S.ura),c.ura?sg(c.ura):null)+cell('原子爆弾',f(S.bomb||0))+cell('電力',Math.round(c.eF*100)+'%',f(S.elec+c.gas*15)+'/'+f(c.elecD),c.eF<1)}</div>`}</div><div class="sr">${mrBars(c)}</div>`;
+ $('#tb').innerHTML=TB.map(([k,l])=>`<button data-a="tab:${k}" class="${tab==k?'on':''}">${l}</button>`).join('');
+ const g=Object.keys(S.ach).length;
+ $('#ntp').innerHTML=mode=='menu'?'':ntfHtml();const _sc=keepSc();$('#pn').innerHTML=(S.over?`<div class="end"><b>${S.over==2?(P=='jp'?'御代完了':'任期完了'):'國家瓦解'}</b><div>總合點 ${f(score(c))} ・ 方針達成 ${g}／${GL().length}</div><div><button class="sm" data-a="menu">記録・始め方</button></div></div>`:'')+(S.dc?(()=>{const e=EV[S.dc];return`<div class="rep"><b>${P=='jp'?'御聖斷を仰ぐ':'裁斷を仰ぐ'}</b><div>${e.t}</div><div class="g">${e.o.map((x,i)=>`<button class="act" data-a="dc:${i}"><b>${x[0]}</b><span>${x[1]}</span></button>`).join('')}</div></div>`})():'')+(rep.length?`<div class="rep"><b>前季の報告</b>${rep.map(l=>`<div>${l.replace(/^[^\u3000]*\u3000/,'')}</div>`).join('')}<div><button class="sm" data-a="cr">閉じる</button></div></div>`:'')+PN[tab](c);restSc(_sc);
+ $('#ap').innerHTML=`行動 <b>${S.ap}</b><small>毎季+${mx}・持越し上限${mx*5}</small>`;$('#mu').textContent=mul>1?'一括 ×5（行動5）':'一括 ×1';$('#st').hidden=stH;$('#stt').textContent=stH?'統計を開く':'統計を畳む';
+ $('#nx').disabled=!!S.over;if(mode=='menu'){$('#pn').innerHTML=menu();$('#tb').hidden=$('#st').hidden=true;$('#nx').disabled=true}else $('#tb').hidden=false}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const[t,v,w]=b.dataset.a.split(':');
+ if(t=='tab'){tab=v;rd()}else if(t=='do')multi(act,v);else if(t=='atk')atk(v);else if(t=='ba')bulk(v);else if(t=='dps'){dpS=v;rd()}else if(t=='tpr')tProp(v,w);else if(t=='tbk')tBrk(v,w);else if(t=='dp')multi(dip,v);else if(t=='shf'){shF=v;invK.clear();rd()}else if(t=='adf'){adF=v;adO=0;rd()}else if(t=='ads'){adSel.has(+v)?adSel.delete(+v):adSel.add(+v);rd()}else if(t=='ado'){adO=adO==+v?0:+v;rd()}else if(t=='adm')adMerge();else if(t=='adc'){adSel.clear();rd()}else if(t=='asp')adSplit(+v,w);else if(t=='adt')adDet(+v,+w);else if(t=='adr'){const d=adD(+v),x=document.getElementById('adn'+v);if(d&&x&&x.value.trim()){d.n=x.value.trim().slice(0,16);sv();rd();toast('區名を改めた')}}else if(t=='adx')adReset(v);else if(t=='ni')nik(v);else if(t=='as')multi(assim,v);else if(t=='bk')multi(bkd,v);else if(t=='mul'){mul=mul==1?5:1;rd()}else if(t=='dc'){const e=EV[S.dc];if(e){S.dc='';e.o[+v][2]();lg((P=='jp'?'御聖斷：':'裁斷：')+e.o[+v][0]);fin()}}else if(t=='fo'){const nf=v=='0'?'':v;if(S.fo!==nf&&can({})){S.ap--;S.fo=nf;lg('主攻方面を'+(nf?TNL().find(x=>x[0]==nf)[1]:'なし')+'に定む');fin()}}else if(t=='li')lib(v);else if(t=='dev')multi(x=>dev(+x),v);
+ else if(t=='bt'){bT=v;rd()}else if(t=='bi')bondDo(bA);else if(t=='br')bondDo(-bA);else if(t=='bsel'){bA=+v;rd()}else if(t=='mp')mpClick(v);else if(t=='sz')setSz(v);else if(t=='back')snapBack();else if(t=='cedo')cedeDo();else if(t=='sett')settle(v);else if(t=='unp')unPick(v);else if(t=='bnd')bandung(v);else if(t=='pe')postEcon(v);else if(t=='lt')letter(v,w,(document.getElementById('ej'+v)||{}).value);else if(t=='rf')multi(rf,v);else if(t=='rs'){const k=S.rq.indexOf(v);if(k<0)S.rq.push(v);else S.rq.splice(k,1);sv();rd()}else if(t=='ntx'){if(v=='all')S.ntf=[];else (S.ntf||[]).splice(+v,1);sv();rd()}else if(t=='bu')bomb(v);else if(t=='bmt'){bm.t=v;rd()}else if(t=='bmo')bombGo(bm.t,v);else if(t=='bmx'){bm={x:null,t:null};rd()}else if(t=='sp')sup(v);else if(t=='menu'){mode='menu';fromGame=true;cf='';rd();scrollTo(0,0)}else if(t=='mc'){mode='game';cf='';rd()}
+ else if(t=='msc'){scSel=+v;cf='';rd()}else if(t=='mn'){const k=v||'jp';if(cf!='mn'+k){cf='mn'+k;rd();return}cf='';S=ns(k,scSel);P=k;relFix();adSel.clear();adO=0;tab='nai';rep=[];seen=S.log[0];mode='game';had=true;sv();rd();toast(S.log[0].replace(/^[^\u3000]*\u3000/,''))}
+ else if(t=='ms'){if(slot(v)&&cf!='ms'+v){cf='ms'+v;rd();return}cf='';S.ts=Date.now();const j=JSON.stringify(S);let ok=0;try{localStorage.setItem(K+'s'+v,j);ok=1}catch(e){}if(CDB){CSL['s'+v]=j;cdPut('s'+v,j);ok=1}toast(ok?'記録 '+kn(+v)+' に保存した':'保存できなかった。ブラウザの保存領域を確かめてください');rd()}
+ else if(t=='xo'||t=='xi'){xm=xm==t?'':t;rd()}else if(t=='xc'){const a=$('#xt');const j=a?a.value:'';const sel=()=>{if(a){a.focus();a.select()}toast('選んだ文字を写して保存してください')};try{navigator.clipboard.writeText(j).then(()=>toast('記録の文字列を写した。メモ等に貼って保存'),sel)}catch(e){sel()}}
+ else if(t=='xl'){const a=$('#xt');const j=(a?a.value:'').trim();if(!j)return;if(fromGame&&cf!='xl'){cf='xl';rd();return}cf='';if(!cdAdopt(j)){toast('この文字列は讀めない');return}tab='nai';mode='game';xm='';sv();rd();toast('貼り付けた記録から再開')}
+ else if(t=='eauto'){S.eAuto=!S.eAuto;if(S.eAuto)eAuto(1);sv();rd()}
+ else if(t=='nopen'){naiOpen=!naiOpen;rd()}else if(t=='pv')pvDo(v);else if(t=='pvc')colDo(v);else if(t=='pvf'){S.pvF=v=='1';sv();rd()}else if(t=='gp'){S.gp=v;sv();rd()}else if(t=='gauto'){S.fAuto=!S.fAuto;sv();rd()}else if(t=='gres'){S.fRes=+v;sv();rd()}
+ else if(t=='gin'||t=='gout'){const a=t=='gin'?Math.min(bA,Math.max(0,S.fund)):Math.min(bA,S.ivest||0);if(a<=0){toast(t=='gin'?'國帑が足りません':'基金が空です');return}if(t=='gin'){S.fund-=a;S.ivest=(S.ivest||0)+a;lg('投資基金へ '+bLbl(a)+'を拠出')}else{S.ivest-=a;S.fund+=a;lg('投資基金から '+bLbl(a)+'を引出')}sv();rd()}
+ else if(t=='ml'){const x=slot(v);if(!x)return;if(fromGame&&cf!='ml'+v){cf='ml'+v;rd();return}cf='';const pv=S;S=x;mig();if(S.v!==ns().v){S=pv;toast('この記録は讀めない');return}fixR();P=S.pl||'jp';relFix();lqMig();tab='nai';rep=[];seen=S.log[0];mode='game';had=true;sv();rd();toast('記録 '+kn(+v)+' から再開')}else if(t=='cr'){rep=[];rd()}else if(t=='hf'){hf=v;rd()}else if(t=='mz'){mapZ=v;rd()}else if(t=='stt'){stH=!stH;try{localStorage.setItem(K+'st',stH?'1':'0')}catch(e){}rd()}else if(t=='dw')dw(v);else if(t=='pc')pc(v);else if(t=='sr')sr(v);else if(t=='an')anx(v);else if(t=='kr')kr(v);else if(t=='bw')bw(v);else if(t=='up')upr(v);else if(t=='next')next();
+ else if(t=='new'){if(!nw){nw=1;b.textContent='もう一度押すと最初から';return}nw=0;S=ns();tab='nai';sv();rd()}});
+document.addEventListener('change',e=>{const m=e.target.dataset&&e.target.dataset.mv;if(!m||!e.target.value)return;const[k,ui]=m.split(':');adMove(+k,+ui,+e.target.value)});
+if(had){const b=S.fx24;fx24();if(!b&&S.fx24)sv()}
+rd();
+(async()=>{try{if(typeof claude=='undefined'||!claude||typeof claude.use!='function')return;const[db,u]=await Promise.all([claude.use('db'),claude.use('user')]);if(!db||!u)return;const id=await u.id();if(!id)return;
+const ref=k=>db.doc('data/users/'+id+'/'+k),sn=await Promise.all(['auto','s1','s2','s3','s4'].map(k=>ref(k).get().then(x=>x.exists?x.data():null).catch(()=>null)));
+CDB=db;CDu=id;const a=sn[0];
+if(a&&a.j&&(a.t||0)>((S&&S.ts)||0)){if(cdAdopt(a.j)){if(mode=='menu'&&!fromGame)mode='game';toast('雲上の記録（'+dsOf(S)+'）を讀み込んだ')}}else if(S&&S.ts)cdPut('auto');
+for(let i=1;i<=4;i++){const c=sn[i];let x=null;try{x=JSON.parse(localStorage.getItem(K+'s'+i))}catch(e){}if(c&&c.j&&(c.t||0)>=((x&&x.ts)||0))CSL['s'+i]=c.j;else if(x){x.ts=x.ts||1;const j=JSON.stringify(x);CSL['s'+i]=j;cdPut('s'+i,j)}}
+rd()}catch(e){}})();
+</script>
+<script>if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}</script>
+
+</html>
