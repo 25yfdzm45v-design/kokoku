@@ -1,4 +1,4 @@
-const C='kunitori-f4017c642d',P='kunitori-',FC='gfonts',F=['./','index.html','manifest.webmanifest','icon-192.png','icon-512.png','apple-touch-icon.png'];
+const C='kunitori-f3037e636f',P='kunitori-',FC='gfonts',F=['./','index.html','manifest.webmanifest','icon-192.png','icon-512.png','apple-touch-icon.png'];
 const S=new URL('./',self.location).href,SP=new URL(S).pathname,IDX=S+'index.html';
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(F)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith(P)&&k!==C).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
