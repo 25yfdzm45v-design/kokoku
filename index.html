@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="皇國經綸"><meta name="theme-color" content="#181e2c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"></head><body>
-<title>皇國經綸 Ver.42</title>
+<title>皇國經綸 Ver.43</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 作戰室の机上：鐵紺の地に國防色の罫。金は見出し、朱は戰と裁可印にのみ使ふ */
@@ -85,7 +85,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .ver{color:var(--mu);font-size:11px;letter-spacing:.06em}
 </style>
 <div class="w">
-<header><h1>皇國經綸</h1><small class="ver">Ver.42</small><div class="dt" id="dt"></div></header>
+<header><h1>皇國經綸</h1><small class="ver">Ver.43</small><div class="dt" id="dt"></div></header>
 <div class="wars" id="wars"></div><div class="fl"><button class="sm" id="stt" data-a="stt">統計を畳む</button><button class="sm" data-a="menu">記録・始め方</button></div>
 <div class="st" id="st"></div>
 <nav class="tb" id="tb"></nav>
@@ -960,7 +960,7 @@ function bfsH(a,b){if(a==b)return 0;const seen={[a]:0};const q=[a];while(q.lengt
 /* 制空権：敵の航空力（國力の推定）が我が航空力を上回るとき敵が制空権を握る */
 function enemyAir(x){return x&&S.war[x]?(S.E[x]||0)*.6>S.air:false}
 function bombOpts(t){const tr=rs(t),tx=tr&&tr.o,lost=enemyAir(tx);const ally=Object.keys(S.tr||{}).filter(k=>hasT(k,'all')&&!S.war[k]&&k!=P);const navyOK=S.navy>=40;
- return S.R.filter(r=>r.o==P||ally.includes(r.o)).map(r=>{const h=bfsH(r.id,t),isAl=r.o!=P;if(isAl&&h>=3&&!navyOK)return null;let p=h<=1?.75:Math.max(.05,.75-.15*(h-1));if(h>=3&&!navyOK)p*=.15;p=lost?.97:.03;return{o:r.id,h,ally:isAl,p}}).filter(Boolean)}
+ return S.R.filter(r=>r.o==P||ally.includes(r.o)).map(r=>{const h=bfsH(r.id,t),isAl=r.o!=P;if(isAl&&h>=3&&!navyOK)return null;let p=h<=1?.75:Math.max(.05,.75-.15*(h-1));if(h>=3&&!navyOK)p*=.15;p=['cn','zxl','yxs','lzj','swn','xbj','ccp'].includes(tx)?1:lost?p*.3:.97;return{o:r.id,h,ally:isAl,p}}).filter(Boolean)}
 function bombGo(t,o){const r=rs(t),x=bm.x||(r&&r.o);const op=bombOpts(t).find(q=>q.o==o);if(!op||!S.bomb||!can({})||!S.war[x])return;S.ap--;
  if(Math.random()>op.p){S.air=Math.max(0,S.air-5);lg('原爆搭載機、'+RD[ri(o)][1]+'から'+RD[ri(t)][1]+'へ投下、迎撃され失敗（在庫は減らず）');bm={x:null,t:null};fin();return}
  S.bomb--;const en=NQ[x]?NQ[x][5]:50;S.E[x]=Math.max(5,(S.E[x]||0)*Math.min(.9,.35+en/400));r.p*=.6;r.c=Math.max(0,r.c-40);S.bshock=S.bshock||{};S.bshock[x]=S.y*4+S.q;up('stab',5);
