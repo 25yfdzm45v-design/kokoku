@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="皇國經綸"><meta name="theme-color" content="#181e2c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"></head><body>
-<title>皇國經綸 Ver.44</title>
+<title>皇國經綸 Ver.45</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 作戰室の机上：鐵紺の地に國防色の罫。金は見出し、朱は戰と裁可印にのみ使ふ */
@@ -85,7 +85,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .ver{color:var(--mu);font-size:11px;letter-spacing:.06em}
 </style>
 <div class="w">
-<header><h1>皇國經綸</h1><small class="ver">Ver.44</small><div class="dt" id="dt"></div></header>
+<header><h1>皇國經綸</h1><small class="ver">Ver.45</small><div class="dt" id="dt"></div></header>
 <div class="wars" id="wars"></div><div class="fl"><button class="sm" id="stt" data-a="stt">統計を畳む</button><button class="sm" data-a="menu">記録・始め方</button></div>
 <div class="st" id="st"></div>
 <nav class="tb" id="tb"></nav>
@@ -1017,7 +1017,7 @@ function next(){if(S.over)return;invK.clear();chkSur();if(S.cs){rd();toast('割�
  c100();story30();if(P=='jp'){war();euro()}else{war2();world2()}allyHelp();tAI();jfEff();aidFlow();warDrift();gueCost();gueEnd();eAuto();pvSeason();if(!fam&&S.stab<50+S.fai*.3)up('stab',.4+S.fai/200+S.kyo/400);if(!fam&&S.stab<100)up('stab',Math.min(.8,.08*Math.sqrt(ivx())));
  S.ind*=1+S.sav/20000*gmul();lqAge();if(++S.q>3){S.q=0;S.y++}
  if(!S.q){const h=HCM.find(([y])=>y==S.y);if(h)lg('〔'+S.y+'〕'+h[1])}
- S.ap=Math.min(S.ap+apMax(),apMax()*5);
+ S.ap=S.ap+apMax();
  if(S.y>2027||(S.y==2027&&S.q>=2)){S.over=2;lg(P=='jp'?'昭和百二年、聖壽百二十六にて崩御。御代終はる':'二〇二七年、'+PS().t+'の任を終ふ')}
  {const k=S.log.indexOf(top);rep=S.log.slice(0,k<0?12:k);seen=S.log[0]}fin();scrollTo(0,0)}
 const G=[
@@ -1092,7 +1092,7 @@ function rd(){tSync();$('h1').textContent=PS().h1;RD[ri('man')][1]=S.sc==1930&&!
  $('#tb').innerHTML=TB.map(([k,l])=>`<button data-a="tab:${k}" class="${tab==k?'on':''}">${l}</button>`).join('');
  const g=Object.keys(S.ach).length;
  $('#ntp').innerHTML=mode=='menu'?'':ntfHtml();const _sc=keepSc();$('#pn').innerHTML=(S.over?`<div class="end"><b>${S.over==2?(P=='jp'?'御代完了':'任期完了'):'國家瓦解'}</b><div>總合點 ${f(score(c))} ・ 方針達成 ${g}／${GL().length}</div><div><button class="sm" data-a="menu">記録・始め方</button></div></div>`:'')+(S.dc?(()=>{const e=EV[S.dc];return`<div class="rep"><b>${P=='jp'?'御聖斷を仰ぐ':'裁斷を仰ぐ'}</b><div>${e.t}</div><div class="g">${e.o.map((x,i)=>`<button class="act" data-a="dc:${i}"><b>${x[0]}</b><span>${x[1]}</span></button>`).join('')}</div></div>`})():'')+(rep.length?`<div class="rep"><b>前季の報告</b>${rep.map(l=>`<div>${l.replace(/^[^\u3000]*\u3000/,'')}</div>`).join('')}<div><button class="sm" data-a="cr">閉じる</button></div></div>`:'')+PN[tab](c);restSc(_sc);
- $('#ap').innerHTML=`行動 <b>${S.ap}</b><small>毎季+${mx}・持越し上限${mx*5}</small>`;$('#mu').textContent=mul>1?'一括 ×5（行動5）':'一括 ×1';$('#st').hidden=stH;$('#stt').textContent=stH?'統計を開く':'統計を畳む';
+ $('#ap').innerHTML=`行動 <b>${S.ap}</b><small>毎季+${mx}・持越し上限なし</small>`;$('#mu').textContent=mul>1?'一括 ×5（行動5）':'一括 ×1';$('#st').hidden=stH;$('#stt').textContent=stH?'統計を開く':'統計を畳む';
  $('#nx').disabled=!!S.over;if(mode=='menu'){$('#pn').innerHTML=menu();$('#tb').hidden=$('#st').hidden=true;$('#nx').disabled=true}else $('#tb').hidden=false}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const[t,v,w]=b.dataset.a.split(':');
  if(t=='tab'){tab=v;rd()}else if(t=='do')multi(act,v);else if(t=='atk')atk(v);else if(t=='ba')bulk(v);else if(t=='dps'){dpS=v;rd()}else if(t=='tpr')tProp(v,w);else if(t=='tbk')tBrk(v,w);else if(t=='dp')multi(dip,v);else if(t=='shf'){shF=v;invK.clear();rd()}else if(t=='adf'){adF=v;adO=0;rd()}else if(t=='ads'){adSel.has(+v)?adSel.delete(+v):adSel.add(+v);rd()}else if(t=='ado'){adO=adO==+v?0:+v;rd()}else if(t=='adm')adMerge();else if(t=='adc'){adSel.clear();rd()}else if(t=='asp')adSplit(+v,w);else if(t=='adt')adDet(+v,+w);else if(t=='adr'){const d=adD(+v),x=document.getElementById('adn'+v);if(d&&x&&x.value.trim()){d.n=x.value.trim().slice(0,16);sv();rd();toast('區名を改めた')}}else if(t=='adx')adReset(v);else if(t=='ni')nik(v);else if(t=='as')multi(assim,v);else if(t=='bk')multi(bkd,v);else if(t=='mul'){mul=mul==1?5:1;rd()}else if(t=='dc'){const e=EV[S.dc];if(e){S.dc='';e.o[+v][2]();lg((P=='jp'?'御聖斷：':'裁斷：')+e.o[+v][0]);fin()}}else if(t=='fo'){const nf=v=='0'?'':v;if(S.fo!==nf&&can({})){S.ap--;S.fo=nf;lg('主攻方面を'+(nf?TNL().find(x=>x[0]==nf)[1]:'なし')+'に定む');fin()}}else if(t=='li')lib(v);else if(t=='dev')multi(x=>dev(+x),v);
