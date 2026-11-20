@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="皇國經綸"><meta name="theme-color" content="#181e2c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"></head><body>
-<title>皇國經綸 Ver.43</title>
+<title>皇國經綸 Ver.44</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 作戰室の机上：鐵紺の地に國防色の罫。金は見出し、朱は戰と裁可印にのみ使ふ */
@@ -1138,7 +1138,7 @@ for(let i=1;i<=4;i++){const c=sn[i];let x=null;try{x=JSON.parse(localStorage.get
 rd()}catch(e){}})();
 </script>
 <style>.dz{font-size:.6em;margin:0 .3em 0 .3em;opacity:.78;font-weight:normal;letter-spacing:0;white-space:nowrap}</style>
-<script>(()=>{const RX=/第三帝國總統|帝國經綸|第三帝國|獨逸國の黨首|獨逸黨首|總統/g,DZ={'第三帝國總統':'Der Führer','帝國經綸':()=>{try{return S&&S.sc==1930&&S.y<1933?'Deutsches Reich Strategie':'Drittes Reich Strategie'}catch(e){return 'Drittes Reich Strategie'}},'第三帝國':'Drittes Reich','獨逸國の黨首':'Führer der NSDAP','獨逸黨首':'Führer der NSDAP','總統':'Der Führer'},SK=new Set(['OPTION','SELECT','TEXTAREA','SCRIPT','STYLE','INPUT']),done=new WeakSet();
+<script>(()=>{const RX=/第三帝國總統|帝國經綸|第三帝國|黨首|總統/g,DZ={'第三帝國總統':'Der Führer','帝國經綸':()=>{try{return NZ()?'Drittes Reich Strategie':'Deutsches Reich Strategie'}catch(e){return 'Drittes Reich Strategie'}},'第三帝國':'Drittes Reich','黨首':'Führer der NSDAP','總統':'Der Führer'},SK=new Set(['OPTION','SELECT','TEXTAREA','SCRIPT','STYLE','INPUT']),done=new WeakSet();
 function ok(n,root){if(done.has(n))return 2;const v=n.nodeValue;if(!v||!/第三帝國|總統|帝國經綸|黨首/.test(v))return 2;for(let p=n.parentNode;p;p=p.parentNode){if(SK.has(p.nodeName)||p instanceof SVGElement||(p.classList&&p.classList.contains('dz')))return 2;if(p===root)break}return 1}
 function dz(root){if(!root||!root.ownerDocument)return;const tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>ok(n,root)}),a=[];while(tw.nextNode())a.push(tw.currentNode);
 for(const n of a){const s=n.nodeValue,f=document.createDocumentFragment();let i=0;s.replace(RX,(m,o)=>{const t=document.createTextNode(s.slice(i,o+m.length));done.add(t);f.append(t);const e=document.createElement('small');e.className='dz';e.textContent=typeof DZ[m]=='function'?DZ[m]():DZ[m];f.append(e);i=o+m.length;return m});const t=document.createTextNode(s.slice(i));done.add(t);f.append(t);n.replaceWith(f)}}
