@@ -85,7 +85,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .ver{color:var(--mu);font-size:11px;letter-spacing:.06em}
 </style>
 <div class="w">
-<header><h1>皇國經綸</h1><small class="ver">Ver.43</small><div class="dt" id="dt"></div></header>
+<header><h1>皇國經綸</h1><small class="ver">Ver.44</small><div class="dt" id="dt"></div></header>
 <div class="wars" id="wars"></div><div class="fl"><button class="sm" id="stt" data-a="stt">統計を畳む</button><button class="sm" data-a="menu">記録・始め方</button></div>
 <div class="st" id="st"></div>
 <nav class="tb" id="tb"></nav>
@@ -396,7 +396,7 @@ const PF30={nai:64.45/70.6,csm:64.45/70.6,nsw:64.45/70.6,wal:.98,nir:.98,hkd:64.
 G30={jp:.59,us:1.04,de:.71,su:.93,gb:.97,fr:.94,it:.87,cn:.76,nl:.84,es:.66,th:.62,pt:.62,tr:1.2,swe:.69,che:.85,prs:.4,tib:.25,zxl:.76,yxs:.76,lzj:.76,swn:.76,xbj:.76,ccp:.76};
 function sc30(o,pl){o.sc=1930;o.y=1930;o.R.forEach(r=>{r.p*=PF30[r.id]??.93});const m=o.R.find(r=>r.id=='man');m.o='zxl';m.or='zxl';m.c=0;{const ya=o.R.find(r=>r.id=='yan');if(ya){ya.o='yxs';ya.or='yxs'}}o.war={};o.E.de=50;o.E.jp=80;o.E.cn=90;
  if(pl=='jp'){Object.assign(o,{ind:76,elec:520,army:85,navy:95,air:30,zai:1.5,stab:60,fund:90,mun:40});o.rel.de=60;o.rel.us=10;o.rel.gb=10;o.log=['昭和五年正月　昭和恐慌のさなか、御代を差配す']}
- else{const f={de:[.4,.35,.1],su:[.8,.6,.5],us:[.8,.85,.5],gb:[.8,.9,.5]}[pl];o.army=Math.round(o.army*f[0]);o.navy=Math.round(o.navy*f[1]);o.air=Math.round(o.air*f[2]);o.log=['一九三〇年正月　'+(pl=='de'?'獨逸國の黨首':PLD[pl].n+'の'+PLD[pl].t)+'として國を率ゐる']}}
+ else{const f={de:[.4,.35,.1],su:[.8,.6,.5],us:[.8,.85,.5],gb:[.8,.9,.5]}[pl];o.army=Math.round(o.army*f[0]);o.navy=Math.round(o.navy*f[1]);o.air=Math.round(o.air*f[2]);o.log=[pl=='de'?'一九三〇年正月　國民社會主義獨逸勞働者黨の黨首として政權奪取を目指す':'一九三〇年正月　'+PLD[pl].n+'の'+PLD[pl].t+'として國を率ゐる']}}
 function story30(){if(S.sc!=1930)return;const v=S.ev,d=S.y*4+S.q,E=S.E;
  if(d<1939*4){E.de=Math.min(100,E.de+2);if(P!='jp'&&E.jp!=null)E.jp=Math.min(100,E.jp+1)}
  if(P=='de'&&!S.nzb&&d>=1933*4){lg('ヒトラー政權成る。第三帝國の始まり');nzB(S);lg('總統の下、民力各25上がり、大日本帝國との親密度100となる')}
@@ -457,7 +457,7 @@ function cdRef(k){return CDB.doc('data/users/'+CDu+'/'+k)}
 function cdPut(k,j){if(!CDB)return;cdQ[k]=j||null;clearTimeout(cdT);cdT=setTimeout(cdFl,1200)}
 async function cdFl(){if(cdBusy||!CDB)return;cdBusy=1;let k;while((k=Object.keys(cdQ)[0])){const j=cdQ[k]||JSON.stringify(S);delete cdQ[k];let o;try{o=JSON.parse(j)}catch(e){continue}try{await cdRef(k).set({j,y:o.y||0,q:o.q||0,pl:o.pl||'jp',t:o.ts||Date.now()})}catch(e){if(e&&e.code=='unavailable'){await new Promise(r=>setTimeout(r,1500+Math.random()*1500));try{await cdRef(k).set({j,y:o.y||0,q:o.q||0,pl:o.pl||'jp',t:o.ts||Date.now()})}catch(e2){}}else if(e&&(e.code=='quota_exceeded'||e.code=='invalid_argument'))toast('雲上へ保存できなかった（容量）')}}cdBusy=0}
 function cdAdopt(j){const pv=S;try{S=JSON.parse(j)}catch(e){S=pv;return 0}mig();if(!S||S.v!==31){S=pv;return 0}fixR();P=S.pl||'jp';relFix();lqMig();rep=[];seen=S.log[0];had=true;try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}return 1}
-const NZ=()=>{try{return !S||S.sc!=1930||S.y*4+(S.q||0)>=1933*4}catch(e){return true}};
+const NZ=()=>{try{return !S||S.sc!=1930||!!S.nzb||S.y*4+(S.q||0)>=1933*4}catch(e){return true}};
 for(const M of [NN,ON])Object.defineProperty(M,'de',{get:()=>NZ()?'第三帝國':'獨逸',set(){},enumerable:true,configurable:true});
 Object.defineProperties(PLD.de,{n:{get:()=>NZ()?'第三帝國':'獨逸國',set(){},enumerable:true},t:{get:()=>NZ()?'第三帝國總統':'黨首',set(){},enumerable:true},h1:{get:()=>'帝國經綸',set(){},enumerable:true},lb:{get:()=>{try{return scSel==1930?'獨逸黨首':'第三帝國總統'}catch(e){return '第三帝國總統'}},set(){},enumerable:true}});
 const DMN=()=>({jp:'日本人',de:'獨逸人',su:'蘇聯人',us:'米國人',gb:'英國人'}[P]||'本國人'),ETN=()=>({jp:'大和民族',de:'獨逸民族',su:'蘇聯人民',us:'米國民',gb:'英國民'}[P]||'本國民');
@@ -1107,6 +1107,27 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b
  else if(t=='ml'){const x=slot(v);if(!x)return;if(fromGame&&cf!='ml'+v){cf='ml'+v;rd();return}cf='';const pv=S;S=x;mig();if(S.v!==ns().v){S=pv;toast('この記録は讀めない');return}fixR();P=S.pl||'jp';relFix();lqMig();tab='nai';rep=[];seen=S.log[0];mode='game';had=true;sv();rd();toast('記録 '+kn(+v)+' から再開')}else if(t=='cr'){rep=[];rd()}else if(t=='hf'){hf=v;rd()}else if(t=='mz'){mapZ=v;rd()}else if(t=='stt'){stH=!stH;try{localStorage.setItem(K+'st',stH?'1':'0')}catch(e){}rd()}else if(t=='dw')dw(v);else if(t=='pc')pc(v);else if(t=='sr')sr(v);else if(t=='an')anx(v);else if(t=='kr')kr(v);else if(t=='bw')bw(v);else if(t=='up')upr(v);else if(t=='next')next();
  else if(t=='new'){if(!nw){nw=1;b.textContent='もう一度押すと最初から';return}nw=0;S=ns();tab='nai';sv();rd()}});
 document.addEventListener('change',e=>{const m=e.target.dataset&&e.target.dataset.mv;if(!m||!e.target.value)return;const[k,ui]=m.split(':');adMove(+k,+ui,+e.target.value)});
+const nzPre=()=>{try{return mode!='menu'&&S&&P=='de'&&S.sc==1930&&!S.nzb&&!S.over}catch(e){return false}};
+function nzI(){if(!S.nz)S.nz={v:8,k:20,m:12,s:2.6,a:0}}
+const NZA={sen:['宣傳戰（ゲッベルス）','支持率 +2〜3.5・黨資金 −3',{m:3},z=>{z.v+=2+Math.random()*1.5;z.m-=3}],
+ sa:['突撃隊の街頭行動','支持率 +1.5〜3・保守派の信任 −4・禁止令の恐れ',{},z=>{z.v+=1.5+Math.random()*1.5;z.k-=4;if(Math.random()<.25){z.v-=2;lg('突撃隊禁止令。黨の支持率が下がる')}}],
+ zai:['財界工作（シャハト・ティッセン）','黨資金 +8・保守派の信任 +3',{},z=>{z.m+=8;z.k+=3}],
+ hok:['保守派・國防軍工作（パーペン・シュライヒャー）','保守派の信任 +6〜9・黨資金 −3',{m:3},z=>{z.k+=6+Math.random()*3;z.m-=3}],
+ yu:['全國飛行機遊説','支持率 +3〜5・黨資金 −6',{m:6},z=>{z.v+=3+Math.random()*2;z.m-=6}]};
+function nzDo(k){nzI();const z=S.nz,a=NZA[k];if(!a)return;if(z.a>=3){toast('今季の黨活動は濟んだ');return}if(a[2].m&&z.m<a[2].m){toast('黨資金が足りない');return}a[3](z);z.a++;z.v=Math.max(0,Math.min(60,z.v));z.k=Math.max(0,Math.min(100,z.k));lg(a[0]);nzChk();sv();rd()}
+function nzWin(t){lg(t);nzB(S);lg('總統の下、民力各25上がり、大日本帝國との親密度100となる。これより國政を擔ふ');toast('政權奪取。國政に携はれるやうになった')}
+function nzChk(){const z=S.nz;if(!z||S.nzb)return;if(z.s>=50)nzWin('國民社會主義黨、國會の過半數を制す。ヒトラー内閣成る');else if(z.s>=30&&z.k>=60)nzWin('ヒンデンブルク大統領、ヒトラーを首相に任命す。第三帝國の始まり')}
+function nzTurn(e){nzI();const z=S.nz,y=Math.floor(e/4);z.a=0;z.v+=y<1931?3:e<1932*4+2?2.5:-1.5;z.k+=1;z.m+=2;z.v=Math.max(0,Math.min(60,z.v));z.k=Math.min(100,z.k);
+ const r=Math.round(z.v*10)/10;if(e==1930*4+2||e==1932*4+2||e==1932*4+3){z.s=r;lg((e==1930*4+2?'九月':e==1932*4+2?'七月':'十一月')+'國會選擧。國民社會主義黨の得票 '+r+'%')}
+ if(e==1932*4){if(r+5>=50){z.s=Math.max(z.s,50);lg('大統領選擧にヒトラー勝つ')}else lg('大統領選擧。ヒトラー得票 '+Math.round(r+5)+'%、ヒンデンブルク再選')}
+ nzChk()}
+function nzPanel(){nzI();const z=S.nz,b=Object.entries(NZA).map(([k,a])=>`<button class="sm" data-a="nz:${k}"${z.a>=3||(a[2].m&&z.m<a[2].m)?' disabled':''}>${a[0]}<small style="display:block;opacity:.7">${a[1]}</small></button>`).join('');
+ return `<div class="rep"><b>政權奪取への道</b><div>黨首として政權を目指す。政權を握るまで國政には携はれない（遅くとも一九三三年正月に政權を握る）。過半數の議席、または議席三割と保守派の信任60で首相に任命される。</div><div>支持率 ${z.v.toFixed(1)}%・國會議席 ${z.s.toFixed(1)}%・保守派の信任 ${Math.round(z.k)}・黨資金 ${Math.round(z.m)}・今季の黨活動 ${z.a}／3</div><div class="g">${b}</div></div>`}
+{const _rd=rd;rd=function(){try{if(nzPre()&&S.dc=='prop'){S.dc='';S.prop=null;lg('ヴァイマル政府、外國からの條約の申入れを見送る')}}catch(e){}_rd.apply(this,arguments);try{if(nzPre()){const p=$('#pn');if(p)p.insertAdjacentHTML('afterbegin',nzPanel())}}catch(e){}};
+ const _nx=next;next=function(){const d0=S?S.y*4+(S.q||0):0,pre=nzPre();const r=_nx.apply(this,arguments);try{if(pre&&S&&!S.nzb&&S.y*4+(S.q||0)>d0){nzTurn(d0);if(!S.nzb&&S.y>=1933)nzWin('ヒンデンブルク大統領、ヒトラーを首相に任命す。第三帝國の始まり');sv();rd()}}catch(e){}return r};
+ const OK=new Set(['tab','next','menu','nz','nopen','dc']);
+ document.addEventListener('click',e=>{if(!nzPre())return;const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const t=b.dataset.a.split(':')[0];if(t=='nz'){e.stopPropagation();e.preventDefault();nzDo(b.dataset.a.split(':')[1]);return}if(!OK.has(t)){e.stopPropagation();e.preventDefault();toast('政權を握るまで國政には携はれない')}},true);
+ document.addEventListener('change',e=>{if(nzPre()){e.stopPropagation();toast('政權を握るまで國政には携はれない')}},true)}
 if(had){const b=S.fx24;fx24();if(!b&&S.fx24)sv()}
 rd();
 (async()=>{try{if(typeof claude=='undefined'||!claude||typeof claude.use!='function')return;const[db,u]=await Promise.all([claude.use('db'),claude.use('user')]);if(!db||!u)return;const id=await u.id();if(!id)return;
