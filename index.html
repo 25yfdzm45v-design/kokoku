@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="皇國經綸"><meta name="theme-color" content="#181e2c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"></head><body>
-<title>帝國經綸 Ver.51</title>
+<title>帝國經綸 Ver.52</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 作戰室の机上：鐵紺の地に國防色の罫。金は見出し、朱は戰と裁可印にのみ使ふ */
@@ -86,7 +86,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .q2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px}.q2 .q{grid-template-columns:2.4em minmax(0,1fr) 2.4em}.mt{display:grid;grid-template-columns:minmax(4.5em,1.3fr) repeat(4,minmax(0,1fr));gap:3px 6px;font-size:13px;align-items:center;min-width:0}.mt .h{color:var(--mu);font-size:12px;text-align:right}.mt .h:first-child{text-align:left}.mt .me{color:var(--au);font-weight:700}.mt .v{position:relative;text-align:right;padding:1px 4px;font-variant-numeric:tabular-nums}.mt .v i{position:absolute;left:0;top:2px;bottom:2px;background:var(--au);opacity:.18}.mt .v.k i{opacity:.38}@media(max-width:520px){.sl{grid-template-columns:repeat(3,minmax(0,1fr))}.srow{display:contents}}@media(max-width:340px){.sl{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 <div class="w">
-<header><h1>帝國經綸</h1><small class="ver">Ver.51</small><div class="dt" id="dt"></div></header>
+<header><h1>帝國經綸</h1><small class="ver">Ver.52</small><div class="dt" id="dt"></div></header>
 <div class="wars" id="wars"></div><div class="fl"><button class="sm" id="stt" data-a="stt">統計を畳む</button><button class="sm" data-a="menu">記録・始め方</button></div>
 <div class="st" id="st"></div>
 <nav class="tb" id="tb"></nav>
@@ -108,24 +108,24 @@ const RD=[
 ['nan','小笠原・南洋群島','jp',0.1,95,0,1,'nai|gum|phi|ngn|pgb|haw|aus|hwb|bsu','c',1,0,0,0,0],
 ['man','滿洲國','jp',37,80,0,0,'cho|kwa|hok|umo|smo|enk','ca',20,2,1,0,0],
 ['kwa','關東州','jp',1.37,100,20,1,'man|cho|tjn|shd','c',1,0,0,0,2],
-['umo','内蒙古','yxs',5,0,15,0,'man|smo|hok|yan|sin','ale',2,1,0,0,0],
-['hok','北平・河北','yxs',38,0,40,0,'man|umo|tjn|shd|xuz|whn|yan','al',8,2,1,0,0],
+['umo','内蒙古','yxs',5,0,15,0,'man|smo|hok|yan|sin|xan','ale',2,1,0,0,0],
+['hok','北平・河北・山西','yxs',42,0,40,0,'man|umo|tjn|shd|xuz|whn|yan|xan','al',8,2,1,0,0],
 ['sha','上海','cn',3.5,0,35,1,'chu|tai','a',1,0,0,0,3],
-['chu','南京（江蘇・浙江）','cn',26.5,0,55,0,'sha|xuz|whn|jxi','l',4,0,0,0,1],
-['knn','廣州（廣東・廣西）','lzj',57.1,0,40,1,'tai|jxi|csh|kmg|hkg|mac|hai|fin','l',7,0,0,0,1],
+['chu','南京（江蘇・浙江）','cn',46.5,0,55,0,'sha|xuz|whn|jxi','l',4,0,0,0,1],
+['knn','廣州（廣東・廣西・福建）','lzj',55.5,0,40,1,'tai|jxi|csh|kmg|hkg|mac|hai|fin','l',7,0,0,0,1],
 ['hkg','香港','gb',1,0,25,1,'knn|tai|mac','a',0,0,0,0,3],
-['jyu','重慶','swn',13,0,75,0,'whn|csh|cdu|kmg','ld',2,1,0,0,0],
-['tib','チベット國','tib',4,0,35,0,'cdu|kmg|sin','l',1,0,0,0,0],
-['sin','新疆','xbj',4,0,30,0,'smo|umo|wsb|cas|tib|nsb|kaz|uzb|kgz|taj','ae',1,0,0,1,0],
-['smo','外蒙古','su',0.8,0,55,0,'man|umo|sin|tsb|nsb|esb|bur','ale',2,0,0,0,0],
+['jyu','重慶（川東・貴州）','swn',24,0,75,0,'whn|csh|cdu|kmg|xan','ld',2,1,0,0,0],
+['tib','チベット國','tib',1.5,0,35,0,'cdu|kmg|sin|xan','l',1,0,0,0,0],
+['sin','新疆','xbj',4,0,30,0,'smo|umo|wsb|cas|tib|nsb|kaz|uzb|kgz|taj|xan','ae',1,0,0,1,0],
+['smo','外蒙古','su',0.76,0,55,0,'man|umo|sin|tsb|nsb|esb|bur','ale',2,0,0,0,0],
 ['kka','北樺太','su',0.1,0,30,1,'kar|alk|csm|nal','ae',0,1,0,0,0],
-['enk','沿海州','su',1.5,0,90,0,'man|cho|tsb|alk|esb|yak','ae',5,1,0,0,0],
-['tsb','西比利亞鐵道','su',2.6,0,110,0,'enk|smo|wsb|alk|nsb|esb|kaz|yak|bur','ae',2,3,1,0,0],
-['wsb','西西伯利亞（オムスク）','su',3.5,0,120,0,'tsb|url|cas|nsb|sin|kaz','aed',-1,3,1,0,0],
-['cas','土庫曼','su',1.5,0,110,0,'wsb|sin|kaz|uzb|tur|mde|vlg|cau|url|nsb|kgz|taj|kkp','aled',-1,-2,1,1,2],
-['sue','歐露中部','su',55.9,0,200,0,'len|vlg|url|blr|ukr|blt|mos|mrd','ld',67,6,3,2,2],
-['blr','白魯','su',5.6,0,60,0,'sue|pol|blt|ukr|lat|mos','l',3,0,0,0,0],
-['ukr','烏克蘭','su',23.5,0,120,0,'sue|blr|pol|rom|hun|vlg|cau|mos|slk|trn|bes|crm|dnb|gal|zap|mda','l',12,3,4,0,1],
+['enk','沿海州','su',1.43,0,90,0,'man|cho|tsb|alk|esb|yak','ae',5,1,0,0,0],
+['tsb','西比利亞鐵道','su',2.5,0,110,0,'enk|smo|wsb|alk|nsb|esb|kaz|yak|bur','ae',2,3,1,0,0],
+['wsb','西西伯利亞（オムスク）','su',3.3,0,120,0,'tsb|url|cas|nsb|sin|kaz','aed',-1,3,1,0,0],
+['cas','土庫曼','su',1.43,0,110,0,'wsb|sin|kaz|uzb|tur|mde|vlg|cau|url|nsb|kgz|taj|kkp','aled',-1,-2,1,1,2],
+['sue','歐露中部','su',53.1,0,200,0,'len|vlg|url|blr|ukr|blt|mos|mrd','ld',67,6,3,2,2],
+['blr','白魯','su',5.3,0,60,0,'sue|pol|blt|ukr|lat|mos','l',3,0,0,0,0],
+['ukr','烏克蘭','su',22.3,0,120,0,'sue|blr|pol|rom|hun|vlg|cau|mos|slk|trn|bes|crm|dnb|gal|zap|mda','l',12,3,4,0,1],
 ['alk','南荒須加（アンカレジ）','us',0.05,0,40,1,'kka|tsb|enk|nal|can|CA|OR|WA','ae',0,1,0,0,1],
 ['can','金田','gb',11,0,120,0,'alk|nal|CO|UT|NV|WY|MT|ID|MA|CT|ME|NH|VT|RI|WA|ND|MN|MI|NY','aed',25,2,3,1,3],
 ['mex','墨西哥','la',19,0,50,1,'TX|NM|AZ|CA|haw|gua|enz|crb','a',8,1,1,4,2],
@@ -180,33 +180,33 @@ const RD=[
 ['mol','モルダヴィア（ヤシ）','nt',2.6,0,40,0,'rom|bes|trn|buk','al',2,0,0,0,0],
 ['dob','ドブロジャ（コンスタンツァ）','nt',0.8,0,30,1,'rom|bul','al',1,0,0,0,0],
 ['buk','ブコヴィナ（チェルナウツィ）','nt',0.8,0,30,0,'rom|mol|trn|gal|bes','al',1,0,0,0,0],
-['tat','韃靼（タタール）','su',3,0,40,0,'vlg|url|bsk|cvs|mar|udm','al',2,0,0,0,0],
-['bsk','巴什基爾（バシキール）','su',3.2,0,40,0,'url|tat|kom|udm','al',2,0,0,2,0],
-['cvs','チュヴァシ','su',0.9,0,30,0,'vlg|tat|mar|mrd','al',2,0,0,0,0],
-['mar','マリ・エル','su',0.6,0,30,0,'vlg|tat|cvs|url','al',1,0,0,0,0],
-['klm','カルムイク','su',0.2,0,25,0,'vlg|cau|dag|vgr','al',1,0,0,0,0],
-['dag','ダゲスタン','su',1,0,40,1,'cau|cec|klm','al',2,0,0,0,0],
-['cec','チェチェン・イングーシ','su',0.9,0,40,0,'cau|dag|geo|oss','al',1,0,0,1,0],
-['crm','クリミア自治共和國','su',1.1,0,60,1,'ukr|zap','al',2,0,0,0,0],
-['dnb','ドンバス（スターリノ・ヴォロシロフグラード）','su',4.5,0,70,0,'ukr|vlg|zap','al',2,5,1,0,0],
+['tat','韃靼（タタール）','su',2.9,0,40,0,'vlg|url|bsk|cvs|mar|udm','al',2,0,0,0,0],
+['bsk','巴什基爾（バシキール）','su',3,0,40,0,'url|tat|kom|udm','al',2,0,0,2,0],
+['cvs','チュヴァシ','su',0.86,0,30,0,'vlg|tat|mar|mrd','al',2,0,0,0,0],
+['mar','マリ・エル','su',0.57,0,30,0,'vlg|tat|cvs|url','al',1,0,0,0,0],
+['klm','カルムイク','su',0.19,0,25,0,'vlg|cau|dag|vgr','al',1,0,0,0,0],
+['dag','ダゲスタン','su',0.95,0,40,1,'cau|cec|klm','al',2,0,0,0,0],
+['cec','チェチェン・イングーシ','su',0.86,0,40,0,'cau|dag|geo|oss','al',1,0,0,1,0],
+['crm','クリミア自治共和國','su',1.05,0,60,1,'ukr|zap','al',2,0,0,0,0],
+['dnb','ドンバス（スターリノ・ヴォロシロフグラード）','su',4.3,0,70,0,'ukr|vlg|zap','al',2,5,1,0,0],
 ['gal','ガリツィア（ルヴフ）','pol',6,0,50,0,'pol|ukr|rom|slk|buk','al',3,1,0,1,0],
-['zap','ザポリッジャ','su',1.3,0,60,1,'ukr|dnb|crm','al',2,0,1,0,0],
-['krl','カレリア','su',0.3,0,30,0,'len|suo|est','al',1,0,0,0,0],
-['kom','コミ','su',0.3,0,25,0,'url|bsk|udm','al',1,2,0,0,0],
-['yak','サハ（ヤクート）','su',0.4,0,30,0,'tsb|esb|enk','al',1,0,0,0,1],
-['bur','ブリヤート','su',0.5,0,30,0,'esb|smo|tsb','al',1,0,0,0,0],
-['kgz','キルギス','su',1,0,40,0,'cas|kaz|sin','al',2,0,0,0,0],
-['taj','タジク','su',1,0,40,0,'cas|uzb|sin','al',2,0,0,0,0],
-['vgr','ヴォルガ・ドイツ人','su',0.6,0,30,0,'vlg|klm|kaz','al',2,0,0,0,0],
-['mrd','モルドヴィア','su',1.2,0,30,0,'vlg|sue|cvs','al',2,0,0,0,0],
-['udm','ウドムルト','su',1.2,0,30,0,'url|tat|bsk|kom','al',1,0,0,0,0],
-['kbr','カバルダ・バルカル','su',0.4,0,30,0,'cau|geo|oss|abk','al',1,0,0,0,0],
-['oss','北オセチア','su',0.3,0,30,0,'cau|kbr|geo|cec','al',1,0,0,0,0],
+['zap','ザポリッジャ','su',1.24,0,60,1,'ukr|dnb|crm','al',2,0,1,0,0],
+['krl','カレリア','su',0.29,0,30,0,'len|suo|est','al',1,0,0,0,0],
+['kom','コミ','su',0.29,0,25,0,'url|bsk|udm','al',1,2,0,0,0],
+['yak','サハ（ヤクート）','su',0.38,0,30,0,'tsb|esb|enk','al',1,0,0,0,1],
+['bur','ブリヤート','su',0.48,0,30,0,'esb|smo|tsb','al',1,0,0,0,0],
+['kgz','キルギス','su',0.95,0,40,0,'cas|kaz|sin','al',2,0,0,0,0],
+['taj','タジク','su',0.95,0,40,0,'cas|uzb|sin','al',2,0,0,0,0],
+['vgr','ヴォルガ・ドイツ人','su',0.57,0,30,0,'vlg|klm|kaz','al',2,0,0,0,0],
+['mrd','モルドヴィア','su',1.14,0,30,0,'vlg|sue|cvs','al',2,0,0,0,0],
+['udm','ウドムルト','su',1.14,0,30,0,'url|tat|bsk|kom','al',1,0,0,0,0],
+['kbr','カバルダ・バルカル','su',0.38,0,30,0,'cau|geo|oss|abk','al',1,0,0,0,0],
+['oss','北オセチア','su',0.29,0,30,0,'cau|kbr|geo|cec','al',1,0,0,0,0],
 ['nkh','ナヒチェヴァン','su',0.1,0,20,0,'cau|arm|tur|mde','al',0,0,0,0,0],
-['kkp','カラカルパク','su',0.4,0,20,0,'uzb|cas|kaz','al',1,0,0,0,0],
-['abk','アブハジア','su',0.3,0,25,1,'geo|kbr','al',1,0,0,0,0],
-['ajr','アジャリア（バトゥミ）','su',0.2,0,25,1,'geo|tur','al',1,0,0,0,0],
-['mda','沿ドニエストル（モルダヴィア自治共和國）','su',0.6,0,30,0,'ukr|bes','al',1,0,0,0,0],
+['kkp','カラカルパク','su',0.38,0,20,0,'uzb|cas|kaz','al',1,0,0,0,0],
+['abk','アブハジア','su',0.29,0,25,1,'geo|kbr','al',1,0,0,0,0],
+['ajr','アジャリア（バトゥミ）','su',0.19,0,25,1,'geo|tur','al',1,0,0,0,0],
+['mda','沿ドニエストル（モルダヴィア自治共和國）','su',0.57,0,30,0,'ukr|bes','al',1,0,0,0,0],
 ['tur','土耳古本國','tr',17,0,80,1,'bul|grc|mde|cau|cas|geo|arm|nkh|ajr','l',8,1,1,0,2],
 ['mde','中東（伊拉克・波斯）','gb',20,0,40,0,'tur|cas|cau|egy|ind|geo|arm|nkh','al',6,0,0,15,3],
 ['egy','埃及・北阿','gb',20,0,50,1,'lby|mde|ita','al',8,0,0,1,4],
@@ -226,30 +226,30 @@ const RD=[
 ['haw','布哇（オアフ・真珠灣）','us',0.3,0,90,1,'nan|gum|hwb|CA|OR|WA|mex|pan|bsu','ae',0,0,0,0,0],
 ['pgb','英領太平洋諸島','gb',0.3,0,15,1,'nan|ran|ngn|pfr|nzl','ae',0,0,0,0,0],
 ['pfr','佛領太平洋','fr',0.1,0,15,1,'pgb|aus','ae',0,0,1,0,0],
-['ind','印度','gb',380,0,150,0,'bir|mde','ld',0,2,2,0,5],
+['ind','印度','gb',368,0,150,0,'bir|mde','ld',0,2,2,0,5],
 ['aus','豪州','gb',7,0,80,1,'ran|nan|ngn|pfr|nzl','ae',25,1,2,0,2],
 ['nzl','新慈蘭','gb',1.6,0,40,1,'aus|pgb','ae',6,0,0,0,1],
-['jxi','江西・革命根據地','ccp',1.6,60,20,0,'chu|whn|csh|knn','d',1,0,0,0,0],
-['tjn','天津','yxs',2.5,0,20,1,'hok|shd|kwa','a',0.5,0,0,0,0],
+['jxi','江西（南昌・瑞金）','cn',15.8,60,20,0,'chu|whn|csh|knn','d',1,0,0,0,0],
+['tjn','天津','yxs',1.3,0,20,1,'hok|shd|kwa','a',0.5,0,0,0,0],
 ['shd','山東（濟南・青島）','yxs',38,0,30,1,'hok|tjn|xuz|kwa','al',5,2,0,0,0],
-['xuz','徐州','cn',12,0,35,0,'shd|hok|chu|whn','l',2,1,0,0,0],
-['whn','武漢（漢口・武昌・漢陽）','cn',30,0,50,0,'chu|xuz|hok|csh|jyu|yan|jxi','l',3,0,1,0,1],
+['xuz','徐州（蘇北・安徽）','cn',35,0,35,0,'shd|hok|chu|whn','l',2,1,0,0,0],
+['whn','武漢（湖北・河南）','cn',60,0,50,0,'chu|xuz|hok|csh|jyu|yan|jxi|xan','l',3,0,1,0,1],
 ['csh','長沙（湖南）','cn',28,0,40,0,'whn|jxi|knn|jyu|kmg','l',3,0,0,0,0],
 ['mac','澳門','pt',0.4,0,10,1,'knn|hkg','a',0,0,0,0,0],
 ['hai','海南島','lzj',2.5,0,15,1,'knn|fin','ae',1,0,1,0,0],
-['cdu','成都','swn',25,0,50,0,'jyu|kmg|tib|yan','ld',3,0,0,0,0],
+['cdu','成都（川西・西康）','swn',33,0,50,0,'jyu|kmg|tib|yan|xan','ld',3,0,0,0,0],
 ['kmg','昆明（雲南）','swn',12,0,40,0,'jyu|cdu|csh|knn|fin|bir|tib','ld',1,0,0,0,1],
-['yan','延安（陝北）','ccp',1.5,0,30,0,'hok|umo|whn|cdu','d',0.5,0,0,0,0],
+['yan','延安（陝北）','ccp',1.5,0,30,0,'hok|umo|whn|cdu|xan','d',0.5,0,0,0,0],['xan','西安（陝西・甘肅）','cn',17,0,55,0,'yan|whn|cdu|jyu|hok|umo|sin|tib','ld',2,1,0,0.3,0],
 ['hkd','北海道','jp',3.2,100,0,0,'thk|kar|nai|csm','',4,2,0,0,0],
 ['thk','北東北','jp',3.3,100,0,0,'hkd|nai|chb|sth','',7,0,0,0,0],
 ['chb','東海（名古屋）','jp',5.9,100,0,0,'nai|thk|kin|hkr|nri|tyo','',7,0,0,0.5,0],
 ['kin','近畿（大阪・京都）','jp',11.6,100,0,0,'chb|cgs|nai|hkr|shk','',6,0,0,0,0],
 ['cgs','中國','jp',5.5,100,0,0,'kin|kyu|shk','',6,0,0,0,0],
 ['kyu','九州','jp',10.9,100,0,1,'cgs|cho|tai|nai|nsw|shk','',6,4,1,0,0],
-['len','レニングラード','su',6.2,0,80,1,'sue|suo|blt|est|lat|mos|krl','l',2,0,0,0,0],
-['vlg','スターリングラード・ヴォルガ','su',7.5,0,80,0,'sue|ukr|cau|cas|url|mos|tat|cvs|mar|klm|dnb|vgr|mrd','l',15,0,0,0,0],
-['cau','アゼルバイジャン（バクー）','su',5.3,0,70,0,'vlg|ukr|tur|mde|cas|geo|arm|klm|dag|cec|kbr|oss|nkh','l',2,0,0,13,0],
-['url','ウラル','su',5.3,0,80,0,'sue|vlg|wsb|cas|mos|tat|bsk|mar|kom|udm','ld',6,4,5,0,2],
+['len','レニングラード','su',5.9,0,80,1,'sue|suo|blt|est|lat|mos|krl','l',2,0,0,0,0],
+['vlg','スターリングラード・ヴォルガ','su',7.1,0,80,0,'sue|ukr|cau|cas|url|mos|tat|cvs|mar|klm|dnb|vgr|mrd','l',15,0,0,0,0],
+['cau','アゼルバイジャン（バクー）','su',5,0,70,0,'vlg|ukr|tur|mde|cas|geo|arm|klm|dag|cec|kbr|oss|nkh','l',2,0,0,13,0],
+['url','ウラル','su',5,0,80,0,'sue|vlg|wsb|cas|mos|tat|bsk|mar|kom|udm','ld',6,4,5,0,2],
 ['rhr','ラインラント・ルール','de',18,0,70,0,'deu|als|fra|bnl|che|bay','ld',10,25,3,0,4],
 ['bay','バイエルン（南獨）','de',12,0,50,0,'deu|rhr|aut|che|cze|sud','l',12,0,0,0,1],
 ['epr','東普魯西','de',1.4,0,35,1,'deu|pol|blt|pom|ber|kbg','l',3,0,0,0,0],
@@ -267,15 +267,15 @@ const RD=[
 ['nsw','南西諸島（沖繩・先島）','jp',0.7,100,0,1,'kyu|tai|nai','',0,0,0,0,0],
 ['hwb','布哇諸島（マウイ・カウアイ）','us',0.1,0,30,1,'haw|nan|gum','ae',0,0,0,0,0],
 ['nal','北荒須加（フェアバンクス）','us',0.02,0,20,1,'alk|kka|can','ae',0,0,0,0,0],
-['nsb','中央西伯利亞（ノヴォシビルスク）','su',2.5,0,80,0,'wsb|esb|cas|smo|sin|tsb|kaz','ae',2,2,1,0,0],
-['esb','東西伯利亞（イルクーツク）','su',2,0,80,0,'nsb|tsb|smo|enk|yak|bur','ae',2,1,1,0,0],
+['nsb','中央西伯利亞（ノヴォシビルスク）','su',2.4,0,80,0,'wsb|esb|cas|smo|sin|tsb|kaz','ae',2,2,1,0,0],
+['esb','東西伯利亞（イルクーツク）','su',1.9,0,80,0,'nsb|tsb|smo|enk|yak|bur','ae',2,1,1,0,0],
 ['sar','撒丁（サルディーニャ）','it',0.9,0,30,1,'ita|sit|sfr|spa|nce|roma','l',1,0,0,0,0],
 ['est','エストニア','nt',1.1,0,15,0,'len|lat|blt|suo|krl','l',1,0,0,0,0],
 ['lat','ラトビア','nt',1.9,0,15,0,'est|blt|blr|len','l',1,0,0,0,0],
-['geo','ジョージア','su',3,0,40,0,'cau|arm|tur|mde|cec|kbr|oss|abk|ajr','l',2,0,0,0,0],
-['arm','アルメニア','su',1.5,0,30,0,'cau|geo|tur|mde|nkh','l',1,0,0,0,0],
-['kaz','カザフ','su',7,0,60,0,'cas|uzb|sin|wsb|nsb|tsb|kgz|vgr|kkp','ae',2,2,1,0,0],
-['uzb','ウズベク','su',5.6,0,60,0,'kaz|cas|sin|taj|kkp','ae',2,0,0,0,0],
+['geo','ジョージア','su',2.9,0,40,0,'cau|arm|tur|mde|cec|kbr|oss|abk|ajr','l',2,0,0,0,0],
+['arm','アルメニア','su',1.43,0,30,0,'cau|geo|tur|mde|nkh','l',1,0,0,0,0],
+['kaz','カザフ','su',6.7,0,60,0,'cas|uzb|sin|wsb|nsb|tsb|kgz|vgr|kkp','ae',2,2,1,0,0],
+['uzb','ウズベク','su',5.3,0,60,0,'kaz|cas|sin|taj|kkp','ae',2,0,0,0,0],
 ['bsu','房総（千葉）','jp',1.5,100,0,1,'nai|nan|haw|tyo','',2,0,0,0,0],
 ['AL','アラバマ','us',3.002,100,12.9,1,'FL|GA|TN|MS','',2.944,0.828,0.483,0.322,0.69],
 ['AZ','アリゾナ','us',0.467,100,6,0,'CA|NV|UT|NM|mex','',0.458,0.129,0.075,0.05,0.107],
@@ -334,7 +334,7 @@ const RD=[
 ['ber','伯林','de',3,100,150,0,'deu|epr|sil|pom','',0,0,0,0,0],
 ['pri','巴里','fr',3,100,120,0,'fra|als|sfr|bnl|gbr','',0,0,0,0,0],
 ['lon','倫敦','gb',8,100,140,0,'gbr|bnl|fra|sco|wal|nir','',0,0,0,0,0],
-['mos','莫斯科','su',4,100,200,0,'sue|len|vlg|url|blr|ukr','',0,0,0,0,0],
+['mos','莫斯科','su',3.8,100,200,0,'sue|len|vlg|url|blr|ukr','',0,0,0,0,0],
 ['roma','羅馬','it',0.9,100,60,0,'ita|sit|sar','',0,0,0,0,0]];;
 // id,名,所在,産出,要技術,初期開發
 const DD=[
@@ -377,13 +377,13 @@ const TD=[
 const NQ={jp:[145,135,300,85,200,150,300,150,100,100],de:[125,125,105,125,90,140,200,140,120,125],it:[75,80,60,100,45,150,50,60,60,40],th:[80,80,60,70,25,150,70,75,20,15],es:[70,80,65,110,20,150,50,70,110,60],pt:[60,70,55,100,10,150,50,50,50,40],gb:[105,95,80,115,60,130,60,90,110,110],us:[70,75,65,90,45,130,50,90,140,120],fr:[80,80,70,100,50,125,0,80,70,80],nl:[120,120,100,120,85,140,75,110,80,110],su:[75,80,65,70,40,150,50,60,80,60],cn:[40,60,55,70,40,60,25,40,20,30],tr:[110,90,80,100,30,110,50,120,60,30]},
 NN={zxl:'張學良',yxs:'閻・馮',lzj:'李宗仁',swn:'西南軍閥',xbj:'新疆',ccp:'中國共産黨',swe:'瑞典',che:'瑞西',tib:'チベット國',prs:'ペルシア',jp:'大日本帝國',de:'第三帝國',it:'伊太利',th:'泰',es:'西班牙',pt:'葡萄牙',gb:'英國',us:'米國',fr:'佛國',nl:'蘭國',su:'魯西亞',cn:'支那',tr:'土耳古'},QL=['勤勉','能力','俊敏','健康','貯蓄','信仰','協調','模倣','情報','醫學'],DO=[1,0,2,7,6,3,5,4,8,9],
 qm=o=>{const q=NQ[o];return q?(q[0]+q[1]+q[2]+q[3])/240*(.9+q[6]/1000):1},srT=x=>2500/NQ[x][5],TH={},TN=[['本','本土・外地'],['北','北方'],['支','支那'],['南','南方'],['洋','太平洋・北米'],['米','中南米・狩部海'],['歐','歐州・中東']],cmd=o=>Math.floor((NQ[o][0]+NQ[o][2])/25),af=o=>cmd(o)/4;
-[['本','nai cho tai kar nan man kwa hkd thk sth chb hkr nri kin cgs shk kyu csm nsw bsu tyo'],['北','csm nsb esb bur kaz uzb kkp geo ajr abk arm smo kka enk tsb yak wsb cas taj kgz sue blr ukr mda crm dnb zap len krl vlg mrd vgr klm mar cvs tat cau nkh oss kbr cec dag url udm kom bsk'],['支','umo hok sha chu knn hkg jyu tib sin jxi tjn shd xuz whn csh mac hai cdu kmg yan'],['南','fin thi mal sgp bir sum jaw kal ran ind'],['歐','sar deu aut cze sud slk pol gal blt suo swe nor dnk bnl fra che ita spa por gbr hun rom mol dob buk trn bes yug cro bul grc tur mde egy lby rhr bay epr kbg sil pom sit sco sfr als nce'],['米','mex gua enz sal hon nic cos pan col ven crb ecu per bol chi par uru arg flk guy sur gfr bra']].forEach(([t,l])=>l.split(' ').forEach(x=>TH[x]=t));RD.forEach(d=>{if(!TH[d[0]])TH[d[0]]='洋'});
+[['本','nai cho tai kar nan man kwa hkd thk sth chb hkr nri kin cgs shk kyu csm nsw bsu tyo'],['北','csm nsb esb bur kaz uzb kkp geo ajr abk arm smo kka enk tsb yak wsb cas taj kgz sue blr ukr mda crm dnb zap len krl vlg mrd vgr klm mar cvs tat cau nkh oss kbr cec dag url udm kom bsk'],['支','umo hok sha chu knn hkg jyu tib sin jxi tjn shd xuz whn csh mac hai cdu kmg yan xan'],['南','fin thi mal sgp bir sum jaw kal ran ind'],['歐','sar deu aut cze sud slk pol gal blt suo swe nor dnk bnl fra che ita spa por gbr hun rom mol dob buk trn bes yug cro bul grc tur mde egy lby rhr bay epr kbg sil pom sit sco sfr als nce'],['米','mex gua enz sal hon nic cos pan col ven crb ecu per bol chi par uru arg flk guy sur gfr bra']].forEach(([t,l])=>l.split(' ').forEach(x=>TH[x]=t));RD.forEach(d=>{if(!TH[d[0]])TH[d[0]]='洋'});
 NQ.zxl=[46,62,50,74,52,58,34,40,24,30];NQ.yxs=[42,58,50,68,38,60,26,38,22,28];NQ.lzj=[44,55,50,72,40,58,38,42,22,30];NQ.swn=[34,50,45,62,30,48,16,32,16,24];NQ.xbj=[30,44,40,55,28,45,30,30,18,22];NQ.ccp=[48,40,58,60,24,72,50,50,30,38];NQ.swe=[100,100,100,95,110,100,100,95,95,95];NQ.che=[100,105,100,100,110,105,95,95,95,100];NQ.prs=[95,90,95,90,85,95,90,90,80,85];NQ.tib=[80,75,80,80,75,95,80,70,70,75];
 const PLD={jp:{lb:'大日本帝國天皇',n:'大日本帝國',t:'天皇',h1:'帝國經綸',hm:'nai',core:['hkd','thk','chb','kin','cgs','kyu','csm','nsw'],sl:[['cn','支那'],['zxl','張學良'],['yxs','閻・馮'],['lzj','李宗仁'],['swn','西南軍閥'],['xbj','新疆'],['ccp','中國共産黨'],['su','魯西亞'],['us','米英']],wk:{zxl:'zxl',yxs:'yxs',lzj:'lzj',swn:'swn',xbj:'xbj',ccp:'ccp',cn:'cn',su:'su',us:'us',gb:'us',nl:'us',la:'us'},fr:['fr','th'],al:[]},
 de:{lb:'第三帝國總統',n:'第三帝國',t:'總統',h1:'帝國經綸',to:['歐','北','南','支','本','洋','米'],hm:'deu',core:['rhr','bay','epr','kbg','sil','pom'],ar:[160,45,130],imp:{oil:5,iron:6},sl:[['gb','英佛'],['su','魯西亞'],['us','米國'],['jp','大日本帝國'],['cn','支那'],['it','伊太利']],wk:{gb:'gb',fr:'gb',nl:'gb',pol:'gb',us:'us',la:'us',su:'su',jp:'jp',cn:'cn',it:'it'},fr:['nt'],al:['it'],rel:{gb:-10,fr:-20,su:-30,us:-10,jp:30,it:40,es:40,tr:20},g:'行動數は（勤勉＋俊敏）÷25。波蘭を攻めれば英佛と開戰する。羅馬尼亞の石油と瑞典の鐵が要。英佛と戰ふ間は交易が半減し、昭和十七年には米國が參戰する。魯西亞とは不可侵條約（關係50）を結べば背後を突かれにくい。'},
 su:{lb:'魯西亜(蘇聯)書記長',n:'魯西亞（蘇聯）',t:'書記長',h1:'蘇聯經綸',to:['北','歐','支','本','南','洋','米'],hm:'sue',core:['blr','ukr','kka','enk','tsb','wsb','cas','len','vlg','cau','url','nsb','esb','est','lat','blt','geo','arm','kaz','uzb','tat','bsk','cvs','mar','klm','dag','cec','crm','dnb','zap','vgr','mrd','udm','kbr','oss','nkh','kkp','abk','ajr','mda','krl','kom','yak','bur','kgz','taj'],ar:[176,32,96],sl:[['de','獨伊'],['jp','大日本帝國'],['cn','支那'],['gb','英佛'],['us','米國']],wk:{de:'de',it:'de',jp:'jp',cn:'cn',gb:'gb',fr:'gb',nl:'gb',us:'us',la:'us'},fr:['nt','pol'],al:['gb','us'],rel:{de:-30,jp:-30,gb:-10,fr:-10,us:0,tr:0,it:-20},g:'行動數は（勤勉＋俊敏）÷25。一九四一年夏、第三帝國が不意に侵攻してくる（不可侵條約で關係80以上なら避けられる）。日本も北進を狙ふ。一九四二年からは米國の援助物資が届く。波蘭・芬蘭・波羅的三國は宣戰なしで攻められる。'},
 us:{lb:'亞米利加合衆國大統領',n:'亞米利加合衆國',t:'大統領',h1:'合衆國經綸',to:['洋','米','本','南','支','歐','北'],hm:'NY',core:['AL','AZ','AR','CA','CO','CT','DE','DC','FL','GA','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC','alk','haw','phi','gum','hwb','nal'],ar:[70,130,70],sl:[['jp','大日本帝國'],['de','獨伊'],['su','魯西亞'],['cn','支那'],['gb','英佛']],wk:{jp:'jp',th:'jp',de:'de',it:'de',su:'su',cn:'cn',gb:'gb',fr:'gb',nl:'gb'},fr:['nt'],al:['gb','fr','nl','su'],rel:{jp:-20,de:-20,gb:40,fr:30,su:-10,it:-10,cn:30},g:'行動數は（勤勉＋俊敏）÷25。一九四一年冬、日本が眞珠灣を奇襲し、第三帝國も宣戰する（不可侵條約で避けられる）。工業力で押し勝つのが本筋。英本國を足場に歐州へ渡れる。'},
- cn:{lb:'中華民國總統',n:'中華民國',t:'總統',h1:'中華經綸',to:['支','南','本','北','洋','米','歐'],get hm(){try{return S&&S.pl=='cn'&&S.ev&&S.ev.qmv?'jyu':'chu'}catch(e){return'chu'}},core:['sha','chu','xuz','whn','csh','knn','hai','jyu','cdu','kmg','jxi','yan','hok','tjn','shd','umo','sin'],ar:[84,2,6],sl:[['jp','大日本帝國'],['ccp','中國共産黨'],['yxs','閻・馮'],['lzj','李宗仁'],['swn','西南軍閥'],['xbj','新疆'],['zxl','張學良'],['su','蘇聯'],['de','獨伊'],['gb','英佛'],['us','米國']],wk:{jp:'jp',th:'jp',ccp:'ccp',yxs:'yxs',lzj:'lzj',swn:'swn',xbj:'xbj',zxl:'zxl',su:'su',de:'de',it:'de',gb:'gb',fr:'gb',nl:'gb',us:'us'},fr:[],al:['us','gb'],rel:{jp:-60,us:30,gb:20,su:10,de:20,it:0,fr:10,ccp:-40,yxs:10,lzj:0,swn:0,xbj:-10,zxl:20},g:'行動數は（勤勉＋俊敏）÷25。一九三七年夏、盧溝橋事件より日本と全面戰爭に入る。日本軍は強く、沿岸・長江の要地は次々と陷ちる。南京を失へば重慶へ遷都する。重慶・成都・昆明は、英米と蘇聯の援助が共に半ば以上續き、獨逸が昭和二十年五月迄・日本が同年九月迄に降伏する限り落ちない。一つでも欠ければ陷落もあり得る（日蘇中立條約後の蘇聯援助は、關係60以上で半ばを保つ）。廣西・四川・雲南は軍閥の地盤で、支配が25を割ると離反する。共産黨は日本軍の後方や手薄な地方に根據地を廣げる。外交の「援助懇願」で米英の援助が増す。米國が參戰しない限り日本は降伏せず、自力での勝利は叶はない。'},
+ cn:{lb:'中華民國總統',n:'中華民國',t:'總統',h1:'中華經綸',to:['支','南','本','北','洋','米','歐'],get hm(){try{return S&&S.pl=='cn'&&S.ev&&S.ev.qmv?'jyu':'chu'}catch(e){return'chu'}},core:['sha','chu','xuz','whn','csh','knn','hai','jyu','cdu','kmg','jxi','xan','yan','hok','tjn','shd','umo','sin'],ar:[84,2,6],sl:[['jp','大日本帝國'],['ccp','中國共産黨'],['yxs','閻・馮'],['lzj','李宗仁'],['swn','西南軍閥'],['xbj','新疆'],['zxl','張學良'],['su','蘇聯'],['de','獨伊'],['gb','英佛'],['us','米國']],wk:{jp:'jp',th:'jp',ccp:'ccp',yxs:'yxs',lzj:'lzj',swn:'swn',xbj:'xbj',zxl:'zxl',su:'su',de:'de',it:'de',gb:'gb',fr:'gb',nl:'gb',us:'us'},fr:[],al:['us','gb'],rel:{jp:-60,us:30,gb:20,su:10,de:20,it:0,fr:10,ccp:-40,yxs:10,lzj:0,swn:0,xbj:-10,zxl:20},g:'行動數は（勤勉＋俊敏）÷25。一九三七年夏、盧溝橋事件より日本と全面戰爭に入る。日本軍は強く、沿岸・長江の要地は次々と陷ちる。南京を失へば重慶へ遷都する。重慶・成都・昆明は、英米と蘇聯の援助が共に半ば以上續き、獨逸が昭和二十年五月迄・日本が同年九月迄に降伏する限り落ちない。一つでも欠ければ陷落もあり得る（日蘇中立條約後の蘇聯援助は、關係60以上で半ばを保つ）。廣西・四川・雲南は軍閥の地盤で、支配が25を割ると離反する。共産黨は日本軍の後方や手薄な地方に根據地を廣げる。外交の「援助懇願」で米英の援助が増す。米國が參戰しない限り日本は降伏せず、自力での勝利は叶はない。'},
  gb:{lb:'大英帝國國王',n:'大英帝國',t:'國王',h1:'大英經綸',to:['歐','南','洋','米','本','支','北'],hm:'gbr',core:['can','aus','nzl','sco','wal','nir'],ar:[60,160,70],sl:[['de','獨伊'],['jp','大日本帝國'],['su','魯西亞'],['us','米國'],['cn','支那']],wk:{de:'de',it:'de',jp:'jp',th:'jp',su:'su',us:'us',la:'us',cn:'cn'},fr:['nt'],al:['fr','nl','pol','us'],rel:{de:-10,it:-10,jp:0,su:-20,us:60,fr:70,nl:60,cn:20,pol:50},g:'行動數は（勤勉＋俊敏）÷25。1939年秋、第三帝國が波蘭に侵攻し英國は參戰する。1940年に佛蘭西が降れば英本國は孤立し、本土航空戰が始まる（空軍60未滿だと工業が被害）。1941年冬、日本が馬來・香港を襲ひ、米國が參戰する。加奈陀・豪州・新慈蘭は自治領として忠誠を保つが、印度・緬甸・馬來・埃及などの植民地は年を追って獨立の氣運が高まる。支配が20を割ると獨立を宣言するので、同化と行政で支配を保て。'}};
 const NAV=['gb','us','jp'],HMO={de:'deu',it:'ita',gb:'gbr',fr:'fra',nl:'bnl',us:'NY',su:'sue',jp:'nai',pol:'pol'};
 function TNL(){return(PS().to||['本','北','支','南','洋','米','歐']).map(t=>[t,P!='jp'&&t=='本'?'大日本帝國 本土・外地':P=='su'&&t=='北'?'蘇聯本土・西比利亞':P=='cn'&&t=='支'?'中國本部':P=='de'&&t=='北'?'魯西亞・西比利亞':TN.find(x=>x[0]==t)[1]])}
@@ -396,7 +396,7 @@ R:RD.map(r=>({id:r[0],o:r[2],p:r[3],c:r[4],or:r[2]})),D:DD.map(d=>({v:d[5]})),lo
 
 const PF30={nai:64.45/70.6,csm:64.45/70.6,nsw:64.45/70.6,wal:.98,nir:.98,hkd:64.45/70.6,thk:64.45/70.6,chb:64.45/70.6,kin:64.45/70.6,cgs:64.45/70.6,kyu:64.45/70.6,cho:21.06/22,tai:4.59/5.5,kar:.98,nan:.7,man:30/37,kwa:.95/1.37,ind:338/380,jaw:.893,sum:.893,kal:.893,ran:.893,phi:.84,deu:.96,gbr:.98,fra:1,ita:.94,sue:.9,ukr:.93,blr:.93},
 G30={jp:.59,us:1.04,de:.71,su:.93,gb:.97,fr:.94,it:.87,cn:.76,nl:.84,es:.66,th:.62,pt:.62,tr:1.2,swe:.69,che:.85,prs:.4,tib:.25,zxl:.76,yxs:.76,lzj:.76,swn:.76,xbj:.76,ccp:.76};
-function sc30(o,pl){o.sc=1930;o.y=1930;o.R.forEach(r=>{r.p*=PF30[r.id]??.93});const m=o.R.find(r=>r.id=='man');m.o='zxl';m.or='zxl';m.c=0;{const ya=o.R.find(r=>r.id=='yan');if(ya){ya.o='yxs';ya.or='yxs'}}o.war={};o.E.de=50;o.E.jp=80;o.E.cn=90;
+function sc30(o,pl){o.sc=1930;o.y=1930;o.R.forEach(r=>{r.p*=PF30[r.id]??.93});o.R.forEach(r=>{if(CNG.includes(r.or))r.p*=1.045;else if(r.or=='su')r.p*=1.04});{const j=o.R.find(r=>r.id=='jxi');if(j){j.o='ccp';j.or='ccp'}}const m=o.R.find(r=>r.id=='man');m.o='zxl';m.or='zxl';m.c=0;{const ya=o.R.find(r=>r.id=='yan');if(ya){ya.o='yxs';ya.or='yxs'}}o.war={};o.E.de=50;o.E.jp=80;o.E.cn=90;
  if(pl=='jp'){Object.assign(o,{ind:76,elec:520,army:85,navy:95,air:30,zai:1.5,stab:60,fund:90,mun:40});o.rel.de=60;o.rel.us=10;o.rel.gb=10;o.log=['昭和五年正月　昭和恐慌のさなか、御代を差配す']}
  else{const f={de:[.4,.35,.1],su:[.8,.6,.5],us:[.8,.85,.5],gb:[.8,.9,.5],cn:[.9,.8,.6]}[pl];o.army=Math.round(o.army*f[0]);o.navy=Math.round(o.navy*f[1]);o.air=Math.round(o.air*f[2]);o.log=[pl=='de'?'一九三〇年正月　國民社會主義獨逸勞働者黨の黨首として政權奪取を目指す':'一九三〇年正月　'+PLD[pl].n+'の'+PLD[pl].t+'として國を率ゐる']}}
 function story30(){if(S.sc!=1930)return;const v=S.ev,d=S.y*4+S.q,E=S.E;
@@ -533,9 +533,9 @@ function calc(){homeNi();const c={food:0,coal:0,iron:0,oil:0,ura:0,gold:0,gas:0}
  for(const k in(S.tr||{}))if(S.tr[k].trd&&!atW(k)){c.gold+=2;c.oil+=1;c.iron+=1}if(P=='jp'){c.imp=S.emb?0:3;if(!S.emb){c.oil+=8;c.iron+=4}}else{const im=PS().imp||{},h=P=='de'&&S.war.gb?.5:1;c.imp=im.oil?2:0;c.oil+=(im.oil||0)*h;c.iron+=(im.iron||0)*h}
  const rl=S.rel;if(rl.gb>=40&&!S.war.gb){c.gold+=4;c.iron+=2}if(rl.nl>=40&&!S.war.us)c.oil+=6;if(rl.pt>=50){c.oil+=2;c.gold+=2}
  const n=Object.values(S.war).filter(v=>v).length,nw=P=='jp'?S.war.us||S.war.gb:NAV.some(x=>S.war[x]);
- pop+=S.zai;pe+=S.zai*.8;c.need=naiP()+S.zai*.3+(S.army+S.navy+S.air)*.02;if(P=='cn')c.need=S.R.reduce((q,r)=>q+(r.o==P?r.p:0),0)*.45+(S.army+S.navy+S.air)*.02;
+ pop+=S.zai;pe+=S.zai*.8;c.need=naiP()+S.zai*.3+(S.army+S.navy+S.air)*.02;if(P=='cn')c.need=S.R.reduce((q,r)=>q+(r.o==P?r.p:0),0)*.3+(S.army+S.navy+S.air)*.02;
  c.oilU=S.ind*.02+S.army*(n?.02:.008)+S.navy*(nw?.06:.02)+S.air*(n?.03:.012);
- c.coalU=S.ind*.08+S.elec*.004;c.elecD=S.ind*6.5+S.arms*8;c.eF=Math.min(1,(S.elec+c.gas*15)/c.elecD);c.munP=(S.arms*S.ind/100*(1+.03*L('ind'))+S.ind*.03)*c.eF;c.munU=n?S.army*.03+S.navy*.02:0;c.medP=(S.phar+S.ika*.02)*(1+.03*L('ind'));c.medU=n?(S.army+S.navy)*.01:0;c.ironU=S.ind*.05;c.pe=pe;c.pop=pop;
+ c.coalU=S.ind*.08+S.elec*.004;c.elecD=S.ind*6.5+S.arms*8;c.elS=(S.elec+c.gas*15)*({su:.72,cn:.45}[P]||1);c.eF=Math.min({su:.7,cn:.5}[P]||1,c.elS/c.elecD);c.munP=(S.arms*S.ind/100*(1+.03*L('ind'))+S.ind*.03)*c.eF;c.munU=(n?S.army*.03+S.navy*.02:0)+(P=='su'?S.army*.03+S.air*.03:P=='cn'?S.army*.015+S.air*.02:0);c.medP=(S.phar+S.ika*.02)*(1+.03*L('ind'));c.medU=n?(S.army+S.navy)*.01:0;c.ironU=S.ind*.05;c.pe=pe;c.pop=pop;
  c.gnp=S.ind*(pe/87)*(.7+.3*S.stab/100)*(S.resF||1)*(.6+.4*c.eF)*(1+.02*L('ind')+.03*L('elc'));c.mr=Math.pow(M(),1.5)*(1+S.ika/1000)*(.85+S.kyo/400);c.gdp=c.gnp*c.mr;
  c.inc=c.gdp*.45*(.7+S.sav/300)*(1+L('com')*.03)*(1+.01*(L('kok')+L('fis')+L('fer')+L('ind')+L('yak')+L('elc')))*Math.pow(Math.max(1,S.ind)/102,.4)*Math.pow(pe/87,.2)+c.gold;c.upk=S.army*.05+S.navy*.07+S.air*.05+n*2+c.imp;c.inc*=(1+pvInc())*syn();
  c.sci=(c.gdp*.04*S.nou/60+S.lab*3+Object.keys(S.tr||{}).filter(k=>S.tr[k].all).length+S.ika*.02+(S.al.ax&&!S.ev.dec?2:0))*(1+S.imi/200)*gmul()*syn();return c}
@@ -739,7 +739,7 @@ let mpF=null;let mapZ='world';
 /* 地圖の表示範圍：地域ごとに選べる（經緯度の範圍で指定） */
 const MZ=[['world','世界',-180,180,-90,90],['jp','日本',118,150,22,50],['cn','支那',95,125,18,45],['fe','極東',100,180,30,75],['ea','東亞',100,150,18,50],['sea','東南亞',92,130,-12,25],['sa','南亞',60,95,5,38],['wa','西亞',25,65,25,50],['ca','中亞',45,90,35,56],['me','中東',-20,60,-5,45],['eu','歐州',-15,50,33,70],['af','阿弗利加',-20,52,-36,38],['oc','大洋州',110,180,-50,10],['na','北米',-170,-50,15,75],['cam','中米',-120,-58,5,33],['sam','南米',-85,-33,-57,13],['su','魯西亞',20,180,40,80]];
 function mzBox(k){const z=MZ.find(q=>q[0]==k)||MZ[0];const x0=(z[2]+180)/360*1000,x1=(z[3]+180)/360*1000,y0=(90-z[5])/180*500,y1=(90-z[4])/180*500;return {x:x0,y:y0,w:x1-x0,h:y1-y0}}
-const MPOS={jxi:[115.5,27],nai:[139.8,36.4],cho:[127,38],tai:[121,23.5],kar:[143,49],nan:[150,7],man:[124,46],kwa:[122,39],umo:[110,42],hok:[116.4,39.9],sha:[121.5,31],chu:[118.8,32.1],knn:[113.3,23.1],hkg:[114.2,22.3],jyu:[106.5,29.6],tib:[90,31],sin:[84,42],smo:[104,47],kka:[143,55],enk:[134,46],tsb:[100,56],wsb:[73,55],cas:[59,39],sue:[37.6,55.8],blr:[28,53.5],ukr:[32,49],alk:[-150,61.2],can:[-100,58],mex:[-102,23],gua:[-90.5,15.5],enz:[-86.5,14],sal:[-89,13.5],hon:[-86.5,15],nic:[-85,12.5],cos:[-84,10],pan:[-80,8.5],col:[-74,4],ven:[-66,8],crb:[-75,19],ecu:[-78.5,-1.5],per:[-75,-10],bol:[-64.5,-16.5],chi:[-71,-33],par:[-58,-23],uru:[-56,-33],arg:[-64,-38],flk:[-59,-51.5],guy:[-59,5],sur:[-56,4],gfr:[-53,4],bra:[-52,-12],deu:[13.4,52.5],aut:[14,47.5],cze:[15,49.8],pol:[19.5,52],blt:[23.9,55.2],suo:[26,64],swe:[16,62],nor:[10,62],dnk:[9.5,56],bnl:[4.5,51.5],fra:[2.3,48.9],che:[8,46.8],ita:[11.5,43.8],spa:[-4,40],por:[-8,39.5],gbr:[-1.5,52.6],hun:[19.5,47],rom:[25,46],yug:[20.5,44],slk:[19.2,48.7],sud:[13.4,50.6],cro:[16,45.1],trn:[24.5,46.3],bes:[28.6,47.1],mol:[27.2,47],dob:[28.4,44.4],buk:[25.8,48],tat:[49.1,55.6],bsk:[56,54.2],cvs:[47.2,55.4],mar:[48,56.7],klm:[45.5,46.3],dag:[47.3,42.8],cec:[45.6,43.3],crm:[34.1,44.9],dnb:[38.5,48.2],zap:[35.6,47.3],gal:[24.4,49.4],krl:[33,63.5],kom:[54,64],yak:[129.7,62],bur:[108.5,52.5],kgz:[74.6,41.4],taj:[71,38.7],vgr:[46.5,51.2],mrd:[44.5,54.2],udm:[53,57],kbr:[43.4,43.5],oss:[44.4,43],nkh:[45.4,39.2],kkp:[59.6,42.5],abk:[41,43.1],ajr:[41.7,41.6],mda:[29.5,47.3],bul:[25,42.7],grc:[22,39],tur:[33,39],mde:[44,33],egy:[30,27],lby:[17,27],fin:[106,15],thi:[101,15],mal:[102,4],sgp:[104,1.3],bir:[96,20],sum:[101,0],jaw:[110,-7.5],kal:[115,0],ran:[128,-2],ngn:[141,-4],phi:[122,12],gum:[144.8,13.4],haw:[-158,21.3],pgb:[170,-15],pfr:[-150,-17],ind:[78,22],aus:[134,-25],nzl:[172,-41],tjn:[117.7,39],shd:[118,36.4],xuz:[117.2,34.3],whn:[114.3,30.6],csh:[112.9,28.2],mac:[113.4,22],hai:[109.8,19.2],cdu:[104.1,30.7],kmg:[102.7,25],yan:[109.5,36.6],hkd:[142.8,43.3],thk:[140.9,40.2],sth:[140.4,37.9],hkr:[136.7,36.5],nri:[138.4,36.6],shk:[133.4,33.7],chb:[137.4,35.0],kin:[135.5,34.7],cgs:[132.6,34.9],kyu:[130.7,32.6],len:[30.3,59.9],vlg:[44.5,48.7],cau:[48.5,40.4],url:[60.6,56.8],rhr:[7,51.3],bay:[11.6,48.4],epr:[21,54.5],kbg:[20.5,54.7],sil:[17,51],pom:[15.5,53.8],sit:[15,38.6],sco:[-4,56.6],sfr:[4.5,44],als:[6.9,48.6],nce:[7.1,44.2],wal:[-3.7,52.4],nir:[-6.6,54.6],csm:[149.5,44.5],nsw:[126.5,25.5],hwb:[-156.5,20.5],nal:[-147.7,64.8],nsb:[90,56],esb:[106,52],sar:[9,40],bsu:[140.1,35.2],est:[25,58.6],lat:[24.6,57],geo:[43.4,42.3],arm:[44.5,40.2],kaz:[68,48],uzb:[64,41.4],AL:[-86.8,32.8],AZ:[-111.7,34.3],AR:[-92.4,34.9],CA:[-119.5,37.2],CO:[-105.5,39],CT:[-72.7,41.6],DE:[-75.5,39],DC:[-77,38.9],FL:[-81.7,28.6],GA:[-83.4,32.7],ID:[-114.5,44.4],IL:[-89.2,40],IN:[-86.3,39.9],IA:[-93.5,42],KS:[-98.4,38.5],KY:[-85.3,37.5],LA:[-91.9,31],ME:[-69.2,45.3],MD:[-76.7,39],MA:[-71.8,42.3],MI:[-85,44.3],MN:[-94.3,46.3],MS:[-89.7,32.7],MO:[-92.5,38.4],MT:[-110,47],NE:[-99.8,41.5],NV:[-116.7,39.3],NH:[-71.6,43.7],NJ:[-74.5,40.1],NM:[-106,34.4],NY:[-75.5,42.9],NC:[-79.4,35.5],ND:[-100.5,47.5],OH:[-82.8,40.3],OK:[-97.5,35.6],OR:[-120.5,43.9],PA:[-77.6,40.9],RI:[-71.5,41.7],SC:[-80.9,33.9],SD:[-100.2,44.4],TN:[-86.6,35.8],TX:[-99.3,31.5],UT:[-111.7,39.3],VT:[-72.7,44],VA:[-78.7,37.5],WA:[-120.5,47.4],WV:[-80.6,38.6],WI:[-89.8,44.6],WY:[-107.5,43],tyo:[139.7,35.7],ber:[13.4,52.5],pri:[2.35,48.85],lon:[-0.1,51.5],mos:[37.6,55.8],roma:[12.5,41.9]};
+const MPOS={jxi:[115.5,27],nai:[139.8,36.4],cho:[127,38],tai:[121,23.5],kar:[143,49],nan:[150,7],man:[124,46],kwa:[122,39],umo:[110,42],hok:[116.4,39.9],sha:[121.5,31],chu:[118.8,32.1],knn:[113.3,23.1],hkg:[114.2,22.3],jyu:[106.5,29.6],tib:[90,31],sin:[84,42],smo:[104,47],kka:[143,55],enk:[134,46],tsb:[100,56],wsb:[73,55],cas:[59,39],sue:[37.6,55.8],blr:[28,53.5],ukr:[32,49],alk:[-150,61.2],can:[-100,58],mex:[-102,23],gua:[-90.5,15.5],enz:[-86.5,14],sal:[-89,13.5],hon:[-86.5,15],nic:[-85,12.5],cos:[-84,10],pan:[-80,8.5],col:[-74,4],ven:[-66,8],crb:[-75,19],ecu:[-78.5,-1.5],per:[-75,-10],bol:[-64.5,-16.5],chi:[-71,-33],par:[-58,-23],uru:[-56,-33],arg:[-64,-38],flk:[-59,-51.5],guy:[-59,5],sur:[-56,4],gfr:[-53,4],bra:[-52,-12],deu:[13.4,52.5],aut:[14,47.5],cze:[15,49.8],pol:[19.5,52],blt:[23.9,55.2],suo:[26,64],swe:[16,62],nor:[10,62],dnk:[9.5,56],bnl:[4.5,51.5],fra:[2.3,48.9],che:[8,46.8],ita:[11.5,43.8],spa:[-4,40],por:[-8,39.5],gbr:[-1.5,52.6],hun:[19.5,47],rom:[25,46],yug:[20.5,44],slk:[19.2,48.7],sud:[13.4,50.6],cro:[16,45.1],trn:[24.5,46.3],bes:[28.6,47.1],mol:[27.2,47],dob:[28.4,44.4],buk:[25.8,48],tat:[49.1,55.6],bsk:[56,54.2],cvs:[47.2,55.4],mar:[48,56.7],klm:[45.5,46.3],dag:[47.3,42.8],cec:[45.6,43.3],crm:[34.1,44.9],dnb:[38.5,48.2],zap:[35.6,47.3],gal:[24.4,49.4],krl:[33,63.5],kom:[54,64],yak:[129.7,62],bur:[108.5,52.5],kgz:[74.6,41.4],taj:[71,38.7],vgr:[46.5,51.2],mrd:[44.5,54.2],udm:[53,57],kbr:[43.4,43.5],oss:[44.4,43],nkh:[45.4,39.2],kkp:[59.6,42.5],abk:[41,43.1],ajr:[41.7,41.6],mda:[29.5,47.3],bul:[25,42.7],grc:[22,39],tur:[33,39],mde:[44,33],egy:[30,27],lby:[17,27],fin:[106,15],thi:[101,15],mal:[102,4],sgp:[104,1.3],bir:[96,20],sum:[101,0],jaw:[110,-7.5],kal:[115,0],ran:[128,-2],ngn:[141,-4],phi:[122,12],gum:[144.8,13.4],haw:[-158,21.3],pgb:[170,-15],pfr:[-150,-17],ind:[78,22],aus:[134,-25],nzl:[172,-41],tjn:[117.7,39],shd:[118,36.4],xuz:[117.2,34.3],whn:[114.3,30.6],csh:[112.9,28.2],mac:[113.4,22],hai:[109.8,19.2],cdu:[104.1,30.7],kmg:[102.7,25],yan:[109.5,36.6],xan:[106.8,34.6],hkd:[142.8,43.3],thk:[140.9,40.2],sth:[140.4,37.9],hkr:[136.7,36.5],nri:[138.4,36.6],shk:[133.4,33.7],chb:[137.4,35.0],kin:[135.5,34.7],cgs:[132.6,34.9],kyu:[130.7,32.6],len:[30.3,59.9],vlg:[44.5,48.7],cau:[48.5,40.4],url:[60.6,56.8],rhr:[7,51.3],bay:[11.6,48.4],epr:[21,54.5],kbg:[20.5,54.7],sil:[17,51],pom:[15.5,53.8],sit:[15,38.6],sco:[-4,56.6],sfr:[4.5,44],als:[6.9,48.6],nce:[7.1,44.2],wal:[-3.7,52.4],nir:[-6.6,54.6],csm:[149.5,44.5],nsw:[126.5,25.5],hwb:[-156.5,20.5],nal:[-147.7,64.8],nsb:[90,56],esb:[106,52],sar:[9,40],bsu:[140.1,35.2],est:[25,58.6],lat:[24.6,57],geo:[43.4,42.3],arm:[44.5,40.2],kaz:[68,48],uzb:[64,41.4],AL:[-86.8,32.8],AZ:[-111.7,34.3],AR:[-92.4,34.9],CA:[-119.5,37.2],CO:[-105.5,39],CT:[-72.7,41.6],DE:[-75.5,39],DC:[-77,38.9],FL:[-81.7,28.6],GA:[-83.4,32.7],ID:[-114.5,44.4],IL:[-89.2,40],IN:[-86.3,39.9],IA:[-93.5,42],KS:[-98.4,38.5],KY:[-85.3,37.5],LA:[-91.9,31],ME:[-69.2,45.3],MD:[-76.7,39],MA:[-71.8,42.3],MI:[-85,44.3],MN:[-94.3,46.3],MS:[-89.7,32.7],MO:[-92.5,38.4],MT:[-110,47],NE:[-99.8,41.5],NV:[-116.7,39.3],NH:[-71.6,43.7],NJ:[-74.5,40.1],NM:[-106,34.4],NY:[-75.5,42.9],NC:[-79.4,35.5],ND:[-100.5,47.5],OH:[-82.8,40.3],OK:[-97.5,35.6],OR:[-120.5,43.9],PA:[-77.6,40.9],RI:[-71.5,41.7],SC:[-80.9,33.9],SD:[-100.2,44.4],TN:[-86.6,35.8],TX:[-99.3,31.5],UT:[-111.7,39.3],VT:[-72.7,44],VA:[-78.7,37.5],WA:[-120.5,47.4],WV:[-80.6,38.6],WI:[-89.8,44.6],WY:[-107.5,43],tyo:[139.7,35.7],ber:[13.4,52.5],pri:[2.35,48.85],lon:[-0.1,51.5],mos:[37.6,55.8],roma:[12.5,41.9]};
 const UNC=[['gen','寿府'],['ny','紐育'],['mos','莫斯科'],['lon','倫敦'],['ber','伯林'],['par','巴里'],['mad','馬徳里'],['rom','羅馬'],['tok','東京'],['nan','南京']],UNPREF={us:'ny',su:'mos',gb:'lon',fr:'par',de:'ber',it:'rom',cn:'nan',che:'gen'};
 const BDC=[['osa','大阪'],['kyo','京都'],['tok','東京'],['sha','上海'],['hkg','香港']];
 const HCM=[[1937,'支那事變は泥沼の長期戰となる。',()=>P!='jp'||S.war.cn],[1939,'歐州に戰雲。第三帝國の進撃に世界が揺れる。'],[1941,'太平洋に戰火が擴がる。',()=>P=='jp'?!!(S.war.us||S.ev.usw):P=='us'?!!(S.war.jp||S.ev.v_jp):true],[1945,'長き戰ひ終はり、新たな國際秩序を探る時代となる。'],[1948,'亞細亞・阿弗利加に獨立の波が高まる。'],[1955,'冷戰の對立が世界を二分する。'],[1960,'技術と經濟が新たな時代を拓く。']];
@@ -928,10 +928,11 @@ function gbStory(v,d,E,pc){
  cols.forEach(r=>{r.c=Math.max(0,r.c-ur);if(r.c<20&&Math.random()<.15){const n=nm(r);r.o=indK(r.id);up('stab',-3);lg(n+'、英國より獨立を宣言す');ntf(n+'、獨立を宣言')}});
  if(!v.gbw&&cols.some(r=>r.c<35)){v.gbw=1;ntf('植民地に獨立の氣運高まる（支配が20を割ると獨立宣言）')}}
 
-const CNIN=['jyu','cdu','kmg','sin'],CNORD=['sha','chu','xuz','whn','knn','hai','jxi','csh'],cnO=id=>{const i=CNORD.indexOf(id);return i<0?99:i};
+const CNIN=['jyu','cdu','kmg','sin','xan'],CNORD=['sha','chu','xuz','whn','knn','hai','jxi','csh'],cnO=id=>{const i=CNORD.indexOf(id);return i<0?99:i};
 function cnInit(o,sc){o.R.forEach(r=>{if(sc!=1930&&['knn','hai','jyu','cdu','kmg'].includes(r.id)&&['lzj','swn'].includes(r.o)){r.o='cn';r.c=35}if(sc!=1930&&r.id=='jxi'&&r.o=='ccp'){r.o='cn';r.c=50}});o.E.jp=sc==1930?80:100;o.rel.ccp=sc==1930?-60:-20;o.fund=20;o.stab=55;o.log=[(sc==1930?'民國十九年（一九三〇年）正月':'民國二十六年（一九三七年）正月')+'　中華民國總統として國を率ゐる']}
 function cnCond(){const d=S.y*4+S.q,a=(S.aidR||{})[P]||0,base=(S.y>=1942?3:2)+1;return[['英米の援助が半ば以上',d<1938*4+1||!S.war.jp||a>=base*.5,'援助 '+a.toFixed(1)+' / 基準 '+base],['蘇聯の援助が半ば以上',!S.war.jp||S.suA==null||S.suA>=.75,'援助 '+(S.suA||0).toFixed(2)+' / 基準 1.5'],['獨逸が昭和二十年五月迄に降伏',d<1945*4+2||!alv('de'),alv('de')?'未降伏':'降伏濟'],['日本が昭和二十年九月迄に降伏',d<1945*4+3||!S.war.jp||!alv('jp'),S.ev.v_jp?'降伏濟':S.war.jp?'交戰中':'開戰前']]}
 function cnSafe(){return cnCond().every(c=>c[1])}
+function lmC(){if(S.sc!=1930||S.ev.lm||S.y*4+S.q<1934*4+3)return;S.ev.lm=1;const j=rs('jxi'),y=rs('yan');if(j&&j.o=='ccp'&&P!='cn'){j.o=j.or='cn';j.c=40}if(y&&y.o=='yxs'){y.o=y.or='ccp'}}
 function cnCap(){const d=S.y*4+S.q;return d<1939*4?.65:(d>=1944*4+1&&d<1945*4+1)?.4:.08}
 function cnPlea(){if(P!='cn'||S.ap<1||!spend({fund:2}))return;S.ap--;rel('us',8);rel('gb',8);rel('su',4);S.plea=S.y*4+S.q+4;lg('米英に援助を懇願す');fin()}
 function cnPanel(){const d=S.y*4+S.q,on=(S.plea||0)>d;return`<h2>抗戰と援助</h2><div class="g"><button class="act" data-a="plea"${S.ap>=1&&S.fund>=2?'':' disabled'}><b>米英に援助を懇願</b><span>米英との關係 +8・一年間 援助1.5倍${on?'（實施中）':''}</span><i>帑2</i></button></div><h2>奧地の安否</h2><div>${cnCond().map(c=>`<div class="p">${c[1]?'✓':'✗'} ${c[0]}　<small>${c[2]}</small></div>`).join('')}</div><p class="p"><b>${cnSafe()?'重慶・成都・昆明は安泰':'重慶・成都・昆明も陷落の恐れあり'}</b>（四條件が全て揃ふ間のみ日本軍は奧地を攻め落とせない）。${isWW('jp','us')?'米國參戰。日本の戰力は年を追って削られ、やがて降伏を申し入れる見込み。':'米國が參戰するまで、日本は決して降伏しない。'}${aidOn(P)?' 米英援助 毎季 戰力 +'+S.aidR[P].toFixed(1):''}</p>`}
@@ -939,7 +940,7 @@ function cnStory(v,d,E){const own=id=>{const r=rs(id);return r&&r.o==P},adj=id=>
  if(S.sc==1930){
   if(!v.c31&&d>=1931*4+2){v.c31=1;const m=rs('man');if(m&&m.o!='jp'&&m.o!=P&&alv('jp')){take('man','jp');up('stab',-5);lg('柳條湖事件。關東軍、滿洲を占領す')}}
   if(!v.c32&&d>=1932*4&&alv('jp')&&!S.war.jp){v.c32=1;up('stab',-2);lg('第一次上海事變。日本軍と上海に戰ふ')}
-  if(!v.c34&&d>=1934*4+3){v.c34=1;const j=rs('jxi');if(j&&j.o=='ccp'){j.o=P;j.c=40;lg('剿共戰により江西を收む。共産黨は長征して陝北へ逃る')}}
+  if(!v.c34&&d>=1934*4+3){v.c34=1;const j=rs('jxi');if(j&&j.o=='ccp'){j.o=j.or=P;j.c=40;lg('剿共戰により江西を收む。共産黨は長征して陝北へ逃る')}}
   if(!v.c35&&d>=1935*4+2){v.c35=1;let n=0;['jyu','cdu'].forEach(id=>{const r=rs(id);if(r&&r.o=='swn'){r.o=P;r.c=35;n++}});if(n)lg('四川、中央に歸順す')}
   if(!v.c36&&d>=1936*4+2){v.c36=1;let n=0;['knn','hai','kmg'].forEach(id=>{const r=rs(id);if(r&&['lzj','swn'].includes(r.o)){r.o=P;r.c=35;n++}});if(n)lg('兩廣事變收まり、廣東・廣西・雲南、中央に歸す')}
   if(!v.xa&&d>=1936*4+3){v.xa=1;if(!S.war.ccp){S.rel.ccp=Math.max(S.rel.ccp||0,0);up('stab',4);lg('西安事件。内戰を停め、國共合作して抗日に當る')}}}
@@ -1063,7 +1064,7 @@ function next(){if(S.over)return;invK.clear();chkSur();if(S.cs){rd();toast('割�
   if(r.c<5){r.o=r.or;r.c=0;lg(RD[i][1]+'で叛亂、支配を失ふ')}});
  volEm();denMig();if(S.ken<S.ika)up('ken',(S.ika-S.ken)*.02);S.rq=S.rq.filter(id=>!S.tech[id]);if(S.rq.length){const sh=c.sci+S.sci/S.rq.length;S.sci=0;S.rq.slice().forEach(id=>{S.tp[id]=(S.tp[id]||0)+tcap(id,sh);tdone(id)})}else S.sci+=c.sci;
  adEff();natInit();S.egL=S.egL||{};S.gL=S.gL||{};for(const o in BG){S.NH[o]*=1+ngr(o)/400;S.NI[o]*=1+egr(o)/400;const g=gnpO(o),g0=S.gL[o];if(g0>0){const ob=Math.max(-20,Math.min(20,(g/g0-1)*400));S.egL[o]=(S.egL[o]??eref(o))*.75+ob*.25}S.gL[o]=g}S.R.forEach(r=>{if(BG[r.o]&&r.o!=P)r.p*=1+ngr(r.o)/400});
- c100();emU();story30();if(P=='jp'){war();euro()}else{war2();world2()}allyHelp();tAI();jfEff();aidFlow();warDrift();gueCost();gueEnd();eAuto();pvSeason();if(!fam&&S.stab<50+S.fai*.3)up('stab',.4+S.fai/200+S.kyo/400);if(!fam&&S.stab<100)up('stab',Math.min(.8,.08*Math.sqrt(ivx())));
+ c100();emU();lmC();story30();if(P=='jp'){war();euro()}else{war2();world2()}allyHelp();tAI();jfEff();aidFlow();warDrift();gueCost();gueEnd();eAuto();pvSeason();if(!fam&&S.stab<50+S.fai*.3)up('stab',.4+S.fai/200+S.kyo/400);if(!fam&&S.stab<100)up('stab',Math.min(.8,.08*Math.sqrt(ivx())));
  S.ind*=1+S.sav/20000*gmul();lqAge();if(++S.q>3){S.q=0;S.y++}
  if(!S.q){const h=HCM.find(([y])=>y==S.y);if(h)lg('〔'+S.y+'〕'+h[1])}
  S.ap=S.ap+apMax();
@@ -1137,7 +1138,7 @@ function rd(){tSync();$('h1').textContent=PS().h1;RD[ri('man')][1]=S.sc==1930&&!
  $('#dt').innerHTML=mode=='menu'?`<span>${scSel==1930?'昭和五年正月':'昭和十二年正月'}</span><small>${scSel==1930?'西暦1930年':'西暦1937年'}</small>`:`<span>${ds()}</span><small>${P=='jp'?'西暦'+S.y+'年 ・ 聖壽 數へ'+kn(S.y-1900):(P=='de'&&NZ()?PS().t:PS().n+'の'+PS().t)}</small>`;
  const ws=PS().sl.map(x=>x[0]).filter(k=>S.war[k]);
  $('#wars').innerHTML=mode=='menu'?'':(ws.length?ws.map(k=>`<span class="chip">${S.offer[k]?'降伏申入れ':'交戰中'}・${SN(k)}</span>`).join(''):'<span class="chip k">平時</span>')+``+(S.emb?'<span class="chip">對日禁輸</span>':'')+(S.al.th?'<span class="chip k">日泰同盟</span>':'')+(S.al.ax?'<span class="chip k">三國同盟</span>':'')+(S.neu?'<span class="chip k">日魯中立</span>':'')+`<span class="chip k">國内總生産 第${kn(rkL(c).findIndex(x=>x[2])+1)}位</span><span class="chip k">民力 第${kn(Object.keys(NQ).filter(k=>k!=P&&mrq(NQ[k])>c.mr).length+1)}位</span>`;
- $('#st').innerHTML=`<div class="sl">${`<div class="srow">${cell('國力',f(c.gdp))+cell('國民總生産',f(c.gnp))+cell('國帑',yen(S.fund),(n>=0?'+':'−')+yen(Math.abs(n)),n<0)+cell('國課 /季',yen(c.inc))}</div>`+`<div class="srow">${cell('帝國人口 萬',f(c.pop*100))+cell(P=='jp'?'内地人口(內邦人) 萬':'本國人口 萬',f((P=='jp'?hmoJ():naiP())*100))+cell(P=='jp'?'外地人口(內邦人) 萬':'外地人口 萬',f(ojT()*100))+(P=='jp'?cell('在外邦人 萬',f(extT()*100)):'')}</div>`+`<div class="srow">${cell('食糧',f(S.food),sg(c.food-c.need),c.food<c.need)+cell('醫藥品',f(S.medi),sg(c.medP-c.medU),c.medP<c.medU)+cell('民心',f(S.stab),S.stab<30?'危險':null,1)+cell('民力',c.mr.toFixed(2))}</div>`+`<div class="srow">${cell('石油',f(S.oil),sg(c.oil-c.oilU),c.oil<c.oilU)+cell('石炭',f(S.coal),sg(c.coal-c.coalU),c.coal<c.coalU)+cell('瓦斯 毎季',c.gas.toFixed(1))+cell('鐵',f(S.iron),sg(c.iron-c.ironU),c.iron<c.ironU)}</div>`+`<div class="srow">${cell('武器彈藥',f(S.mun),sg(c.munP-c.munU),c.munP<c.munU)+cell('鈾',f(S.ura),c.ura?sg(c.ura):null)+cell('原子爆弾',f(S.bomb||0))+cell('電力',Math.round(c.eF*100)+'%',f(S.elec+c.gas*15)+'/'+f(c.elecD),c.eF<1)}</div>`}</div><div class="sr">${mrBars(c)}</div>`;
+ $('#st').innerHTML=`<div class="sl">${`<div class="srow">${cell('國力',f(c.gdp))+cell('國民總生産',f(c.gnp))+cell('國帑',yen(S.fund),(n>=0?'+':'−')+yen(Math.abs(n)),n<0)+cell('國課 /季',yen(c.inc))}</div>`+`<div class="srow">${cell(({su:'連邦',us:'合衆國',gb:'王國',cn:'民國'}[P]||'帝國')+'人口 萬',f(c.pop*100))+cell(P=='jp'?'内地人口(內邦人) 萬':'本國人口 萬',f((P=='jp'?hmoJ():naiP())*100))+cell(P=='jp'?'外地人口(內邦人) 萬':'外地人口 萬',f(ojT()*100))+(P=='jp'?cell('在外邦人 萬',f(extT()*100)):'')}</div>`+`<div class="srow">${cell('食糧',f(S.food),sg(c.food-c.need),c.food<c.need)+cell('醫藥品',f(S.medi),sg(c.medP-c.medU),c.medP<c.medU)+cell('民心',f(S.stab),S.stab<30?'危險':null,1)+cell('民力',c.mr.toFixed(2))}</div>`+`<div class="srow">${cell('石油',f(S.oil),sg(c.oil-c.oilU),c.oil<c.oilU)+cell('石炭',f(S.coal),sg(c.coal-c.coalU),c.coal<c.coalU)+cell('瓦斯 毎季',c.gas.toFixed(1))+cell('鐵',f(S.iron),sg(c.iron-c.ironU),c.iron<c.ironU)}</div>`+`<div class="srow">${cell('武器彈藥',f(S.mun),sg(c.munP-c.munU),c.munP<c.munU)+cell('鈾',f(S.ura),c.ura?sg(c.ura):null)+cell('原子爆弾',f(S.bomb||0))+cell('電力',Math.round(c.eF*100)+'%',f(c.elS)+'/'+f(c.elecD)+(P=='su'||P=='cn'?' 停電頻發':''),c.eF<1)}</div>`}</div><div class="sr">${mrBars(c)}</div>`;
  $('#tb').innerHTML=TB.map(([k,l])=>`<button data-a="tab:${k}" class="${tab==k?'on':''}">${l}</button>`).join('');
  const g=Object.keys(S.ach).length;
  $('#ntp').innerHTML=mode=='menu'?'':ntfHtml();const _sc=keepSc();$('#pn').innerHTML=(S.over?`<div class="end"><b>${S.over==2?(P=='jp'?'御代完了':'任期完了'):'國家瓦解'}</b><div>總合點 ${f(score(c))} ・ 方針達成 ${g}／${GL().length}</div><div><button class="sm" data-a="menu">記録・始め方</button></div></div>`:'')+(S.dc?(()=>{const e=EV[S.dc];return`<div class="rep"><b>${P=='jp'?'御聖斷を仰ぐ':'裁斷を仰ぐ'}</b><div>${e.t}</div><div class="g">${e.o.map((x,i)=>`<button class="act" data-a="dc:${i}"><b>${x[0]}</b><span>${x[1]}</span></button>`).join('')}</div></div>`})():'')+(rep.length?`<div class="rep"><b>前季の報告</b>${rep.map(l=>`<div>${l.replace(/^[^\u3000]*\u3000/,'')}</div>`).join('')}<div><button class="sm" data-a="cr">閉じる</button></div></div>`:'')+PN[tab](c);restSc(_sc);
