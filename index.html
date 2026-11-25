@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="皇國經綸"><meta name="theme-color" content="#181e2c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"></head><body>
-<title>帝國經綸 Ver.48</title>
+<title>帝國經綸 Ver.49</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 作戰室の机上：鐵紺の地に國防色の罫。金は見出し、朱は戰と裁可印にのみ使ふ */
@@ -83,9 +83,10 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .nt{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--pn2);border:1px solid var(--au);padding:8px 10px;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,.35)}
 .ntb{background:none;border:0;color:var(--fg);font-size:20px;line-height:1;cursor:pointer;padding:2px 8px}
 .ver{color:var(--mu);font-size:11px;letter-spacing:.06em}
+.q2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px}.q2 .q{grid-template-columns:2.4em minmax(0,1fr) 2.4em}.mt{display:grid;grid-template-columns:minmax(4.5em,1.3fr) repeat(4,minmax(0,1fr));gap:3px 6px;font-size:13px;align-items:center;min-width:0}.mt .h{color:var(--mu);font-size:12px;text-align:right}.mt .h:first-child{text-align:left}.mt .me{color:var(--au);font-weight:700}.mt .v{position:relative;text-align:right;padding:1px 4px;font-variant-numeric:tabular-nums}.mt .v i{position:absolute;left:0;top:2px;bottom:2px;background:var(--au);opacity:.18}.mt .v.k i{opacity:.38}@media(max-width:520px){.sl{grid-template-columns:repeat(3,minmax(0,1fr))}.srow{display:contents}}@media(max-width:340px){.sl{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 <div class="w">
-<header><h1>帝國經綸</h1><small class="ver">Ver.48</small><div class="dt" id="dt"></div></header>
+<header><h1>帝國經綸</h1><small class="ver">Ver.49</small><div class="dt" id="dt"></div></header>
 <div class="wars" id="wars"></div><div class="fl"><button class="sm" id="stt" data-a="stt">統計を畳む</button><button class="sm" data-a="menu">記録・始め方</button></div>
 <div class="st" id="st"></div>
 <nav class="tb" id="tb"></nav>
@@ -403,7 +404,7 @@ function story30(){if(S.sc!=1930)return;const v=S.ev,d=S.y*4+S.q,E=S.E;
  if(P!='jp')return;
  if(!v.hit&&d>=1933*4){v.hit=1;drel('de',10);lg('獨逸にヒトラー政權成る。第三帝國の始まり')}
  if(!v.ni6&&d>=1936*4){v.ni6=1;up('stab',-5);lg('二・二六事件。陸軍青年將校、蹶起す')}
- if(!v.acp&&d>=1936*4+3){v.acp=1;drel('de',15);lg('日獨防共協定成る')}
+ if(!v.acp&&d>=1936*4+3&&!S.war.de&&alv('de')){v.acp=1;drel('de',15);lg('日獨防共協定成る')}
  if(v.mo&&!v.mko&&d>=1932*4){v.mko=1;const m=rs('man');if(m.o=='jp'){m.c=Math.min(100,m.c+15);lg('滿洲國建國。帝國、これを承認す')}}
  if(S.dc)return;
  if(!v.lnt&&d>=1930*4){v.lnt=1;S.dc='lnt'}
@@ -633,7 +634,7 @@ function pw(o){const og=RD.filter(d=>d[2]==o).reduce((a,d)=>a+d[3],0),nw=S.R.fil
 const HP={jp:0,de:0,it:0,th:0,es:0,pt:0,gb:0,us:0,fr:0,nl:0,su:0,cn:0,tr:0,swe:6.3,che:4.2,prs:15,tib:0,zxl:30,yxs:0,lzj:0,swn:0,xbj:0,ccp:0},HR={jp:['nai','hkd','thk','chb','kin','cgs','kyu'],de:['deu','rhr','bay','epr','kbg','sil','pom'],it:['ita','sit','sar'],gb:['gbr','sco','wal','nir'],fr:['fra','sfr','als','nce'],nl:['bnl'],es:['spa'],pt:['por'],tr:['tur'],us:['AL','AZ','AR','CA','CO','CT','DE','DC','FL','GA','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY'],su:['sue','blr','ukr','len','vlg','cau','url','wsb','nsb','esb','est','lat','blt','geo','arm','kaz','uzb','cas','tat','bsk','cvs','mar','klm','dag','cec','crm','dnb','zap','vgr','mrd','udm','kbr','oss','nkh','kkp','abk','ajr','mda','krl','kom','yak','bur','kgz','taj'],th:['thi']};
 function npe(o,org){let p=org?HP[o]:S.NH[o];RD.forEach((d,i)=>{if(!(org?d[2]==o:S.R[i].o==o))return;const w=(o=='cn'&&d[2]=='cn')||(HR[o]||[]).includes(d[0])?1:o=='gb'&&['can','aus','nzl'].includes(d[0])?.4:.2;p+=(org?d[3]:S.R[i].p)*w});return p}
 function natInit(){S.NI=S.NI||{};S.NH=S.NH||{};for(const o in BG)if(S.NI[o]==null){S.NH[o]=HP[o];S.NI[o]=S.sc==1930?BG[o]*.568*(G30[o]||1)/((npe(o)/87)*.91):BG[o]*.568/((npe(o,1)/87)*.91)}if(!S.NI0)S.NI0={...S.NI};for(const o in S.NI)if(S.NI0[o]==null)S.NI0[o]=S.NI[o]}
-let AIKv=1.25;try{const v=+localStorage.getItem('kokoku-aik');if(v)AIKv=v}catch(e){}
+let AIKv=1.5;try{const v=+localStorage.getItem('kokoku-aik2');if(v)AIKv=v}catch(e){}
 const AIK=o=>o&&o!=P?AIKv:1;
 function eqO(o){const k=AIK(o);if(!BG[o])return k;natInit();return k*Math.pow(Math.max(.1,S.NI[o]/S.NI0[o]),.3)}
 /* 列國の人口の伸び（年%）：史實の水準（米1.2・英0.45・獨0.6・佛0.35…）に健康と醫學で少し上下 */
@@ -646,6 +647,17 @@ function egr(o){return eref(o)*Math.max(.3,Math.min(1.5,.5+.5*ngr(o)/Math.max(.1
 function gnpO(o){const st=(o=='de'&&S.ev.dec)||(o=='su'&&S.ev.suc)?20:70;return S.NI[o]*(npe(o)/87)*(.7+.3*st/100)}
 function mrq(q){return Math.pow((q[0]+q[1]+q[2]+q[3])/240,1.5)*(1+q[9]/1000)*(.85+q[6]/400)}
 function rkL(c){natInit();return[[NN[P],c.gnp,1]].concat(Object.keys(BG).filter(o=>o!=P).map(o=>[NN[o],gnpO(o),0])).sort((a,b)=>b[1]-a[1])}
+
+const CAP={jp:'nai',de:'deu',su:'sue',us:'NY',gb:'gbr',fr:'fra',it:'ita'};
+function alv(o){if(o==P)return !S.over;const v=S.ev||{};if(o=='de'&&v.dec)return false;if(o=='su'&&(v.suc||v.suc2))return false;if(o=='fr'&&(v.fall||v.ff))return false;const c=CAP[o],r=c&&rs(c);if(r&&r.o!=o)return false;return S.R.some(x=>x.o==o)}
+function isWW(a,b){if(a==P)return !!S.war[b];if(b==P)return !!S.war[a];const v=S.ev||{},k=[a,b].sort().join('-');if((S.ww||{})[k])return true;return k=='de-su'?!!(v.barb||v.barb2||v.su2):k=='de-gb'?!!(v.eu||v.pl):k=='jp-us'?!!(v.jpw||v.ph||v.jpa):k=='de-us'?!!(v.ue||v.dw||v.us2):k=='jp-su'?!!(v.jp2||v.sudw):false}
+function setWW(a,b){S.ww=S.ww||{};S.ww[[a,b].sort().join('-')]=1}
+function emU(){S.Em=S.Em||{};for(const o in S.E)if(S.E[o]!=null)S.Em[o]=Math.max(S.Em[o]||0,S.E[o])}
+const MB={jp:[100,100,50],de:[160,45,130],su:[220,40,120],us:[70,130,70],gb:[60,160,70],fr:[150,70,45],it:[90,60,45],nl:[15,12,8],es:[40,10,10],pt:[8,4,2],th:[10,5,5],tr:[30,5,5],swe:[12,8,5],che:[15,0,3],prs:[10,1,2],tib:[1,0,0],cn:[120,3,8],zxl:[25,0,1],yxs:[25,0,1],lzj:[20,0,1],swn:[18,0,0],xbj:[4,0,0],ccp:[8,0,0]},MB30={jp:[.85,.95,.6],de:[.4,.35,.1],su:[.8,.6,.5],us:[.8,.85,.5],gb:[.8,.9,.5]};
+function milO(o){if(o==P){const k=eqF();return[S.army*k,S.navy*k,S.air*k]}const b=MB[o];if(!b)return null;let m=[1,1,1];if(S.sc==1930){const f=MB30[o]||[.85,.9,.5],t=cl((S.y*4+(S.q||0)-1930*4)/28,0,1);m=f.map(x=>x+(1-x)*t)}if(!S.Em)emU();const e=S.E&&S.E[o]!=null&&(S.Em[o]||0)>0?cl(S.E[o]/S.Em[o],.05,1):1,k=eqO(o)/AIK(o)*e;return b.map((v,i)=>v*m[i]*k)}
+let mSort=4;
+function milPanel(){const L=[P,...Object.keys(MB).filter(o=>o!=P&&alv(o))].map(o=>{const m=milO(o);return m&&[o,m[0],m[1],m[2],m[0]+m[1]+m[2]]}).filter(Boolean).sort((a,b)=>b[mSort]-a[mSort]),mx=[0,1,2,3,4].map(i=>i?Math.max(1,...L.map(r=>r[i])):0);
+ return`<div class="fl">${[[1,'陸軍'],[2,'海軍'],[3,'航空'],[4,'總合']].map(([k,n])=>`<button class="sm${mSort==k?' on':''}" data-a="msr:${k}">${n}順</button>`).join('')}</div><div class="mt"><span class="h">國</span><span class="h">陸軍</span><span class="h">海軍</span><span class="h">航空</span><span class="h">總合</span>${L.map(r=>`<span class="${r[0]==P?'me':''}">${NN[r[0]]||ON[r[0]]||r[0]}${r[0]!=P&&S.war[r[0]]?' ⚔':''}</span>`+[1,2,3,4].map(i=>`<span class="v${mSort==i?' k':''}"><i style="width:${cl(r[i]/mx[i]*100,0,100)}%"></i>${Math.round(r[i])}</span>`).join('')).join('')}</div><p class="p">昭和十二年の帝國陸軍を100とした實效値（裝備と國力の伸び・交戰による損耗を含む。戰鬪では更にAIの強さ ×${AIKv} が敵に掛かる）。海軍は艦艇噸數、航空は第一線機數を基に推計。經濟力の番付とは別物。</p>`}
 function rank(c){const L=rkL(c),mx=L[0][1];return L.map((x,i)=>`<div class="q qr"><span${x[2]?' style="color:#c9a227;font-weight:700"':''}>${i+1}・${x[0]}</span><div class="bar"><i style="width:${cl(x[1]/mx*100,0,100)}%"></i></div><span>${Math.round(x[1])}</span></div>`).join('')} function drel(k,v){rel(k,v)}
 function fronts(){const a=new Set();S.R.forEach(r=>{if(atW(r.o))a.add(TH[r.id])});return a}
 function mf(t){const n=Math.max(1,fronts().size);return(S.fo?S.fo==t?1.3:.85:1)/(1+.2*(n-1))}
@@ -903,11 +915,11 @@ function war2(){const W=S.war,E=S.E;S.wt2=S.wt2||{};
  for(const id in S.bk){const i=ri(id),r=S.R[i];if(!atW(r.o)){delete S.bk[id];continue}S.oil=Math.max(0,S.oil-1);const nx=NAV.filter(x=>W[x]).some(x=>(E[x]||0)*qm(x)*eqO(x)*.9>nvP()*1.3);if(nx)S.bk[id]=Math.max(0,S.bk[id]-15);else S.bk[id]+=bks(r,i)*.5;bkc(id)}
  S.army=Math.max(0,S.army)}
 function gbStory(v,d,E,pc){
- if(!v.pl&&d>=1939*4+3&&!S.war.de){v.pl=1;if(pc.de&&S.rel.de>=80)lg('第三帝國、波蘭に侵攻す。英國は宥和を續け參戰せず');else{decl2('de');lg('第三帝國、波蘭に侵攻す。英國、第三帝國に宣戰す')}}
- if(!v.ff&&d>=1940*4+2&&S.war.de){v.ff=1;S.army*=.85;up('stab',-5);lg('佛蘭西降伏、ダンケルクより撤退す。英本國は孤立す');frFall()}
+ if(!v.pl&&d>=1939*4+3&&!S.war.de&&alv('de')){v.pl=1;if(pc.de&&S.rel.de>=80)lg('第三帝國、波蘭に侵攻す。英國は宥和を續け參戰せず');else{decl2('de');lg('第三帝國、波蘭に侵攻す。英國、第三帝國に宣戰す')}}
+ if(!v.ff&&d>=1940*4+2&&S.war.de&&alv('de')&&alv('fr')){v.ff=1;S.army*=.85;up('stab',-5);lg('佛蘭西降伏、ダンケルクより撤退す。英本國は孤立す');frFall()}
  if(!v.bob&&d>=1940*4+3&&S.war.de){v.bob=1;if(S.air>=60){up('stab',5);lg('英本土航空戰に勝ち、第三帝國の上陸を挫く')}else{up('stab',-8);S.ind=Math.round(S.ind*.93);lg('英本土航空戰に苦戰、工業地帶が爆撃を受く')}}
- if(!v.jpa&&d>=1941*4+3&&!S.war.jp&&!(pc.jp&&S.rel.jp>=60)){v.jpa=1;decl2('jp');lg('日本、馬來・香港を襲ふ')}
- if(!v.usj&&d>=1941*4+3&&!S.war.us){v.usj=1;S.rel.us=Math.max(S.rel.us||0,90);lg('米國、參戰す')}
+ if(!v.jpa&&d>=1941*4+3&&!S.war.jp&&alv('jp')&&!(pc.jp&&S.rel.jp>=60)){v.jpa=1;decl2('jp');lg('日本、馬來・香港を襲ふ')}
+ if(!v.usj&&d>=1941*4+3&&!S.war.us&&alv('us')&&(S.war.de||S.war.jp)){v.usj=1;S.rel.us=Math.max(S.rel.us||0,90);lg('米國、參戰す')}
  if(v.usj){if(S.war.de)E.de=Math.max(5,E.de-1.5);if(S.war.jp)E.jp=Math.max(5,(E.jp||0)-1.2);S.oil+=2;S.mun+=2}
  if(S.war.de&&E.de<=10&&!S.offer.de){S.offer.de=1;lg('第三帝國、降伏を申し入る')}
  if(S.war.jp&&(E.jp||0)<=10&&!S.offer.jp){S.offer.jp=1;lg('日本、降伏を申し入る')}
@@ -915,16 +927,16 @@ function gbStory(v,d,E,pc){
  cols.forEach(r=>{r.c=Math.max(0,r.c-ur);if(r.c<20&&Math.random()<.15){const n=nm(r);r.o=indK(r.id);up('stab',-3);lg(n+'、英國より獨立を宣言す');ntf(n+'、獨立を宣言')}});
  if(!v.gbw&&cols.some(r=>r.c<35)){v.gbw=1;ntf('植民地に獨立の氣運高まる（支配が20を割ると獨立宣言）')}}
 function world2(){const v=S.ev,d=S.y*4+S.q,E=S.E,pc=pactMap();
- if(P=='de'){if(!v.us2&&S.war.gb&&d>=1942*4&&!S.war.us&&!pc.us){v.us2=1;decl2('us');lg('米國、英佛を援けて參戰す')}
-  if(!v.su2&&!S.war.su&&!pc.su&&d>=1942*4&&Math.random()<.25){v.su2=1;decl2('su');lg('魯西亞、背後より侵攻す')}
-  if(!v.jpw&&d>=1941*4+3&&S.rel.jp>=50){v.jpw=1;lg('日本、對米英開戰。米英は太平洋にも兵を割く')}
+ if(P=='de'){if(!v.us2&&S.war.gb&&d>=1942*4&&!S.war.us&&alv('us')&&!pc.us){v.us2=1;decl2('us');lg('米國、英佛を援けて參戰す')}
+  if(!v.su2&&!S.war.su&&alv('su')&&!pc.su&&d>=1942*4&&Math.random()<.25){v.su2=1;decl2('su');lg('魯西亞、背後より侵攻す')}
+  if(!v.jpw&&d>=1941*4+3&&S.rel.jp>=50&&!S.war.jp&&alv('jp')&&alv('us')&&!isWW('jp','us')){v.jpw=1;setWW('jp','us');lg('日本、對米英開戰。米英は太平洋にも兵を割く')}
   if(v.jpw){E.us=Math.max(5,E.us-1.5);E.gb=Math.max(5,E.gb-1)}}
- if(P=='su'){if(!v.barb2&&d>=1941*4+2&&!S.war.de&&!(pc.de&&S.rel.de>=80)){v.barb2=1;decl2('de');S.army*=.85;lg('第三帝國、不意に侵攻す。大祖國戰爭始まる')}
-  if(!v.jp2&&d>=1941*4+2&&!S.war.jp&&!pc.jp&&Math.random()<.2){v.jp2=1;decl2('jp');lg('日本、北進す')}
+ if(P=='su'){if(!v.barb2&&d>=1941*4+2&&!S.war.de&&alv('de')&&!(pc.de&&S.rel.de>=80)){v.barb2=1;decl2('de');S.army*=.85;lg('第三帝國、不意に侵攻す。大祖國戰爭始まる')}
+  if(!v.jp2&&d>=1941*4+2&&!S.war.jp&&alv('jp')&&!pc.jp&&Math.random()<.2){v.jp2=1;decl2('jp');lg('日本、北進す')}
   if(S.war.de){E.de=Math.max(5,E.de-(d>=1940*4?1.5:0)-(d>=1942*4?2.5:0));if(d>=1942*4&&S.rel.us>=0){S.oil+=4;S.mun+=3}}}
- if(P=='us'){if(!v.ph&&d>=1941*4+3&&!S.war.jp&&!pc.jp){v.ph=1;decl2('jp');S.navy*=.8;lg('日本、眞珠灣を奇襲す')}
-  if(!v.dw&&S.war.jp&&!S.war.de&&!pc.de){v.dw=1;decl2('de');lg('第三帝國、米國に宣戰す')}
-  if(d>=1941*4+2&&!v.suc2&&E.de>5){E.su=Math.min(100,E.su-4*E.de/100+1+(S.war.de?1:0));E.de=Math.max(5,E.de-3*E.su/100-(S.war.de?1.5:0));if(E.su<=15){v.suc2=1;lg('魯西亞、第三帝國に屈す')}}
+ if(P=='us'){if(!v.ph&&d>=1941*4+3&&!S.war.jp&&alv('jp')&&!pc.jp){v.ph=1;decl2('jp');S.navy*=.8;lg('日本、眞珠灣を奇襲す')}
+  if(!v.dw&&S.war.jp&&!S.war.de&&alv('de')&&!pc.de){v.dw=1;decl2('de');lg('第三帝國、米國に宣戰す')}
+  if(d>=1941*4+2&&!v.suc2&&E.de>5&&alv('de')&&alv('su')){E.su=Math.min(100,E.su-4*E.de/100+1+(S.war.de?1:0));E.de=Math.max(5,E.de-3*E.su/100-(S.war.de?1.5:0));if(E.su<=15){v.suc2=1;lg('魯西亞、第三帝國に屈す')}}
   if(S.war.de&&E.de<=10&&!S.offer.de){S.offer.de=1;lg('第三帝國、降伏を申し入る')}}
  if(P=='gb')gbStory(v,d,E,pc)}
 function GL(){if(P=='jp')return G;return[['ab','原子爆彈完成','核分裂研究を經て原爆を得る',()=>S.tech.ab],['p1','本國人口一億','',()=>naiP()>=100],['p2','本國人口二億','',()=>naiP()>=200],['rk','國力第一位','國力番付の首位に立つ',()=>rkL(calc()).findIndex(x=>x[2])==0]].concat(PS().sl.map(([x,n])=>['v_'+x,n+'に勝利',n+'を降伏させる',()=>S.ev['v_'+x]])).concat([['life','二〇二七年まで國を保つ','',()=>S.over==2]])}
@@ -992,12 +1004,12 @@ function war(){const W=S.war,E=S.E;
  ['cn','su','us'].forEach(x=>{if(W[x]&&S.E[x]<2000/NQ[x][5]&&!S.offer[x]&&!offCD(x)&&canSur(x)){S.offer[x]=1;lg(SN(x)+'、降伏を申し入る')}});
  S.army=Math.max(0,S.army)}
 function euro(){const E=S.E,v=S.ev,d=S.y*4+S.q;if(!v.bal&&d>=1940*4+2){v.bal=1;const t=['est','lat','blt'].map(id=>rs(id)).filter(r=>r&&r.o=='nt');if(t.length){t.forEach(r=>r.o='su');lg('魯西亞、波羅的海三國を併合す（獨ソ密約に基づく）')}}
- if(!v.eu&&d>=1939*4+3){v.eu=1;E.gb-=20;lg('第三帝國、波蘭に侵攻。歐州大戰勃發')}
- if(!v.fall&&d>=1940*4+2){v.fall=1;E.fr=8;E.nl=10;lg('佛蘭兩國、第三帝國に屈す。南方の守り手薄となる');frFall()}
- if(!v.int&&d>=1941*4){v.int=1;if(S.rel.de>=40||S.inf>=80)lg('密電：第三帝國、本年夏に魯西亞侵攻を計畫。極東魯軍は西送の見込み')}
- if(!v.barb&&d>=1941*4+2){v.barb=1;if(!S.war.su)S.dc='hoku';lg('第三帝國、魯西亞に侵攻。獨魯戰開始')}
+ if(!v.eu&&d>=1939*4+3&&alv('de')&&alv('gb')){v.eu=1;setWW('de','gb');E.gb-=20;lg(S.war.gb?'第三帝國、波蘭に侵攻。英國は東西二正面となる':'第三帝國、波蘭に侵攻。歐州大戰勃發')}
+ if(!v.fall&&d>=1940*4+2&&v.eu&&alv('de')&&alv('fr')){v.fall=1;E.fr=8;E.nl=10;lg('佛蘭兩國、第三帝國に屈す。南方の守り手薄となる');frFall()}
+ if(!v.int&&d>=1941*4&&alv('de')&&alv('su')&&!isWW('de','su')){v.int=1;if(S.rel.de>=40||S.inf>=80)lg('密電：第三帝國、本年夏に魯西亞侵攻を計畫。極東魯軍は西送の見込み')}
+ if(!v.barb&&d>=1941*4+2&&alv('de')&&alv('su')&&!isWW('de','su')){v.barb=1;setWW('de','su');if(!S.war.su&&!S.war.de)S.dc='hoku';lg(S.war.de?'第三帝國、魯西亞にも侵攻。獨軍は東西二正面となる':S.war.su?'第三帝國、魯西亞に侵攻。帝國と東西より魯西亞を挾撃す':'第三帝國、魯西亞に侵攻。獨魯戰開始')}
  if(S.rel.ind_wjw!=null)S.rel.ind_wjw=100;if(!v.wjw&&d>=1940*4+1&&S.war.cn&&!S.dc&&(rs('sha').o==P||rs('chu').o==P)){v.wjw=1;S.dc='wang'}if(!v.hull&&d>=1941*4+3&&S.emb&&!S.war.us&&!S.dc){v.hull=1;S.dc='hull'}
- if(!v.ue&&!S.ev.usw&&((S.war.us&&S.al.ax&&d>=1941*4+3)||d>=1943*4)){v.ue=1;lg(S.war.us&&S.al.ax?'第三帝國、米國に宣戰。米國は二正面戰爭へ':'米國、歐州戰に參戰')}
+ if(!v.ue&&!S.ev.usw&&alv('de')&&alv('us')&&!isWW('de','us')&&((S.war.us&&S.al.ax&&d>=1941*4+3)||(d>=1943*4&&v.eu))){v.ue=1;setWW('de','us');lg(S.war.us&&S.al.ax?'第三帝國、米國に宣戰。米國は二正面戰爭へ':'米國、歐州戰に參戰')}
  if(v.barb&&!v.mos&&d>=1941*4+3&&!v.dec&&!v.suc){v.mos=1;if(S.war.su||(!S.neu&&S.army>=150)){E.su-=15;lg('極東魯軍、帝國を恐れて動けず。獨軍、莫斯科に迫る')}else{E.su+=8;v.fe=1;lg('極東魯軍、西へ轉進し莫斯科は持ち堪ふ。極東は手薄となる')}}
  if(v.barb&&!v.dec&&!v.suc){const gW=v.eu&&!S.ev.usw?.3*cl(E.gb/60,0,1):0,uW=v.ue&&!S.ev.usw?.8*(S.war.us?.6:1):0,es=1/(1+gW+uW),ll=0;S.esh=es;E.su=Math.min(100,E.su-6*E.de/100*Math.sqrt(qm('de')*eqO('de')/(qm('su')*eqO('su')))*es+1+ll-(S.rel.tr>=60?1:0));E.de-=5*E.su/100*Math.sqrt(qm('su')*eqO('su')/(qm('de')*eqO('de')))*es+gW*2+uW*5;
   if(E.su<=15){v.suc=1;if(S.NI)S.NI.su*=.5;E.su=10;if(S.war.su){S.offer.su=1;lg('魯西亞崩壞。極東魯軍、降伏を申し入る')}else lg('魯西亞崩壞。西比利亞は無主の地となる')}
@@ -1016,7 +1028,7 @@ function next(){if(S.over)return;invK.clear();chkSur();if(S.cs){rd();toast('割�
   if(r.c<5){r.o=r.or;r.c=0;lg(RD[i][1]+'で叛亂、支配を失ふ')}});
  volEm();denMig();if(S.ken<S.ika)up('ken',(S.ika-S.ken)*.02);S.rq=S.rq.filter(id=>!S.tech[id]);if(S.rq.length){const sh=c.sci+S.sci/S.rq.length;S.sci=0;S.rq.slice().forEach(id=>{S.tp[id]=(S.tp[id]||0)+tcap(id,sh);tdone(id)})}else S.sci+=c.sci;
  adEff();natInit();S.egL=S.egL||{};S.gL=S.gL||{};for(const o in BG){S.NH[o]*=1+ngr(o)/400;S.NI[o]*=1+egr(o)/400;const g=gnpO(o),g0=S.gL[o];if(g0>0){const ob=Math.max(-20,Math.min(20,(g/g0-1)*400));S.egL[o]=(S.egL[o]??eref(o))*.75+ob*.25}S.gL[o]=g}S.R.forEach(r=>{if(BG[r.o]&&r.o!=P)r.p*=1+ngr(r.o)/400});
- c100();story30();if(P=='jp'){war();euro()}else{war2();world2()}allyHelp();tAI();jfEff();aidFlow();warDrift();gueCost();gueEnd();eAuto();pvSeason();if(!fam&&S.stab<50+S.fai*.3)up('stab',.4+S.fai/200+S.kyo/400);if(!fam&&S.stab<100)up('stab',Math.min(.8,.08*Math.sqrt(ivx())));
+ c100();emU();story30();if(P=='jp'){war();euro()}else{war2();world2()}allyHelp();tAI();jfEff();aidFlow();warDrift();gueCost();gueEnd();eAuto();pvSeason();if(!fam&&S.stab<50+S.fai*.3)up('stab',.4+S.fai/200+S.kyo/400);if(!fam&&S.stab<100)up('stab',Math.min(.8,.08*Math.sqrt(ivx())));
  S.ind*=1+S.sav/20000*gmul();lqAge();if(++S.q>3){S.q=0;S.y++}
  if(!S.q){const h=HCM.find(([y])=>y==S.y);if(h)lg('〔'+S.y+'〕'+h[1])}
  S.ap=S.ap+apMax();
@@ -1056,7 +1068,7 @@ const MXA={inf:()=>S.inf>=200&&S.nou>=200,edu:()=>S.stab>=100,hea:()=>S.ken>=200
 ['de','it','gb','fr','es','nl','pt','tr','us','su'].forEach(k=>MXA[k]=()=>(S.rel[k]||0)>=100);
 function amx(k){return MXA[k]?!!MXA[k]():false}
 function ab(k){const a=A[k];if(a.x&&!a.x())return'';const mx=amx(k),en=!mx&&can(a.c)&&(!a.e||a.e());return`<button class="act" data-a="do:${k}"${en?'':' disabled'}><b>${a.n}</b><span>${a.d}</span><i>${mx?'効果は上限':cs(a.c)}</i></button>`}
-const mrBars=c=>`<h2>民力</h2><div>${[['能力','nou'],['勤勉','kin'],['俊敏','shun'],['模倣','imi'],['協調','kyo'],['健康','ken'],['信仰','fai'],['貯蓄','sav'],['情報','inf'],['醫學','ika']].map(([n,k])=>qb(n,S[k],200)).join('')}</div><p class="p">民力 ${M().toFixed(2)}　行動數は（勤勉＋俊敏）÷25、使ひ殘しは毎季5倍まで。<br>工業力 ${f(S.ind)}・出生奬勵 +${Math.min(3,L('umi')*.3).toFixed(1)}%/年・食糧 生産 ${c.food.toFixed(1)} ／ 需要 ${c.need.toFixed(1)}</p>`;
+const mrBars=c=>`<h2>民力</h2><div class="q2">${[['能力','nou'],['勤勉','kin'],['俊敏','shun'],['模倣','imi'],['協調','kyo'],['健康','ken'],['信仰','fai'],['貯蓄','sav'],['情報','inf'],['醫學','ika']].map(([n,k])=>qb(n,S[k],200)).join('')}</div><p class="p">民力 ${M().toFixed(2)}　行動數は（勤勉＋俊敏）÷25、使ひ殘しは毎季5倍まで。<br>工業力 ${f(S.ind)}・出生奬勵 +${Math.min(3,L('umi')*.3).toFixed(1)}%/年・食糧 生産 ${c.food.toFixed(1)} ／ 需要 ${c.need.toFixed(1)}</p>`;
 const qb=(n,v,m)=>`<div class="q"><span>${n}</span><div class="bar"><i style="width:${cl(v/m*100,0,100)}%"></i></div><span>${Math.round(v)}</span></div>`;
 const PN={
 adm:()=>adPanel(),
@@ -1064,7 +1076,7 @@ nai:c=>`${bondPanel()}<p class="p one">内政の效き目は年を經ても減�
 gun:c=>{const E=S.E,ws=P=='jp'?[['cn','支那',E.cn],['su','魯西亞',E.su],['us','米國',E.us],['gb','英國',E.gb]]:PS().sl.map(([x,n])=>[x,n,E[x]]);
  return`<div class="st">${cell('裝備',eqF().toFixed(2))}${cell('陸軍',f(S.army))}${cell('海軍',f(S.navy))}${cell('航空',f(S.air))}${cell('陸戰力',f(lnP()))}${cell('海戰力',f(nvP()))}${cell('原爆',S.bomb)}</div>
 <h2>軍備</h2><div class="g">${['mu','arm','nav','air','bom','ll'].map(ab).join('')}</div>
-<h2>列強戰力</h2><div>${ws.map(w=>qb(w[1]+(S.war[w[0]]?' ⚔':''),w[2],150)).join('')}${P=='jp'?qb('第三帝國',E.de,150):''}</div>
+<h2>列國軍備比較</h2>${milPanel()}<h2>交戰國の戰意</h2><div>${ws.map(w=>qb(w[1]+(S.war[w[0]]?' ⚔':''),w[2],150)).join('')}${P=='jp'?qb('第三帝國',E.de,150):''}</div>
 <h2>作戰方針</h2><p class="p">主攻方面は戰力1.3倍、他の方面は0.85倍。交戰する方面が多いほど戰力は分散する。陸の奥地は補給（隣の地の支配度）・冬季と泥濘（魯西亞の正月・十月）・縱深で成算が落ちる。海に圍まれた地は封鎖を續ければ攻めずとも降る。方針の變更に行動1つ。</p><div class="fl">${TNL().filter(x=>P!='jp'||x[0]!='本').concat([['0','なし']]).map(([k,n])=>`<button class="sm${(S.fo||'0')==k?' on':''}" data-a="fo:${k}">${n}</button>`).join('')}</div><div>${TNL().filter(x=>P!='jp'||x[0]!='本').map(([t,n])=>`<div class="q"><span>${n}${fronts().has(t)?' ⚔':''}</span><div class="bar"><i style="width:${mf(t)/1.3*100}%"></i></div><span>×${mf(t).toFixed(2)}</span></div>`).join('')}</div><p class="p"${P=='jp'?'':' hidden'}>第三帝國の對魯比重 ${Math.round((S.esh||1)*100)}%（英米が西で戰ふほど下がる）。${S.ev.ue?'米國は歐州にも參戰中で、太平洋への増援は6割。':''}${S.ev.fe?'極東魯軍は西へ去り手薄。':''}</p><h2>宣戰と講和</h2><p class="p">宣戰布告で戰が始まる。講和交渉は敵戰力50未滿で可、占領地を保って和を結ぶ。降伏勧告は敵戰力が一定未滿（信仰の低い國ほど早く降る）か、敵の降伏申入れの後に可。支那が降れば殘る地に獨立政府を立てて屬國とし、魯西亞・米英が降れば領土を割讓させ、魯西亞・白魯・烏克蘭・米國本土・印度を屬國とする。</p>${wRows()}`},
 han:()=>mapHtml()+`<div class="fl">${[['act','行動できる地'],['own','帝國と屬國'],['all','全て']].map(([k,l])=>`<button class="sm${hf==k?' on':''}" data-a="hf:${k}">${l}</button>`).join('')}</div><p class="p">進攻は前提の地を押さへてから。成算は戰力と守備で決まる。外地は同化で支配が上がり、占領地は放置すると叛亂する。人口の少ない地は同化が容易い。全ての占領地は支配30以上で、併合して外地とするか、獨立政府を樹立して屬國にできる。外地は支配100で内地に編入できる。</p>`+TNL().map(([t,tn])=>{const rows=hOrd(t).map(i=>[S.R[i],i]).map(([r,i])=>{if(!hIn(t,r.id))return'';if(P=='jp'&&t=='本'&&!naiOpen&&JNS.has(r.id))return'';const d=RD[i];let b='';
  if(P=='jp'&&r.o==P&&r.id!=HM()&&!S.cs)b+=`<button class="sm" data-a="sett:${r.id}"${can({fund:4})&&settPool(r.id)?'':' disabled'}>入植 帑4・行動1</button>`;if(r.o==P&&r.id!=HM()){if((isC(i)||r.an)&&r.c>=100&&!r.ni)b+=`<button class="sm" data-a="ni:${r.id}"${can({fund:10})?'':' disabled'}>内地編入 帑10</button>`;if(r.c<100)b+=`<button class="sm" data-a="as:${r.id}"${can({fund:6})?'':' disabled'}>${isC(i)||r.an?'同化教育':'宣撫工作'} 帑6</button>`;
@@ -1079,7 +1091,7 @@ shi:c=>`<div class="st">${cell('石油 産出',c.oil.toFixed(1),'消費 '+c.oilU
 ken:c=>`<p class="p one">原爆研究の突貫：模倣・情報・勤勉と研究所（科學振興）で最短期間が縮む。現在 ×${tboost().toFixed(2)}・原子爆彈 最短${Math.ceil(16/tboost())}季、二號・F號 最短${Math.ceil(4/tboost())}季</p><p class="p">研究點 毎季 +${c.sci.toFixed(1)}・研究所 ${S.lab}${S.sci>=1?`・未配分 ${f(S.sci)}`:''}。着手中の研究は、それぞれ毎季この研究點をまるごと得る。幾つ同時に着手しても遲れない。「集中研究」で行動を1つ使ふと、その研究に1季分の研究點を上乘せできる。未配分の點（機密收集や完成時の餘り）は着手中の研究に分けて足す。中斷しても進み具合は殘る。</p>`+TD.map(x=>{const id=x[0],dn=S.tech[id],cu=S.rq.includes(id),a=av(x),pg=Math.min(100,(S.tp[id]||0)/x[2]*100),n=Math.max(1,S.rq.length);
  const st=dn?'完成':cu?`研究中 ${Math.round(pg)}%・あと約${Math.max(1,Math.ceil((x[2]-(S.tp[id]||0))/Math.max(.1,tcap(id,c.sci))))}季`:pg>0?`中斷中 ${Math.round(pg)}%`:a?'':(TY[id]&&S.y<TY[id]?TY[id]+'年より（核分裂の發見後）':'要 '+x[3].split(',').map(tn).join('・'));
  return`<div class="row"><div><span class="nm">${tn(x[0])}</span><div class="meta">${x[4]} ・${x[2]}點${st?' ・'+st:''}</div>${!dn&&pg>0?`<div class="bar"><i style="width:${pg}%"></i></div>`:''}</div><div class="bt">${cu?`<button class="sm on" data-a="rf:${id}"${can({fund:5})?'':' disabled'}>集中研究 帑5</button>`:''}${a?`<button class="sm" data-a="rs:${id}">${cu?'中斷':'研究に着手'}</button>`:''}</div></div>`}).join(''),
-gai:()=>`<h2>國力番付</h2><div>${rank(calc())}</div>${S.y>=1945?postPanel():''}${envoyPanel()}<p class="p">國内總生産＝工業力 × 人口 × 民心 × 電力。全ての國を同じ式で算出し、列國の工業力は貯蓄で、人口は健康と醫學で毎季伸びる。領土を失へば人口が減り、外地・植民地の人口は本國より輕く數へる。國力はこの國内總生産に民力を掛けたもの。</p><h2>民力番付</h2><div class="tw">${ntab()}</div><p class="p">民力＝（能力・勤勉・俊敏・健康の平均）の1.5乘 × 協調 × 醫學。國力に掛かり、敵の守備と戰力にも乘る。敵の情報は守備に、米國の勤勉と貯蓄は戰時の増産に、信仰は降伏の遲速に、協調は國力と戰力に、行動數（勤勉＋俊敏を25で割る）は敵の反攻と回復の頻度に効く。</p><h2>關係</h2><div>${Object.keys(S.rel).filter(k=>k!=P&&k!='ind').map(k=>[k,NN[k]||ON[k]||k]).sort((a,b)=>(S.rel[b[0]]||0)-(S.rel[a[0]]||0)).map(([k,n])=>{const rv=S.rel[k]||0,st=P!='jp'?(atW(k)?'交戰':(S.pact||{})[k]?'不可侵':''):k=='th'&&S.al.th?'同盟':k=='de'&&S.al.ax?'同盟':(k=='us'||k=='gb'||k=='nl')&&S.war.us?'交戰':k=='gb'&&rv>=40?'通商':k=='nl'&&rv>=40?'協定':k=='pt'&&rv>=50?'通商':k=='tr'&&rv>=60?'協力':k=='es'&&S.ev.es?'協力':k=='fr'&&S.ev.fall?'維希':k=='us'&&S.emb?'禁輸':k=='su'&&S.ev.suc?'崩壞':k=='su'&&S.war.su?'交戰':k=='su'&&S.neu?'中立':'';return qb(n+(st?' '+st:''),rv+100,200).replace(/<span>\d+<\/span><\/div>$/,`<span>${Math.round(rv)}</span></div>`)}).join('')}</div>
+gai:()=>`<h2>國力番付（經濟）</h2><div>${rank(calc())}</div><h2>軍備番付</h2>${milPanel()}${S.y>=1945?postPanel():''}${envoyPanel()}<p class="p">國内總生産＝工業力 × 人口 × 民心 × 電力。全ての國を同じ式で算出し、列國の工業力は貯蓄で、人口は健康と醫學で毎季伸びる。領土を失へば人口が減り、外地・植民地の人口は本國より輕く數へる。國力はこの國内總生産に民力を掛けたもの。</p><h2>民力番付</h2><div class="tw">${ntab()}</div><p class="p">民力＝（能力・勤勉・俊敏・健康の平均）の1.5乘 × 協調 × 醫學。國力に掛かり、敵の守備と戰力にも乘る。敵の情報は守備に、米國の勤勉と貯蓄は戰時の増産に、信仰は降伏の遲速に、協調は國力と戰力に、行動數（勤勉＋俊敏を25で割る）は敵の反攻と回復の頻度に効く。</p><h2>關係</h2><div>${Object.keys(S.rel).filter(k=>k!=P&&k!='ind').map(k=>[k,NN[k]||ON[k]||k]).sort((a,b)=>(S.rel[b[0]]||0)-(S.rel[a[0]]||0)).map(([k,n])=>{const rv=S.rel[k]||0,st=P!='jp'?(atW(k)?'交戰':(S.pact||{})[k]?'不可侵':''):k=='th'&&S.al.th?'同盟':k=='de'&&S.al.ax?'同盟':(k=='us'||k=='gb'||k=='nl')&&S.war.us?'交戰':k=='gb'&&rv>=40?'通商':k=='nl'&&rv>=40?'協定':k=='pt'&&rv>=50?'通商':k=='tr'&&rv>=60?'協力':k=='es'&&S.ev.es?'協力':k=='fr'&&S.ev.fall?'維希':k=='us'&&S.emb?'禁輸':k=='su'&&S.ev.suc?'崩壞':k=='su'&&S.war.su?'交戰':k=='su'&&S.neu?'中立':'';return qb(n+(st?' '+st:''),rv+100,200).replace(/<span>\d+<\/span><\/div>$/,`<span>${Math.round(rv)}</span></div>`)}).join('')}</div>
 <h2>外交</h2><div class="g">${P=='jp'?['de','it','th','ax','gb','fr','fin','es','nl','pt','tr','us','su'].map(ab).join(''):Object.keys(S.rel).filter(k=>k!=P).map(dipB).join('')}</div>${tPanel()}
 <div${P=='jp'?'':' hidden'}><h2>植民地の獨立派指導者</h2><p class="p">支援すると攻略が容易になり、占領後の支配も高まる。信頼80以上で宗主國が弱れば蜂起工作が可能（成算は情報次第）。</p></div>`+Object.keys(P=='jp'?S.L:{}).map(id=>{const r=rs(id),v=S.L[id],o=r.o,ok=!fr(r);return`<div class="row"><div><span class="nm">${RD[ri(id)][1]} 獨立派</span><span class="o" style="color:${oc(o)}">${ON[o]}</span><div class="meta">信頼 ${Math.round(v)}</div><div class="bar"><i style="width:${v}%"></i></div></div><div class="bt">${ok?`<button class="sm" data-a="sp:${id}"${can({fund:5})&&v<100?'':' disabled'}>支援 帑5</button><button class="sm r" data-a="up:${id}"${can({fund:10})&&v>=80&&ef(o)<=.7?'':' disabled'}>蜂起工作 帑10</button>`:''}</div></div>`}).join(''),
 ho:c=>`${P=='jp'?'':`<p class="p">${PS().g}</p>`}<p class="p"${P=='jp'?'':' hidden'}>行動數は勤勉と俊敏の合計を25で割った數。使ひ殘しは毎季の5倍まで持ち越せる。裁可で季が進む。國力は工業力・民力・人口・民心で決まる。石油は米國頼みゆゑ大慶油田を急げ（地質探査で發見）。昭和16年夏、第三帝國は魯西亞に侵攻し極東魯軍は手薄になる。解放した地は盟邦となり資源の半ばを供す。原爆は二號・F號研究と原子爆彈研究の後、鈾10で製造。</p>
@@ -1097,9 +1109,9 @@ function rd(){tSync();$('h1').textContent=PS().h1;RD[ri('man')][1]=S.sc==1930&&!
  $('#ap').innerHTML=`行動 <b>${S.ap}</b><small>毎季+${mx}・持越し上限なし</small>`;$('#mu').textContent=mul>1?'一括 ×5（行動5）':'一括 ×1';$('#st').hidden=stH;$('#stt').textContent=stH?'統計を開く':'統計を畳む';
  $('#nx').disabled=!!S.over;if(mode=='menu'){$('#pn').innerHTML=menu();$('#tb').hidden=$('#st').hidden=true;$('#nx').disabled=true}else $('#tb').hidden=false}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const[t,v,w]=b.dataset.a.split(':');
- if(t=='tab'){tab=v;rd()}else if(t=='do')multi(act,v);else if(t=='atk')atk(v);else if(t=='ba')bulk(v);else if(t=='dps'){dpS=v;rd()}else if(t=='tpr')tProp(v,w);else if(t=='tbk')tBrk(v,w);else if(t=='dp')multi(dip,v);else if(t=='shf'){shF=v;invK.clear();rd()}else if(t=='adf'){adF=v;adO=0;rd()}else if(t=='ads'){adSel.has(+v)?adSel.delete(+v):adSel.add(+v);rd()}else if(t=='ado'){adO=adO==+v?0:+v;rd()}else if(t=='adm')adMerge();else if(t=='adc'){adSel.clear();rd()}else if(t=='asp')adSplit(+v,w);else if(t=='adt')adDet(+v,+w);else if(t=='adr'){const d=adD(+v),x=document.getElementById('adn'+v);if(d&&x&&x.value.trim()){d.n=x.value.trim().slice(0,16);sv();rd();toast('區名を改めた')}}else if(t=='adx')adReset(v);else if(t=='ni')nik(v);else if(t=='as')multi(assim,v);else if(t=='bk')multi(bkd,v);else if(t=='mul'){mul=mul==1?5:1;rd()}else if(t=='dc'){const e=EV[S.dc];if(e){S.dc='';e.o[+v][2]();lg((P=='jp'?'御聖斷：':'裁斷：')+e.o[+v][0]);fin()}}else if(t=='fo'){const nf=v=='0'?'':v;if(S.fo!==nf&&can({})){S.ap--;S.fo=nf;lg('主攻方面を'+(nf?TNL().find(x=>x[0]==nf)[1]:'なし')+'に定む');fin()}}else if(t=='li')lib(v);else if(t=='dev')multi(x=>dev(+x),v);
+ if(t=='tab'){tab=v;rd();tabTop()}else if(t=='msr'){mSort=+v;rd()}else if(t=='do')multi(act,v);else if(t=='atk')atk(v);else if(t=='ba')bulk(v);else if(t=='dps'){dpS=v;rd()}else if(t=='tpr')tProp(v,w);else if(t=='tbk')tBrk(v,w);else if(t=='dp')multi(dip,v);else if(t=='shf'){shF=v;invK.clear();rd()}else if(t=='adf'){adF=v;adO=0;rd()}else if(t=='ads'){adSel.has(+v)?adSel.delete(+v):adSel.add(+v);rd()}else if(t=='ado'){adO=adO==+v?0:+v;rd()}else if(t=='adm')adMerge();else if(t=='adc'){adSel.clear();rd()}else if(t=='asp')adSplit(+v,w);else if(t=='adt')adDet(+v,+w);else if(t=='adr'){const d=adD(+v),x=document.getElementById('adn'+v);if(d&&x&&x.value.trim()){d.n=x.value.trim().slice(0,16);sv();rd();toast('區名を改めた')}}else if(t=='adx')adReset(v);else if(t=='ni')nik(v);else if(t=='as')multi(assim,v);else if(t=='bk')multi(bkd,v);else if(t=='mul'){mul=mul==1?5:1;rd()}else if(t=='dc'){const e=EV[S.dc];if(e){S.dc='';e.o[+v][2]();lg((P=='jp'?'御聖斷：':'裁斷：')+e.o[+v][0]);fin()}}else if(t=='fo'){const nf=v=='0'?'':v;if(S.fo!==nf&&can({})){S.ap--;S.fo=nf;lg('主攻方面を'+(nf?TNL().find(x=>x[0]==nf)[1]:'なし')+'に定む');fin()}}else if(t=='li')lib(v);else if(t=='dev')multi(x=>dev(+x),v);
  else if(t=='bt'){bT=v;rd()}else if(t=='bi')bondDo(bA);else if(t=='br')bondDo(-bA);else if(t=='bsel'){bA=+v;rd()}else if(t=='mp')mpClick(v);else if(t=='sz')setSz(v);else if(t=='back')snapBack();else if(t=='cedo')cedeDo();else if(t=='sett')settle(v);else if(t=='unp')unPick(v);else if(t=='bnd')bandung(v);else if(t=='pe')postEcon(v);else if(t=='lt')letter(v,w,(document.getElementById('ej'+v)||{}).value);else if(t=='rf')multi(rf,v);else if(t=='rs'){const k=S.rq.indexOf(v);if(k<0)S.rq.push(v);else S.rq.splice(k,1);sv();rd()}else if(t=='ntx'){if(v=='all')S.ntf=[];else (S.ntf||[]).splice(+v,1);sv();rd()}else if(t=='bu')bomb(v);else if(t=='bmt'){bm.t=v;rd()}else if(t=='bmo')bombGo(bm.t,v);else if(t=='bmx'){bm={x:null,t:null};rd()}else if(t=='sp')sup(v);else if(t=='menu'){mode='menu';fromGame=true;cf='';rd();scrollTo(0,0)}else if(t=='mc'){mode='game';cf='';rd()}
- else if(t=='msc'){scSel=+v;cf='';rd()}else if(t=='aik'){AIKv=+v;try{localStorage.setItem('kokoku-aik',v)}catch(e){}rd()}else if(t=='mn'){const k=v||'jp';if(cf!='mn'+k){cf='mn'+k;rd();return}cf='';S=ns(k,scSel);P=k;relFix();adSel.clear();adO=0;tab='nai';rep=[];seen=S.log[0];mode='game';had=true;sv();rd();toast(S.log[0].replace(/^[^\u3000]*\u3000/,''))}
+ else if(t=='msc'){scSel=+v;cf='';rd()}else if(t=='aik'){AIKv=+v;try{localStorage.setItem('kokoku-aik2',v)}catch(e){}rd()}else if(t=='mn'){const k=v||'jp';if(cf!='mn'+k){cf='mn'+k;rd();return}cf='';S=ns(k,scSel);P=k;relFix();adSel.clear();adO=0;tab='nai';rep=[];seen=S.log[0];mode='game';had=true;sv();rd();toast(S.log[0].replace(/^[^\u3000]*\u3000/,''))}
  else if(t=='ms'){if(slot(v)&&cf!='ms'+v){cf='ms'+v;rd();return}cf='';S.ts=Date.now();const j=JSON.stringify(S);let ok=0;try{localStorage.setItem(K+'s'+v,j);ok=1}catch(e){}if(CDB){CSL['s'+v]=j;cdPut('s'+v,j);ok=1}toast(ok?'記録 '+kn(+v)+' に保存した':'保存できなかった。ブラウザの保存領域を確かめてください');rd()}
  else if(t=='xo'||t=='xi'){xm=xm==t?'':t;rd()}else if(t=='xc'){const a=$('#xt');const j=a?a.value:'';const sel=()=>{if(a){a.focus();a.select()}toast('選んだ文字を写して保存してください')};try{navigator.clipboard.writeText(j).then(()=>toast('記録の文字列を写した。メモ等に貼って保存'),sel)}catch(e){sel()}}
  else if(t=='xl'){const a=$('#xt');const j=(a?a.value:'').trim();if(!j)return;if(fromGame&&cf!='xl'){cf='xl';rd();return}cf='';if(!cdAdopt(j)){toast('この文字列は讀めない');return}tab='nai';mode='game';xm='';sv();rd();toast('貼り付けた記録から再開')}
@@ -1140,9 +1152,12 @@ for(let i=1;i<=4;i++){const c=sn[i];let x=null;try{x=JSON.parse(localStorage.get
 rd()}catch(e){}})();
 </script>
 <style>.dz{font-size:.6em;margin:0 .3em 0 .3em;opacity:.78;font-weight:normal;letter-spacing:0;white-space:nowrap}</style>
-<script>(()=>{const RX=/第三帝國總統|帝國經綸|第三帝國|黨首|總統/g,DZ={'第三帝國總統':'Der Führer','帝國經綸':()=>{try{return NZ()?'Drittes Reich Strategie':'Deutsches Reich Strategie'}catch(e){return 'Drittes Reich Strategie'}},'第三帝國':'Drittes Reich','黨首':'Führer der NSDAP','總統':'Der Führer'},SK=new Set(['OPTION','SELECT','TEXTAREA','SCRIPT','STYLE','INPUT']),done=new WeakSet();
+<script>function tabTop(){const p=$('#pn'),tb=$('#tb');if(!p||!tb)return;const y=p.getBoundingClientRect().top+scrollY-tb.offsetHeight-4;if(scrollY>y)scrollTo(0,Math.max(0,y))}
+(()=>{let x0=null,y0=0,ok=1;const hs=e=>{for(let n=e;n&&n!==document.body;n=n.parentNode){if(n.nodeType!==1)continue;if(/^(INPUT|SELECT|TEXTAREA|svg)$/i.test(n.nodeName)||n instanceof SVGElement)return 1;if(n.scrollWidth>n.clientWidth+2&&/(auto|scroll)/.test(getComputedStyle(n).overflowX))return 1}return 0};
+document.addEventListener('touchstart',e=>{const p=$('#pn');if(e.touches.length!==1||!p||!p.contains(e.target)||typeof mode!='undefined'&&mode=='menu'){x0=null;return}x0=e.touches[0].clientX;y0=e.touches[0].clientY;ok=!hs(e.target)},{passive:true});
+document.addEventListener('touchend',e=>{if(x0==null||!ok)return;const t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;if(Math.abs(dx)<70||Math.abs(dx)<Math.abs(dy)*2)return;const i=TB.findIndex(q=>q[0]==tab),j=i+(dx<0?1:-1);if(i<0||j<0||j>=TB.length)return;tab=TB[j][0];rd();tabTop()},{passive:true})})();</script><script>(()=>{const RX=/第三帝國總統|帝國經綸|第三帝國|黨首|總統/g,DZ={'第三帝國總統':'Der Führer','帝國經綸':()=>{try{return P!='de'?'':NZ()?'Drittes Reich Strategie':'Deutsches Reich Strategie'}catch(e){return 'Drittes Reich Strategie'}},'第三帝國':'Drittes Reich','黨首':'Führer der NSDAP','總統':'Der Führer'},SK=new Set(['OPTION','SELECT','TEXTAREA','SCRIPT','STYLE','INPUT']),done=new WeakSet();
 function ok(n,root){if(done.has(n))return 2;const v=n.nodeValue;if(!v||!/第三帝國|總統|帝國經綸|黨首/.test(v))return 2;for(let p=n.parentNode;p;p=p.parentNode){if(SK.has(p.nodeName)||p instanceof SVGElement||(p.classList&&p.classList.contains('dz')))return 2;if(p===root)break}return 1}
 function dz(root){if(!root||!root.ownerDocument)return;const tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>ok(n,root)}),a=[];while(tw.nextNode())a.push(tw.currentNode);
-for(const n of a){const s=n.nodeValue,f=document.createDocumentFragment();let i=0;s.replace(RX,(m,o)=>{const t=document.createTextNode(s.slice(i,o+m.length));done.add(t);f.append(t);const e=document.createElement('small');e.className='dz';e.textContent=typeof DZ[m]=='function'?DZ[m]():DZ[m];f.append(e);i=o+m.length;return m});const t=document.createTextNode(s.slice(i));done.add(t);f.append(t);n.replaceWith(f)}}
+for(const n of a){const s=n.nodeValue,f=document.createDocumentFragment();let i=0;s.replace(RX,(m,o)=>{const t=document.createTextNode(s.slice(i,o+m.length));done.add(t);f.append(t);const e=document.createElement('small');e.className='dz';e.textContent=typeof DZ[m]=='function'?DZ[m]():DZ[m];if(e.textContent)f.append(e);i=o+m.length;return m});const t=document.createTextNode(s.slice(i));done.add(t);f.append(t);n.replaceWith(f)}}
 new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes){if(n.nodeType===1){if(!(n.classList&&n.classList.contains('dz')))dz(n)}else if(n.nodeType===3&&!done.has(n)&&n.parentNode)dz(n.parentNode)}}).observe(document.body,{childList:true,subtree:true});dz(document.body)})();</script>
 <script>if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})})}</script></body></html>
