@@ -86,6 +86,10 @@ button,input{font-family:inherit}
 .stat{background:var(--sheet);padding:9px 12px 10px;min-width:0}
 .stat .k{font-size:11.5px;color:var(--ink-2);letter-spacing:.12em}
 .stat .v{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.35;overflow-wrap:anywhere}
+.dlt{display:inline-block;font-size:11px;font-weight:600;margin-left:6px;letter-spacing:0}.dlt.up{color:var(--good)}.dlt.dn{color:var(--bad)}
+@media(max-width:520px){.stats{grid-template-columns:repeat(3,1fr)}.stat{padding:6px 8px 7px}.stat .k{font-size:10.5px;letter-spacing:.04em}.stat .v{font-size:15.5px}.stat .v small{font-size:10px}.stat .meter{width:30px}.dlt{display:block;margin-left:0}}
+.dlg .cash{font-size:12px;color:var(--ink-2);margin:-2px 0 6px}
+.kbd-hint{font-size:11px;color:var(--ink-2);text-align:center;margin:10px 0 0}@media(hover:none){.kbd-hint{display:none}}
 .stat .v small{font-size:12px;font-weight:500;color:var(--ink-2)}
 .meter{display:inline-block;width:64px;height:7px;background:var(--sheet-2);border:1px solid var(--rule);vertical-align:middle;margin-right:6px;position:relative}
 .meter i{position:absolute;left:0;top:0;bottom:0;background:var(--ai-2)}
@@ -587,6 +591,75 @@ const H_SUMMER={1770:{all:.82},1782:{all:.78,shinano:.68,tango:.72,wakasa:.74},1
 const H_AUTUMN={1783:{all:.62,shinano:.4,kazusa:.6,musashi:.5,settsu:.68,kii:.72},1786:{all:.86,kazusa:.8,shinano:.66,musashi:.6},1833:{all:.9},1836:{all:.9}};
 const SCRIPT_LIST=[[1768,1,'shinchu'],[1770,1,'kanbatsu70'],[1771,1,'okage'],[1772,0,'meiwa'],[1772,3,'anei'],[1782,1,'tenmei_cold'],[1783,2,'asama'],[1783,3,'relief'],[1784,0,'famine84'],[1786,2,'tenmei_flood'],[1786,3,'sakelimit'],[1787,1,'uchi87'],[1787,2,'kansei'],[1788,0,'kyoto_fire88'],[1789,2,'kien'],[1789,3,'kakoi'],[1790,0,'kiri'],[1793,2,'sadanobu_out'],[1806,0,'bunka_fire'],[1812,0,'kanreki'],[1818,1,'bunsei'],[1828,0,'kiju'],[1829,0,'bunsei_fire'],[1830,0,'okage'],[1833,1,'cold33'],[1833,2,'famine33'],[1833,3,'sakelimit'],[1833,3,'relief'],[1834,0,'kogo_fire'],[1836,1,'cold36'],[1836,3,'sakelimit'],[1836,3,'relief'],[1837,0,'oshio'],[1839,0,'beiju'],[1841,1,'tenpo_reform'],[1841,3,'kabu_kaisan'],[1843,2,'mizuno_fall'],[1847,0,'zenkoji'],[1848,1,'rennyo'],[1850,0,'hakuju'],[1851,0,'kabu_saiko'],[1851,1,'hyakuju'],[1853,1,'perry'],[1854,3,'ansei_quake'],[1855,3,'ansei_edo'],[1858,2,'cholera'],[1859,0,'chaju'],[1859,1,'yokohama'],[1860,0,'manen'],[1861,1,'shinran'],[1862,0,'kouju'],[1862,2,'sankin'],[1864,2,'kinmon'],[1864,2,'goyokin','長州征討の軍用金'],[1866,1,'yonaoshi'],[1866,3,'sakelimit'],[1867,2,'eejanaika'],[1867,3,'taisei'],[1868,0,'boshin'],[1868,0,'goyokin','新政府の会計基立金'],[1868,2,'meiji'],[1870,2,'heimin'],[1871,1,'shinka'],[1871,2,'haihan'],[1872,0,'daikanreki'],[1872,1,'kocho'],[1872,2,'tetsudo'],[1873,0,'gakko'],[1873,2,'chiso'],[1876,2,'ginko'],[1877,0,'seinan'],[1877,3,'daioujou']];
 const SCRIPT={}; for(const [y,se,id,ex] of SCRIPT_LIST){ const k=TT(y,se); (SCRIPT[k]=SCRIPT[k]||[]).push([id,ex]); }
+// 各国の一揆・打ちこわし・直訴・村方騒動・飢饉（国ごとの史実イベント）
+const REG_LIST=[
+['tanba',1771,2,'goso','篠山藩領の強訴','明和八年八月、大干ばつで凶作となったのに篠山藩が厳しく年貢を取り立てようとし、多紀郡の農民数千人が城下へ強訴した。藩は一部の減免と拝借米を認めたが、のちに首謀者を探し出して重く罰したという。'],
+['tanba',1787,1,'uchi','亀山・園部の打ちこわし','天明七年五月、米価の暴騰で、大坂・京の打ちこわしに続き、亀山・園部・篠山・柏原の城下でも、米を買い占めた米穀商や酒造家、富商の家が打ちこわされた。'],
+['tanba',1786,2,'goso','山あいの凶作と夫食米願い','天明の飢饉が山あいの村々にも及び、冷害で稲が実らない。平屋村のあたりでも、年貢の減免と夫食米の貸し出しを願う声が高まっている。'],
+['tanba',1795,2,'murakata','保津川筋の村方騒動','保津川流域の水害や不作が続き、桑田郡・船井郡の村々では、年貢勘定や村入用の不正をめぐって小前百姓が庄屋・年寄を訴える村方騒動が相次いでいる。'],
+['tanba',1825,2,'goso','由良川の洪水','文政八年秋、由良川流域が洪水と風水害に見舞われた。下流の天田郡・何鹿郡では、年貢の減免と川除普請の公費負担を求める愁訴が起きている。上流の当村でも田が水をかぶった。'],
+['tanba',1836,2,'gimin','宮内清兵衛の直訴','天保の飢饉のさなか、同じ桑田郡の上久保村で、宮内清兵衛が餓死寸前の村人を救おうと、年貢を二ツ免（二割）に下げてほしいと単身で園部陣屋へ直訴した。清兵衛は直訴の罪で捕らえられ、死罪となったと伝わる。だがその訴えにより、上久保村の年貢は二ツ取に減じられた。'],
+['tanba',1860,2,'news','福知山の市ノ寺騒動','万延元年八月、福知山藩が生糸・楮・葉煙草・藍などの専売や新しい雑税を押しつけたことに反発し、天田郡市ノ寺村のあたりから数千人の農民が城下へ迫った。藩は専売会所の廃止と新税の撤回を認めたが、のちに首謀者を処刑・遠島に処したという。'],
+['tanba',1860,3,'uchi','辻金右衛門宅の打ちこわし','万延元年十一月、凶作と開港後の物価高のなか、酒造米を買い占めて米と酒の値をつり上げたとして、天田郡大身村や細野峠に集まった農民およそ二千人が、船井郡上大久保村の酒屋で庄屋の辻金右衛門の屋敷に押し寄せた。大黒柱には鍬の傷が刻まれ、一揆勢は水原村の呉服屋や井脇村の掛屋にも乱入しているという。'],
+['tanba',1866,1,'goso','長州再征の助郷','長州への再征で、街道筋の村々に助郷の人足が重く割り当てられた。長雨の凶作で米の値も跳ね上がり、各地で助郷の免除や年貢の減免、米価の引き下げを求める騒ぎが起きている。'],
+['tanba',1869,2,'goso','明治初年の水害と減免願い','御一新ののちも水害と凶作が続き、平屋村のあたりの村々から年貢の減免を求める嘆願が出ている。'],
+['tanba',1873,2,'uchi','何鹿郡の徴兵反対一揆','明治六年七月、何鹿郡で、徴兵令（血税の誤解）や地租改正、小学校費の取り立てに反対する農民数千人が蜂起し、戸長の家や小学校、区務所を打ちこわし、焼き討ちしながら綾部へ向かった。大阪鎮台の兵が出て鎮められたが、戸長の家は真っ先に狙われる。'],
+['tango',1774,2,'goso','ちりめん運上の嘆願','ちりめんの機織りが広がるにつれ、機運上の取り立ても厳しくなった。村々では運上の引き下げや、不作の年の石代銀納の値の引き下げを求める嘆願が続いている。'],
+['tango',1782,3,'goso','宮津藩の天明一揆','天明二年冬、凶作のうえ、ちりめん運上銀の増額や新しい税が課され、宮津藩領四郡の農民が城下へ強訴した。藩は新税の撤回を一部認めたが、首謀者を捕らえて死罪や追放に処したという。'],
+['tango',1786,2,'kikin','久美浜代官所領の飢饉','天明の大飢饉が深まり、久美浜代官所が治める熊野・中・竹野郡では餓死する者が相次いでいる。代官所へ年貢の減免や夫食米の貸し出しを願う声が高まり、米屋への打ちこわし騒ぎも起きた。'],
+['tango',1822,3,'goso','万人講騒動','文政五年十二月、藩主の幕閣昇進の費用をまかなう強制の頼母子講「万人講」と重い年貢に怒り、与謝郡栗田村の吉田新兵衛らを先頭に、宮津藩領四郡からおよそ一万人が城下へ押し寄せ、御用商人の家を打ちこわした。大庄屋の多くは藩の側に立っている。'],
+['tango',1823,0,'gimin','吉田新兵衛らの処刑','藩は万人講の廃止と重税の撤回を約束したが、年が明けると、吉田新兵衛ら一揆の指導者を捕らえ、斬罪などの極刑に処した。'],
+['tango',1836,2,'goso','久美浜代官所領の連合強訴','天保の大飢饉で丹後一円が大凶作となった。久美浜代官所が治める熊野・中・竹野郡の村々が連合し、年貢の減免、石代銀納の延期、夫食米の貸し出しを求めて強訴している。'],
+['tango',1866,1,'kikin','ちりめん機屋の困窮','凶作と生糸・米の値上がりで、ちりめんの機業が大きな打撃を受けた。仕事を失った織り手や農民が困窮し、減免の嘆願や施行を求める声が上がっている。'],
+['tango',1873,2,'uchi','丹後四郡の徴兵反対一揆','明治六年七月、丹波の何鹿郡の一揆が飛び火し、与謝・中・竹野・熊野の四郡でも、徴兵令や地租改正、学校費の取り立てに反対する農民が蜂起して、戸長の家や役場を襲っている。'],
+['wakasa',1769,2,'murakata','明和の村方騒動','干ばつや風水害の不作が続き、若狭三郡の村々では年貢減免の愁訴とともに、村役人の不正を糾弾する村方騒動が散発している。'],
+['wakasa',1783,0,'uchi','小浜の打ちこわし','天明三年正月、米価の高騰と米商の買い占めに怒った根来谷・松永谷・遠敷の農民数百人が蜂起し、遠敷村の孫次郎宅を打ちこわした。その夜、遠敷山・野木山・愛宕山には大篝火が焚かれ、十八日夜には名田庄の一揆勢が小浜町清水町の門を押し開いて、米商・小物屋次兵衛の家を打ちこわした。小浜湊の隣の西津も、米の積み出しで目を付けられている。'],
+['wakasa',1787,1,'uchi','小浜・高浜の米騒動','米の値の暴騰で、小浜の町や高浜・三方のあたりで、米を買い占めた商人の家へ人々が押しかけている。藩は富商に御用金と施米を出させ、米を安く払い下げて鎮めようとしている。'],
+['wakasa',1804,0,'murakata','名田庄下村の村方騒動','文化元年二月、遠敷郡名田庄の下村で、小前百姓が庄屋・村役人による年貢の割り当てや村入用の不正を糾弾し、帳簿の公開を求めて騒ぎを起こした。同じ騒ぎは若狭のあちこちで繰り返されている。'],
+['wakasa',1836,2,'goso','若狭三郡の集団嘆願','天保の大飢饉で若狭一円に飢えと疫病が広がった。遠敷・三方・大飯郡の村々では、年貢の減免や拝借米を求める集団嘆願が続いている。小浜の町では米商や富商へ施行を迫る騒ぎも起きている。'],
+['wakasa',1854,1,'goso','海防の人足役','異国船に備えた砲台の普請と人足の徴発が重くのしかかり、そこへ地震と風水害の不作が重なった。浦々の村から、人足役の軽減と年貢減免の嘆願が出ている。'],
+['wakasa',1866,2,'goso','所司代の軍役','長雨の凶作に加え、藩主が京都所司代などを務めることで重い軍役や御用金がかかり、米の値も上がった。村々から減免の嘆願や米価の引き下げを求める声が上がっている。'],
+['wakasa',1874,2,'goso','地租改正の地価嘆願','地租改正の地位等級と収穫米の査定が重すぎるとして、旧小浜藩領の村々が連合し、地価の修正と減額を求めている。'],
+['omi',1770,2,'goso','湖西の破免願い','干ばつの凶作で、湖西の村々が破免検見や年貢の減免を求めて愁訴・強訴を起こしている。'],
+['omi',1784,1,'goso','瀬田川浚渫の請願','冷害に加え、琵琶湖の増水と川の氾濫で湖辺の田が水に浸かった。高島郡深溝村の庄屋、藤本太郎兵衛らが湖辺の村々を取りまとめ、年貢の減免と夫食米の貸し出し、そして湖の水を抜くための瀬田川の浚渫を御公儀に願い出ようとしている。'],
+['omi',1787,1,'news','大津の打ちこわし','天明七年五月、米価の暴騰を受けて、大津の町民や仲仕らが米穀商や買い占め商人の家を次々と打ちこわした。大津代官所は御蔵米を安く払い下げて鎮めたという。'],
+['omi',1800,2,'goso','湖岸の水損と舟運争い','琵琶湖の水位が上がって湖岸の田畑が冠水し、減免の嘆願が出ている。今津・海津・堅田・大津の舟運の特権をめぐる争いも絶えない。'],
+['omi',1836,2,'goso','高島郡の愁訴','天保の飢饉と疫病で、高島郡の村々が年貢の減免や拝借米を求めて愁訴・強訴を続けている。今津の湊にも米を求める人が集まる。'],
+['omi',1836,3,'news','正興寺村の米借用騒動','天保七年十二月、園城寺領の滋賀郡正興寺村で、飢えた農民たちが領主や村の富農に飯米の借用を強く迫る騒ぎを起こした。大津の町では木戸門の警備が厳しくなっている。'],
+['omi',1842,3,'news','近江天保一揆','天保十三年十月、野洲郡三上村などで、幕府の検地に反対する農民およそ四万人が蜂起した。検地役人は大津代官所へ逃げ込み、幕府は検地の中止に追い込まれた。湖西の増税検地も沙汰やみとなった。'],
+['omi',1866,1,'uchi','湖西の米騒動','凶作と長州再征の物資・人足の徴発で米の値が跳ね上がり、今津から大津にかけての町や村で、米価の引き下げや施行を求める不穏な動きが広がっている。'],
+['omi',1868,1,'goso','琵琶湖の大氾濫','明治元年五月の長雨で琵琶湖が大氾濫し、湖岸の村々が壊滅的な冠水に見舞われた。大津県へ年貢の全免・減免と堤防修復の費用を求める嘆願が相次いでいる。'],
+['omi',1875,2,'goso','地租改正の査定','地租改正の収穫米と地価の査定が旧来の年貢より重いとして、高島郡や滋賀郡の村々が県庁へ連日陳情を重ねている。'],
+['yamashiro',1785,2,'gimin','伏見義民の駕籠訴','天明五年九月、伏見奉行小堀政方の悪政と過酷な御用金に耐えかね、伏見の町年寄の文珠九助・丸屋九兵衛・麹屋伝兵衛らが江戸へ下り、老中の駕籠に直訴した。'],
+['yamashiro',1787,1,'uchi','京の打ちこわしと御所千度参り','天明七年五月、米価の暴騰で京と伏見の米穀商や買い占め商人の家が打ちこわされた。六月には数万人の町民が、飢えからの救いを祈って御所の築地塀を昼夜めぐる「御所千度参り」を始めた。'],
+['yamashiro',1788,2,'news','伏見奉行の改易','吟味の末、伏見奉行小堀政方は改易となった。だが直訴した文珠九助ら義民の多くは、江戸の牢の中で命を落としたという。'],
+['yamashiro',1815,2,'murakata','桂川筋の村方騒動','木津川・桂川・宇治川の氾濫による凶作が続き、山城の村々では、減免を求める動きとともに、村役人の不正を追及する村方騒動が起きている。'],
+['yamashiro',1836,2,'kikin','京のお救い小屋','天保の飢饉と疫病で、京と伏見には行き倒れが続出している。町奉行所は北野や四条河原にお救い小屋を設けたが、とても足りない。御室や鳴滝のあたりでも、施行を求める人が門前に立つ。'],
+['yamashiro',1866,1,'uchi','京・伏見の米騒動','禁門の変の焼け跡もまだ癒えぬなか、凶作と長州再征の軍需で物価が跳ね上がった。京や伏見で、米商や富商への打ちこわし騒ぎや施行の要求が起きている。'],
+['yamashiro',1868,1,'goso','明治元年の大水害','明治元年五月の大豪雨で、木津川・宇治川・桂川が同時に氾濫し、田畑が壊滅した。鳥羽・伏見の戦いの負担も重なり、村々が京都府へ年貢の全免・減免と救恤米を求めている。'],
+['yamashiro',1874,2,'goso','地租改正の不服申立て','地租改正の土地丈量と収穫米・地価の査定が旧幕時代より重いとして、乙訓や洛北の村々から減額を求める嘆願が続いている。'],
+['settsu',1787,1,'uchi','大坂の打ちこわし','天明七年五月、米価の暴騰で、大坂の町で米屋が次々と打ちこわされた。騒ぎは灘目の酒蔵の町にも及びかねない。'],
+['settsu',1823,1,'goso','摂河の国訴','文政六年、摂津・河内の千を超える村々が、綿の売りさばきを大坂の問屋に縛られることに反対し、自由な売買を求めて大坂町奉行所へ訴え出ようとしている（国訴）。庄屋たちが村々の総代となっている。'],
+['settsu',1837,2,'news','能勢騒動','天保八年、大塩平八郎の門人を名乗る山田屋大助らが能勢郡で兵を挙げ、村々を回って人を集めた。ほどなく鎮められたという。'],
+['settsu',1866,1,'uchi','西宮・兵庫の打ちこわし','慶応二年五月、米の値上がりに耐えかねた人々が西宮で米屋に押しかけ、打ちこわしは兵庫や大坂へと広がった。灘目の酒蔵も目を付けられている。'],
+['kii',1810,2,'murakata','有田の村方騒動','近ごろ紀州の村々では、年貢の割付や村入用をめぐって、小前百姓が村役人を突き上げる村方騒動が珍しくない。'],
+['kii',1823,3,'uchi','こぶち騒動','文政六年、凶作と藩の取り立てに苦しむ紀ノ川筋の百姓が大挙して蜂起し、大庄屋や富商の家を打ちこわした（こぶち騒動）。噂は有田郡にも伝わり、村々は落ち着かない。'],
+['kii',1836,2,'kikin','天保の飢饉（紀州）','天保の飢饉は紀州にも及び、浦々でも山あいでも食べるものに事欠く者が増えている。'],
+['kii',1866,1,'goso','長州再征の夫役','長州への再征で紀州藩が先手を務めることになり、村々に人足と兵糧米の割り当てが重くのしかかっている。'],
+['musashi',1787,1,'uchi','江戸の打ちこわし','天明七年五月、江戸の町で米屋などが千軒近くも打ちこわされた。江戸近郊の当村にも、米を蓄えた家を狙う噂が流れている。'],
+['musashi',1812,2,'murakata','村入用をめぐる村方騒動','江戸近郊の村々では、助郷や村入用の割り当てをめぐって、小前百姓が村役人を訴える村方騒動が珍しくない。当村でも不満がくすぶっている。'],
+['musashi',1836,2,'kikin','天保の飢饉（武蔵）','天保の飢饉で江戸近郊にも飢える者が増えた。江戸の町ではお救い小屋が設けられている。'],
+['musashi',1866,1,'uchi','品川の打ちこわし','慶応二年五月、米の値上がりに耐えかねた人々が品川宿で米屋などを打ちこわし、騒ぎは江戸市中へと広がった。'],
+['musashi',1866,2,'news','武州一揆','この夏、秩父・多摩・入間など武蔵の西部で、米価の高騰に怒った人々が十万人を超える世直し一揆を起こし、生糸商や質屋、穀屋を打ちこわしながら村々を進んだという。'],
+['kazusa',1790,2,'murakata','九十九里の網方争論','九十九里の浜では、地曳網の網元と網子、浦方の村々の間で、漁場や取り分をめぐる争いが絶えない。当村でも網子たちが取り分の見直しを迫っている。'],
+['kazusa',1836,2,'kikin','天保の飢饉（上総）','天保の飢饉で上総の村々にも飢える者が増えている。'],
+['kazusa',1853,2,'goso','九十九里の海防','黒船の来航ののち、九十九里の浜にも異国船に備えた遠見番所や台場の備えが命じられ、村々に人足と費用の割り当てが来ている。'],
+['kazusa',1868,1,'goyo','撒兵隊の軍用金','旧幕府の撒兵隊が上総に入り、村々に軍用金と人足を求めている'],
+['shinano',1783,3,'uchi','上州からの打ちこわし','浅間山の大焼けで米の値が跳ね上がり、上州から打ちこわしの一団が碓氷峠を越えて佐久郡へ入ってきた。米を買い占めた商家が次々と襲われている。'],
+['shinano',1815,2,'murakata','佐久の村方騒動','佐久の村々でも、年貢の割付や村入用をめぐって小前百姓が村役人を突き上げる村方騒動が起きている。'],
+['shinano',1836,2,'kikin','天保の飢饉（信濃）','天保の飢饉で、山国の信濃では米が尽き、餓死する者が出始めている。'],
+['shinano',1869,2,'news','上田騒動','明治二年八月、隣の上田藩領で、贋金の横行と米価の高騰に苦しむ百姓が蜂起し、商家や役人の家を打ちこわした（上田騒動）。']];
+const REG={}; for(const [pv,y,se,k,ti,tx] of REG_LIST){ const kk=TT(y,se); (REG[kk]=REG[kk]||[]).push([pv,k,ti,tx]); }
 const VILS=['上村','下村','中村','東村','西村','北村','南村','本郷村','新田村','川原村','山田村','大野村','小野村','宮村','寺村','岡村','中島村','高田村'];
 const SHOYA_NAMES=['甚右衛門','五郎左衛門','善右衛門','孫右衛門','新右衛門','喜左衛門','伝右衛門','長兵衛','市左衛門','重兵衛','源右衛門','惣左衛門','太郎右衛門','次郎兵衛'];
 const NAMES=['太郎作','与平','勘助','権兵衛','八右衛門','甚六','茂助','吉兵衛','源蔵','清七','佐平次','伝八','市郎兵衛','九兵衛','弥五郎','治助','藤吉','善六','後家のおたけ','孫左衛門','長次郎','新五郎'];
@@ -1062,6 +1135,9 @@ function randomEvent(s){
   add('tairyo',6,s.biz.kaisan.lv>0&&se<3);
   add('karabune',5,s.biz.kusuri.lv>0);
   add('shike',6,s.fune>0&&se<3);
+  add('tomikuji',4,s.t<MEIJI_T); add('meibutsu',3,nw>800*PL(s)); add('ronin',3+(s.flags.kaibo?4:0),!s.flags.haihan);
+  add('shibai',5,se!==3); add('sumo',3,nw>500*PL(s)); add('maizo',2); add('haikai',4); add('ookai',6);
+  add('murakata_r',2,s.t<MEIJI_T); add('bakuchi',3); add('gakusha',3); add('okageinu',2,se<3); add('genmen',5,se===2);
   const tot=pool.reduce((a,p)=>a+p[1],0); let r=rnd()*tot;
   for(const [id,w] of pool){ r-=w; if(r<=0) return makeEvent(s,id); }
   return null;
@@ -1381,6 +1457,7 @@ function beginSeason(s,rep,initial){
   if(!initial) updatePrices(s);
   if(se===0&&!initial){ const k=estKaku(s); if(k>0) addKaku(s,k); }
   if(SCRIPT[t]) for(const [id,extra] of SCRIPT[t]){ const e=makeEvent(s,id,extra); if(e) evs.push(e); }
+  if(!initial&&REG[t]) for(const [pv,k,ti,tx] of REG[t]) if(pv===s.prov){ const e=k==='goyo'?makeEvent(s,'goyokin',ti):makeEvent(s,'r_'+k,{ti,tx}); if(e) evs.push(e); }
   if(se===0&&!initial&&s.fam) familyYear(s,(text,warn)=>{ if(rep) rep.notes.push({text,warn:!!warn,fam:true}); log(s,text.replace(/。$/,''),warn?'out':'ev'); },evs);
   for(const id of s.pendingDefaults){ const l=s.loans.find(x=>x.id===id); const e=makeEvent(s,l&&l.kind==='shoya'?'default_shoya':'default',id); if(e) evs.push(e); }
   s.pendingDefaults=[];
@@ -1398,6 +1475,7 @@ function blocking(q){
 }
 function advance(quiet){
   if(!S||S.queue.length||S.over) return;
+  S.nwPrev=netWorth(S);
   if(S.opt&&S.opt.autoOpt) ACT.optAll(true);
   const mg=runManagers(S);
   for(const n of autoDev(S)) mg.notes.push(n);
@@ -1688,6 +1766,134 @@ const EV={
     make:s=>honEvMake(s,1),
     text:()=>`<p>宗祖親鸞聖人の六百回大遠忌が本山で盛大に勤まる。諸国から門徒が上り、御影堂の御修復にも莫大な御懇志が要る。</p>`,
     choices:(d,s)=>honEvChoices(d,s)},
+  r_uchi:{stamp:'打毀',title:d=>d.ti,major:true,
+    make:(s,x)=>({...x,c:r5(clamp(netWorth(s)*.01,10*PL(s),300*PL(s))),risk:Math.min(.7,.2+(s.biz.kome&&s.biz.kome.lv>0?.15:0)+(s.biz.sake&&s.biz.sake.lv>0?.15:0)+(s.rice>200?.1:0)+(s.flags.kocho?.15:0))}),
+    text:d=>`<p>${d.tx}</p><p>米を蓄えた家や酒屋、村役人の家が狙われるという。当家も無縁ではいられない。</p>`,
+    choices:(d,s)=>[
+      {label:`施行を出し、米と銭を配る（${ryo(d.c)}）`,sub:'信望 +6・襲われない',dis:s.cash<d.c,run:(d,s)=>{spend(s,d.c);addTrust(s,6);return '門前に施行の札を掲げ、粥と銭を配った。一揆勢は当家の前を素通りしていった。';}},
+      {label:'蔵の米を安値で売り出す',sub:'米の三割を半値で売る・信望 +3',dis:s.rice<1,run:(d,s)=>{const q=Math.round(s.rice*.3); s.rice-=q; gain(s,Math.round(q*s.P.rice*.5)); addTrust(s,3); return `米${n0(q)}石を相場の半値で売り出した。人々は列をなして買っていった。`;}},
+      {label:'門を閉ざして様子を見る',sub:`襲われる恐れ ${Math.round(d.risk*100)}%`,run:(d,s)=>{ if(rnd()<d.risk){ const f=.15; for(const g of PROD_KEYS) s.inv[g]-=s.inv[g]*f; s.rice-=s.rice*f; const lc=Math.min(Math.round(Math.max(0,s.cash)*.1),r5(500*PL(s))); s.cash-=lc; addTrust(s,-5); return `夜半、一揆勢が門を破って押し入った。蔵の品と米の一割五分を打ち散らされ、金${ryo(lc)}も奪われた。`; } addTrust(s,-2); return '一揆勢は別の家へ向かい、当家は難を逃れた。だが村人の目は冷ややかだ。';}},
+    ]},
+  r_goso:{stamp:'強訴',title:d=>d.ti,major:true,
+    make:(s,x)=>({...x,c:r5(clamp(netWorth(s)*.008,8*PL(s),200*PL(s)))}),
+    text:d=>`<p>${d.tx}</p><p>村の者たちが庄屋の屋敷に集まり、どうするのかと詰め寄ってきた。</p>`,
+    choices:(d,s)=>[
+      {label:'願書を取りまとめ、お上へ取り次ぐ',sub:'信望 +6・お叱りの恐れ',run:(d,s)=>{addTrust(s,6); if(rnd()<.3){addKaku(s,-3);s.flags.displeasure=(s.flags.displeasure||0)+1;return '願いは一部聞き届けられたが、取り次いだ庄屋もきつくお叱りを受けた。';} return '願いは一部聞き届けられ、村人は庄屋を頼もしく思った。';}},
+      {label:`当家で夫食米を貸し与える（${ryo(d.c)}）`,sub:'信望 +8',dis:s.cash<d.c,run:(d,s)=>{spend(s,d.c);addTrust(s,8);return '当家の蔵から夫食米を貸し出した。村は騒ぎに加わらずに済んだ。';}},
+      {label:'村人を説き伏せて鎮める',sub:'信望 −6・格式 +2',run:(d,s)=>{addTrust(s,-6);addKaku(s,2);return '村は静まったが、陰で庄屋を恨む声が聞こえる。お上からはお褒めの言葉を賜った。';}},
+    ]},
+  r_murakata:{stamp:'村方',title:d=>d.ti,major:true,
+    make:(s,x)=>({...x,c:r5(clamp(netWorth(s)*.004,5*PL(s),80*PL(s)))}),
+    text:d=>`<p>${d.tx}</p><p>小前百姓たちが、年貢割付と村入用の帳簿を見せよと当家に迫っている。</p>`,
+    choices:(d,s)=>[
+      {label:`帳簿を開き、過分の村入用を返す（${ryo(d.c)}）`,sub:'信望 +6',dis:s.cash<d.c,run:(d,s)=>{spend(s,d.c);addTrust(s,6);return '寄合で帳簿を読み上げ、取り過ぎた分を返した。小前たちは納得して引き上げた。';}},
+      {label:'百姓代を立て、帳簿を共に改める',sub:'信望 +3・格式 −1',run:(d,s)=>{addTrust(s,3);addKaku(s,-1);return '以後、村入用は百姓代の立ち会いで勘定することになった。';}},
+      {label:'庄屋の務めに口出し無用と突っぱねる',sub:'信望が大きく下がる恐れ',run:(d,s)=>{ if(rnd()<.5){addTrust(s,-10);return '小前たちは代官所へ訴え出た。吟味は長引き、庄屋の評判は地に落ちた。';} addTrust(s,-4);return '小前たちは引き下がったが、わだかまりが残った。';}},
+    ]},
+  r_gimin:{stamp:'直訴',title:d=>d.ti,major:true,
+    make:(s,x)=>({...x,c:r5(clamp(netWorth(s)*.005,5*PL(s),100*PL(s)))}),
+    text:d=>`<p>${d.tx}</p>`,
+    choices:(d,s)=>[
+      {label:`ひそかに見舞金を送る（${ryo(d.c)}）`,sub:'信望 +7・露見すればお咎め',dis:s.cash<d.c,run:(d,s)=>{spend(s,d.c);addTrust(s,7); if(rnd()<.2){addKaku(s,-3);return '見舞いが役人の耳に入り、当家も吟味を受けた。それでも村人はこの恩を忘れなかった。';} return '人目を忍んで米と銭を届けた。この恩は長く語り継がれるだろう。';}},
+      {label:'関わらずにおく',sub:'信望 −2',run:(d,s)=>{addTrust(s,-2);return '当家は沈黙を守った。';}},
+    ]},
+  r_kikin:{stamp:'飢饉',title:d=>d.ti,major:true,
+    make:(s,x)=>({...x,q:Math.round(clamp(s.koku*.5,10,300)),c:r5(clamp(netWorth(s)*.01,10*PL(s),300*PL(s)))}),
+    text:d=>`<p>${d.tx}</p><p>当村にも行き倒れが出始めた。</p>`,
+    choices:(d,s)=>[
+      {label:`蔵の米${n0(d.q)}石で粥を炊き出す`,sub:'信望 +8・格式 +1',dis:s.rice<d.q,run:(d,s)=>{s.rice-=d.q;addTrust(s,8);addKaku(s,1);return '屋敷の前で大釜に粥を炊き、毎朝配った。村から餓死者を出さずに済んだ。';}},
+      {label:`他国米を買い入れて配る（${ryo(d.c)}）`,sub:'信望 +6',dis:s.cash<d.c,run:(d,s)=>{spend(s,d.c);addTrust(s,6);return '他国から米を買い入れ、村の家々に配った。';}},
+      {label:'見て見ぬふりをする',sub:'信望 −8',run:(d,s)=>{addTrust(s,-8);return '村では餓死する者が出た。庄屋の家の灯りを恨めしげに見る目がある。';}},
+    ]},
+  r_news:{stamp:'風聞',title:d=>d.ti,major:true,make:(s,x)=>({...x}),text:d=>`<p>${d.tx}</p>`},
+  tomikuji:{stamp:'富突',title:()=>'寺社の富突き',
+    make:s=>({c:r5(10*PL(s)),big:r5(300*PL(s)),sm:r5(20*PL(s))}),
+    text:d=>`<p>近くの寺社で富突きが催される。札を買っておけば、突き当日に錐で突かれた番号が当たりとなる。一番富は${ryo(d.big)}という。</p>`,
+    choices:(d,s)=>[
+      {label:`札をまとめて買う（${ryo(d.c)}）`,sub:'当たれば大金、外れれば丸損',dis:s.cash<d.c,run:(d,s)=>{spend(s,d.c);const x=rnd(); if(x<.03){gain(s,d.big);addKaku(s,1);return `なんと一番富を引き当てた。${ryo(d.big)}が転がり込み、村じゅうの噂になった。`;} if(x<.15){gain(s,d.sm);return `合番に当たり、${ryo(d.sm)}を受け取った。`;} return '外れた。札は紙くずになった。';}},
+      {label:'買わない',run:()=>'堅実に過ごした。'},
+    ]},
+  meibutsu:{stamp:'道具',title:()=>'名物茶碗の売り込み',
+    make:s=>{const p=r5(clamp(netWorth(s)*.03,30*PL(s),800*PL(s))); return {p,f:r5(Math.max(2*PL(s),p*.08)),real:rnd()<.45};},
+    text:d=>`<p>京の道具屋が、さる大名家から出たという茶碗を持ち込んできた。本物の名物なら${ryo(d.p)}は安いが、近ごろは贋物も多い。</p>`,
+    choices:(d,s)=>[
+      {label:`言い値の${ryo(d.p)}で買う`,sub:'本物なら格式 +12',dis:s.cash<d.p,run:(d,s)=>{spend(s,d.p); if(d.real){addKaku(s,12);addTrust(s,2);return '目利きに見せると、まぎれもない名物だった。茶会に招きたいという客がにわかに増えた。';} return '後日、贋物と分かった。道具屋はもう行方知れずだ。';}},
+      {label:`目利きに見せてから決める（${ryo(d.f)}）`,sub:'贋物なら買わずに済む',dis:s.cash<d.f,run:(d,s)=>{spend(s,d.f); if(!d.real) return '目利きは首を横に振った。贋物を掴まずに済んだ。'; if(s.cash<d.p) return '本物と分かったが、手元金が足りず見送った。'; spend(s,d.p);addKaku(s,12);addTrust(s,2);return '目利きのお墨付きを得て買い取った。名物が家の格を一段上げた。';}},
+      {label:'断る',run:()=>''},
+    ]},
+  ronin:{stamp:'浪人',title:()=>'浪人の押し借り',
+    make:s=>({a:r5(clamp(netWorth(s)*.004,5*PL(s),60*PL(s)))}),
+    text:d=>`<p>腰に大小を差した浪人が三人、門先に居座った。「当座の路銀を借りたい」と言うが、返すつもりはなさそうだ。${ryo(d.a)}ほど包めば立ち去るだろう。</p>`,
+    choices:(d,s)=>[
+      {label:`${ryo(d.a)}を包んで帰ってもらう`,dis:s.cash<d.a,run:(d,s)=>{spend(s,d.a);return '浪人たちは礼も言わずに去った。';}},
+      {label:'村の若い衆を集めて追い返す',sub:'うまくいけば信望 +5',run:(d,s)=>{ if(rnd()<.6){addTrust(s,5);return '若い衆が鍬や棒を手に取り囲むと、浪人たちは捨て台詞を残して逃げ去った。村人は庄屋の胆力を褒めそやした。';} const l=Math.min(Math.round(Math.max(0,s.cash)*.06),r5(120*PL(s))); s.cash-=l; addTrust(s,-2); return `揉み合いになって怪我人が出たうえ、どさくさに${ryo(l)}を奪われた。`;}},
+      {label:'代官所へ訴え出る',sub:'五分五分',run:(d,s)=>{ if(rnd()<.5){addTrust(s,1);return '捕り方が駆けつけ、浪人たちを召し捕った。';} const l=Math.min(r5(d.a*2),Math.max(0,Math.round(s.cash))); s.cash-=l; return `訴えが届く前に浪人たちは蔵を荒らして去り、${ryo(l)}ほどの損が出た。`;}},
+    ]},
+  shibai:{stamp:'芝居',title:()=>'旅芝居の一座',
+    make:s=>({c:r5(15*PL(s)),g:r5(8*PL(s))}),
+    text:()=>`<p>旅回りの芝居一座が村に立ち寄った。座頭が、鎮守の境内で村芝居を打たせてほしいと頭を下げている。</p>`,
+    choices:(d,s)=>[
+      {label:`金主になり、村人に無料で見せる（${ryo(d.c)}）`,sub:'信望 +6・格式 +1',dis:s.cash<d.c,run:(d,s)=>{spend(s,d.c);addTrust(s,6);addKaku(s,1);return '三日三晩、境内は見物人であふれた。忠臣蔵の大詰めでは、年寄りまで涙をぬぐっていた。';}},
+      {label:'木戸銭を取らせ、上がりを分ける',sub:`金 +${ryo(d.g)}・信望 −1`,run:(d,s)=>{gain(s,d.g);addTrust(s,-1);return '芝居はそこそこ当たり、上がりの分け前が入った。';}},
+      {label:'断る',run:()=>'一座は次の宿場へ去っていった。'},
+    ]},
+  sumo:{stamp:'相撲',title:()=>'勧進相撲の巡業',
+    make:s=>({c:r5(clamp(netWorth(s)*.01,20*PL(s),150*PL(s)))}),
+    text:()=>`<p>${EDO()}の大関を擁する相撲の一行が近くを巡業する。贔屓になって化粧廻しを贈れば、当家の名が土俵の上で披露されるという。</p>`,
+    choices:(d,s)=>[
+      {label:`化粧廻しを贈る（${ryo(d.c)}）`,sub:'格式 +5・信望 +3',dis:s.cash<d.c,run:(d,s)=>{spend(s,d.c);addKaku(s,5);addTrust(s,3);return '土俵入りで当家の名入りの化粧廻しが披露され、見物の衆がどよめいた。';}},
+      {label:'見物だけする',sub:'信望 +1',run:(d,s)=>{addTrust(s,1);return '村人と桟敷に並んで、取組を楽しんだ。';}},
+    ]},
+  maizo:{stamp:'発見',title:()=>'古壺の小判',
+    make:s=>({v:r5((20+rnd()*100)*PL(s))}),
+    text:d=>`<p>屋敷の古井戸をさらっていた人足が、泥の中から壺を掘り当てた。中には古い小判がぎっしり。${ryo(d.v)}ほどはありそうだ。</p>`,
+    choices:(d,s)=>[
+      {label:'代官所に届け出る',sub:'三割を褒美に賜る・信望 +5',run:(d,s)=>{const v=r5(d.v*.3);gain(s,v);addTrust(s,5);addKaku(s,2);return `正直な届け出が褒められ、${ryo(v)}の褒美を賜った。`;}},
+      {label:'黙って蔵に納める',sub:'露見すれば大事',run:(d,s)=>{ if(rnd()<.25){addTrust(s,-10);addKaku(s,-5);s.flags.displeasure=(s.flags.displeasure||0)+1;return '人足の口から噂が広まり、代官所に知れた。小判は取り上げられ、きついお叱りを受けた。';} gain(s,d.v);return `小判${ryo(d.v)}を蔵の奥にしまい込んだ。人足には口止め料を握らせた。`;}},
+    ]},
+  haikai:{stamp:'俳諧',title:()=>'俳諧の宗匠',
+    make:s=>({c:r5(8*PL(s))}),
+    text:()=>`<p>名の知れた俳諧の宗匠が、旅の途中で一夜の宿を求めてきた。もてなして句会を開けば、近在の旦那衆も集まるだろう。</p>`,
+    choices:(d,s)=>[
+      {label:`句会を開いてもてなす（${ryo(d.c)}）`,sub:'格式 +3・信望 +1',dis:s.cash<d.c,run:(d,s)=>{spend(s,d.c);addKaku(s,3);addTrust(s,1);return pick(['宗匠は当主の句を「田の匂いがする」と褒め、撰集に一句を載せると約束した。','句会は夜更けまで続いた。旦那衆とのつきあいが一段と深まった。','宗匠の揮毫した短冊が床の間に掛かった。客がみな足を止めて眺めていく。']);}},
+      {label:'一夜の宿だけ貸す',run:()=>'宗匠は礼を述べ、翌朝早くに旅立った。'},
+    ]},
+  ookai:{stamp:'買付',title:d=>`${GOODS[d.g].name}の大口買付`,
+    make:s=>{ const c=PROD_KEYS.filter(g=>s.inv[g]>=1&&s.inv[g]*s.P[g]>=20*PL(s)); if(!c.length) return null; const g=pick(c); const q=Math.max(1,Math.floor(s.inv[g]*(.5+rnd()*.5))); const pr=Math.round((1.25+rnd()*.25)*100)/100; return {g,q,pr,v:Math.round(q*s.P[g]*pr)}; },
+    text:d=>`<p>他国の商人が訪ねてきて、蔵の${GOODS[d.g].name}を${n0(d.q)}${GOODS[d.g].unit}まとめて買いたいという。相場の${Math.round((d.pr-1)*100)}%増しで、代金は即金で払うそうだ。</p>`,
+    choices:(d,s)=>[
+      {label:`売る（${ryo(d.v)}）`,sub:'すぐ入金',dis:s.inv[d.g]<d.q,run:(d,s)=>{s.inv[d.g]-=d.q;gain(s,d.v);s.stats[d.g]=(s.stats[d.g]||0)+d.v;return `${GOODS[d.g].name}${n0(d.q)}${GOODS[d.g].unit}を${ryo(d.v)}で売り渡した。`;}},
+      {label:'値を吊り上げてみる',sub:'一割上がるか、破談か',run:(d,s)=>{ if(rnd()<.5&&s.inv[d.g]>=d.q){const v=Math.round(d.v*1.1); s.inv[d.g]-=d.q;gain(s,v);s.stats[d.g]=(s.stats[d.g]||0)+v;return `渋い顔をしながらも商人は折れた。${ryo(v)}で売り渡した。`;} return '「それなら結構」と、商人は帰ってしまった。';}},
+      {label:'断る',run:()=>''},
+    ]},
+  bakuchi:{stamp:'博打',title:d=>`${d.n}の借金`,
+    make:s=>{ const c=s.fam.filter(m=>m.alive&&m.inHouse&&m.kind==='blood'&&m.sex==='m'&&ageM(s,m)>=16&&ageM(s,m)<=35); if(!c.length) return null; const m=pick(c); return {id:m.id,n:m.name,a:r5(clamp(netWorth(s)*.012,10*PL(s),300*PL(s)))}; },
+    text:d=>`<p>${d.n}が隣町の賭場に入り浸り、${ryo(d.a)}もの借金をこしらえていた。胴元の使いが証文を手に門前で待っている。</p>`,
+    choices:(d,s)=>[
+      {label:`肩代わりして、きつく叱る（${ryo(d.a)}）`,sub:'家名は守られる',dis:s.cash<d.a,run:(d,s)=>{spend(s,d.a);return `${d.n}は畳に額をすりつけて詫びた。しばらくは家業に精を出しそうだ。`;}},
+      {label:'突っぱねる',sub:'信望 −4・格式 −3',run:(d,s)=>{addTrust(s,-4);addKaku(s,-3);return '胴元の子分が村で騒ぎ立て、庄屋の家の恥が知れ渡った。';}},
+    ]},
+  gakusha:{stamp:'学問',title:()=>'旅の算学者',
+    make:s=>{ const c=s.fam.filter(m=>m.alive&&m.inHouse&&m.kind==='blood'&&ageM(s,m)>=8&&ageM(s,m)<=20&&(m.sho||1)<10); if(!c.length) return null; const m=pick(c); return {id:m.id,n:m.name,c:r5(20*PL(s))}; },
+    text:d=>`<p>和算と蘭学をおさめたという学者が村に逗留している。住み込みで${d.n}に算盤と読み書きを仕込んでもいいという。</p>`,
+    choices:(d,s)=>[
+      {label:`師として迎える（${ryo(d.c)}）`,sub:`${d.n}の商才 +1`,dis:s.cash<d.c,run:(d,s)=>{spend(s,d.c); const m=famById(s,d.id); if(m) m.sho=Math.min(10,(m.sho||1)+1); return `${d.n}はみるみる算盤が上達した。`;}},
+      {label:'断る',run:()=>''},
+    ]},
+  okageinu:{stamp:'代参',title:()=>'おかげ犬',
+    make:s=>({c:r5(Math.max(1,PL(s)))}),
+    text:()=>`<p>首に小さな袋と札を下げた犬が、門前にちょこんと座っている。飼い主の代わりにお伊勢参りへ向かう「おかげ犬」らしい。袋には路銀と、行き先を記した書付が入っている。</p>`,
+    choices:(d,s)=>[
+      {label:'飯を食わせ、路銀を足して送り出す',sub:'信望 +2',dis:s.cash<d.c,run:(d,s)=>{spend(s,d.c);addTrust(s,2);return '犬は尾を振って街道を駆けていった。村の子どもたちが村境まで見送った。';}},
+      {label:'そっと見送る',run:()=>'犬は次の家の軒先へ向かっていった。'},
+    ]},
+  genmen:{stamp:'嘆願',title:()=>'小作の年貢減免願い',
+    make:s=>{ if(s.koku<20) return null; return {c:r5(s.koku*.12*s.P.rice)}; },
+    text:()=>`<p>小作人たちが連れ立ってやってきた。今年は虫がついて実入りが悪く、約束の小作米を納めきれないという。</p>`,
+    choices:(d,s)=>[
+      {label:`減免を認める（${ryo(d.c)}相当）`,sub:'信望 +6',dis:s.cash<d.c,run:(d,s)=>{spend(s,d.c);addTrust(s,6);return '小作人たちは何度も頭を下げて帰っていった。来年はきっと良い米を作るだろう。';}},
+      {label:'約束どおり納めさせる',sub:'信望 −5',run:(d,s)=>{addTrust(s,-5);return '小作人たちはうなだれて帰った。陰で庄屋を恨む声も聞こえる。';}},
+    ]},
   matsuri:{stamp:'寄進',title:()=>'秋祭りの寄進',
     make:s=>({a:Math.round(clamp(5+netWorth(s)*.003/PL(s),5,100)*PL(s))}),
     text:()=>`<p>鎮守の秋祭りが近い。村の若い衆が、神輿の修繕と幟の新調のために寄進を願い出てきた。</p>`,
@@ -1807,6 +2013,7 @@ const EV={
     })[d.r],
     choices:d=>[{label:d.r===2?'この苗字を名乗る':'ありがたく拝受する',run:(d,s)=>{ if(d.r===2){ const el=document.getElementById('surname'); const v=(el&&el.value||'').trim().slice(0,4); s.surname=v||d.def; return `以後、${s.surname}を名乗る。`; } return ''; }}]},
 };
+EV.murakata_r={...EV.r_murakata,make:s=>EV.r_murakata.make(s,{ti:'村方騒動',tx:pick(['不作の年が続き、小前百姓たちの間で、年貢の割付が庄屋に甘く自分たちに重いという不満がくすぶっていた。','村の寄合で、村入用の使い道がはっきりしないと声が上がった。','隣村で庄屋が訴えられたという噂が広まり、当村の小前たちも騒ぎ始めた。'])})};
 
 /* ───── 帳場での商い ───── */
 const err=m=>({ok:false,msg:m});
@@ -2787,8 +2994,8 @@ function stats(s){
   <div class="stat"><div class="k">持高</div><div class="v">${n1(s.koku)}<small>石</small></div></div>
   <div class="stat"><div class="k">信望</div><div class="v"><span class="meter"><i style="width:${s.trust}%"></i></span>${n0(s.trust)}</div></div>
   <div class="stat"><div class="k">家格</div><div class="v" style="font-size:16px">${RANKS[s.rank]}<small>　格式${n0(s.kaku)}</small></div></div>
-  <div class="stat"><div class="k">家産</div><div class="v">${ryo(nw)}</div></div>
-  </div></section>`;
+  <div class="stat"><div class="k">家産</div><div class="v">${ryo(nw)}${s.nwPrev!=null&&Math.round(nw-s.nwPrev)!==0?`<small class="dlt ${nw>=s.nwPrev?'up':'dn'}" title="前の季から">${nw>=s.nwPrev?'▲':'▼'}${ryo(Math.abs(Math.round(nw-s.nwPrev)))}</small>`:''}</div></div>
+  </div><p class="kbd-hint">キー操作：Enter 季節を送る／Y 一年送る／1〜7 画面切替／出来事は数字キーで選ぶ</p></section>`;
 }
 function renderGame(s){
   const tabs=[['biz','家業'],['kazoku','家族'],['yashiki','屋敷'],['mura','田畑と村'],['soba','相場'],['cho','大福帳'],['bz','番付']];
@@ -2842,7 +3049,7 @@ function renderModal(s){
     <div class="choices"><button class="btn pri" data-act="next" style="align-self:flex-end;padding:8px 22px">${s.over&&s.queue.length===1?'帳締めへ':'次へ'}</button></div></div></div>`;
   }
   const E=EV[q.id]; const chs=E.choices?E.choices(q.d,s):[{label:'心得た',run:()=>''}];
-  return `<div class="veil"><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dlg-h"><div class="stamp" aria-hidden="true">${E.stamp||'事'}</div><div class="dw">${dateOf(s.t)}</div><h2 id="dlg-h">${E.title(q.d,s)}</h2><div class="txt">${E.text(q.d,s)}</div>
+  return `<div class="veil"><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="dlg-h"><div class="stamp" aria-hidden="true">${E.stamp||'事'}</div><div class="dw">${dateOf(s.t)}</div><h2 id="dlg-h">${E.title(q.d,s)}</h2>${chs.length>1?`<div class="cash">手元金 ${ryo(s.cash)}</div>`:''}<div class="txt">${E.text(q.d,s)}</div>
   <div class="choices">${chs.map((c,i)=>`<button class="choice" data-act="ch:${i}" ${c.dis?'disabled':''}>${c.label}${c.sub?`<small>${c.sub}${c.dis?'（足りない）':''}</small>`:(c.dis?'<small>足りない</small>':'')}</button>`).join('')}</div></div></div>`;
 }
 function render(){
@@ -2981,7 +3188,14 @@ document.addEventListener('click',e=>{
   if(r){ if(r.ok){ if(r.clear) delete ui.q[r.clear]; save(); render(); } toast(r.msg,!r.ok); }
 });
 document.addEventListener('toggle',e=>{ if(e.target&&e.target.id==='monpick') ui.monOpen=e.target.open; },true);
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&ui.saveOpen&&S){ ui.saveOpen=false; render(); } });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&ui.saveOpen&&S){ ui.saveOpen=false; render(); return; }
+  if(!S||e.ctrlKey||e.metaKey||e.altKey) return; const tg=e.target; if(tg&&(/^(INPUT|SELECT|TEXTAREA)$/.test(tg.tagName)||tg.isContentEditable)) return; if(ui.saveOpen) return;
+  const clk=sel=>{ const b=document.querySelector(sel); if(b&&!b.disabled){ e.preventDefault(); b.click(); return true; } return false; };
+  if(S.queue.length){ if(e.key==='Enter'||e.key===' '){ if(clk('#modal [data-act="next"]')) return; const cs=document.querySelectorAll('#modal [data-act^="ch:"]'); if(cs.length===1&&!cs[0].disabled){ e.preventDefault(); cs[0].click(); } } else if(/^[1-9]$/.test(e.key)){ clk(`#modal [data-act="ch:${+e.key-1}"]`); } return; }
+  if(e.key==='Enter'||e.key===' '){ clk('[data-act="advance"]'); return; }
+  if(e.key==='y'||e.key==='Y'){ clk('[data-act="fast:1"]'); return; }
+  if(/^[1-9]$/.test(e.key)){ const tb=document.querySelectorAll('.tabs [data-act^="tab:"]'); const b=tb[+e.key-1]; if(b){ e.preventDefault(); b.click(); } }
+});
 document.addEventListener('input',e=>{
   const t=e.target;
   if(t.dataset&&t.dataset.q){ ui.q[t.dataset.q]=t.value; updatePreviews(); return; }
