@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="皇國經綸"><meta name="theme-color" content="#181e2c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"></head><body>
-<title>帝國經綸 Ver.52</title>
+<title>帝國經綸 Ver.53</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 作戰室の机上：鐵紺の地に國防色の罫。金は見出し、朱は戰と裁可印にのみ使ふ */
@@ -86,7 +86,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .q2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px}.q2 .q{grid-template-columns:2.4em minmax(0,1fr) 2.4em}.mt{display:grid;grid-template-columns:minmax(4.5em,1.3fr) repeat(4,minmax(0,1fr));gap:3px 6px;font-size:13px;align-items:center;min-width:0}.mt .h{color:var(--mu);font-size:12px;text-align:right}.mt .h:first-child{text-align:left}.mt .me{color:var(--au);font-weight:700}.mt .v{position:relative;text-align:right;padding:1px 4px;font-variant-numeric:tabular-nums}.mt .v i{position:absolute;left:0;top:2px;bottom:2px;background:var(--au);opacity:.18}.mt .v.k i{opacity:.38}@media(max-width:520px){.sl{grid-template-columns:repeat(3,minmax(0,1fr))}.srow{display:contents}}@media(max-width:340px){.sl{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 <div class="w">
-<header><h1>帝國經綸</h1><small class="ver">Ver.52</small><div class="dt" id="dt"></div></header>
+<header><h1>帝國經綸</h1><small class="ver">Ver.53</small><div class="dt" id="dt"></div></header>
 <div class="wars" id="wars"></div><div class="fl"><button class="sm" id="stt" data-a="stt">統計を畳む</button><button class="sm" data-a="menu">記録・始め方</button></div>
 <div class="st" id="st"></div>
 <nav class="tb" id="tb"></nav>
@@ -1175,7 +1175,7 @@ function nzPanel(){nzI();const z=S.nz,b=Object.entries(NZA).map(([k,a])=>`<butto
  return `<div class="rep"><b>政權奪取への道</b><div>黨首として政權を目指す。政權を握るまで國政には携はれない（遅くとも一九三三年正月に政權を握る）。過半數の議席、または議席三割と保守派の信任60で首相に任命される。</div><div>支持率 ${z.v.toFixed(1)}%・國會議席 ${z.s.toFixed(1)}%・保守派の信任 ${Math.round(z.k)}・黨資金 ${Math.round(z.m)}・今季の黨活動 ${z.a}／3</div><div class="g">${b}</div></div>`}
 {const _rd=rd;rd=function(){try{if(nzPre()&&S.dc=='prop'){S.dc='';S.prop=null;lg('ヴァイマル政府、外國からの條約の申入れを見送る')}}catch(e){}_rd.apply(this,arguments);try{if(nzPre()){const p=$('#pn');if(p)p.insertAdjacentHTML('afterbegin',nzPanel())}}catch(e){}};
  const _nx=next;next=function(){const d0=S?S.y*4+(S.q||0):0,pre=nzPre();const r=_nx.apply(this,arguments);try{if(pre&&S&&!S.nzb&&S.y*4+(S.q||0)>d0){nzTurn(d0);if(!S.nzb&&S.y>=1933)nzWin('ヒンデンブルク大統領、ヒトラーを首相に任命す。第三帝國の始まり');sv();rd()}}catch(e){}return r};
- const OK=new Set(['tab','next','menu','nz','nopen','dc']);
+ const OK=new Set(['tab','next','menu','nz','nopen','dc','ntx','msr','stt','cr','bmx']);
  document.addEventListener('click',e=>{if(!nzPre())return;const b=e.target.closest('[data-a]');if(!b||b.disabled)return;const t=b.dataset.a.split(':')[0];if(t=='nz'){e.stopPropagation();e.preventDefault();nzDo(b.dataset.a.split(':')[1]);return}if(!OK.has(t)){e.stopPropagation();e.preventDefault();toast('政權を握るまで國政には携はれない')}},true);
  document.addEventListener('change',e=>{if(nzPre()){e.stopPropagation();toast('政權を握るまで國政には携はれない')}},true)}
 if(had){const b=S.fx24;fx24();if(!b&&S.fx24)sv()}
