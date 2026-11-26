@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="皇國經綸"><meta name="theme-color" content="#181e2c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"></head><body>
-<title>帝國經綸 Ver.54</title>
+<title>帝國經綸 Ver.55</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 作戰室の机上：鐵紺の地に國防色の罫。金は見出し、朱は戰と裁可印にのみ使ふ */
@@ -86,7 +86,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .q2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px}.q2 .q{grid-template-columns:2.4em minmax(0,1fr) 2.4em}.mt{display:grid;grid-template-columns:minmax(4.5em,1.3fr) repeat(4,minmax(0,1fr));gap:3px 6px;font-size:13px;align-items:center;min-width:0}.mt .h{color:var(--mu);font-size:12px;text-align:right}.mt .h:first-child{text-align:left}.mt .me{color:var(--au);font-weight:700}.mt .v{position:relative;text-align:right;padding:1px 4px;font-variant-numeric:tabular-nums}.mt .v i{position:absolute;left:0;top:2px;bottom:2px;background:var(--au);opacity:.18}.mt .v.k i{opacity:.38}@media(max-width:520px){.sl{grid-template-columns:repeat(3,minmax(0,1fr))}.srow{display:contents}}@media(max-width:340px){.sl{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 <div class="w">
-<header><h1>帝國經綸</h1><small class="ver">Ver.54</small><div class="dt" id="dt"></div></header>
+<header><h1>帝國經綸</h1><small class="ver">Ver.55</small><div class="dt" id="dt"></div></header>
 <div class="wars" id="wars"></div><div class="fl"><button class="sm" id="stt" data-a="stt">統計を畳む</button><button class="sm" data-a="menu">記録・始め方</button></div>
 <div class="st" id="st"></div>
 <nav class="tb" id="tb"></nav>
@@ -550,11 +550,11 @@ elc:{n:'電源開發',c:{fund:10,iron:2},get d(){return'電力 +'+eY()+'萬瓩�
 com:{n:'商業振興',c:{fund:8},d:'税收 +3%・人口增加 +0.05%/年・健康 +1・民心 +2',f:()=>{lv('com');up('ken',1);up('stab',2)}},
 ind:{n:'工業振興',c:{fund:10,iron:3,coal:3},d:'工業力 +5・健康 +2・生産性 +2%・軍需と藥品の産出 +3%・税收↑',f:()=>{S.ind+=5;up('ken',2);lv('ind')}},
 lab:{n:'科學振興',c:{fund:9},d:'研究所 +1（毎季 研究+3）・能力 +2・模倣 +2',f:()=>{S.lab++;up('nou',2);up('imi',2)}},
-edu:{n:'教育振興',c:{fund:7},d:'民心 +2',f:()=>{up('stab',2)}},
+edu:{n:'教育振興',c:{fund:7},d:'民心 +2・能力 +1・勤勉 +1・協調 +1・模倣 +1',f:()=>{up('stab',2);up('nou',1);up('kin',1);up('kyo',1);up('imi',1)}},
 hea:{n:'衛生體育',c:{fund:7},d:'健康 +2・俊敏 +1.5・死亡率低下で人口の伸び↑（經年で低下せず）',f:()=>{up('ken',2);up('shun',1.5);lvP('hea')}},
 umi:{n:'人口施策',c:{fund:6},d:'出生 +0.3%/年（十季で漸減・上限3%）・健康 +2・信仰 +2',f:()=>{lv('umi');up('ken',2);up('fai',2)}},
 fer:{n:'資源開發',c:{fund:8,iron:1},d:'毎季 炭+1.5・鐵+1・油+0.5・瓦+0.5・肥料で食+1、人口の伸び↑・税收↑',f:()=>{S.mine=(S.mine||0)+1;lv('fer')}},
-kok:{n:'國土開發',c:{fund:7,coal:1},d:'農業收量 +6%・電力 +20・模倣 +2・人口の伸び↑・税收↑（治水・植林・灌漑）',f:()=>{S.fert+=.06;S.elec+=20;up('imi',2);lv('kok')}},
+kok:{n:'國土開發',c:{fund:7,coal:1},d:'農業收量 +6%・電力 +20・模倣 +2・協調 +1・人口の伸び↑・税收↑（治水・植林・灌漑）',f:()=>{S.fert+=.06;S.elec+=20;up('imi',2);up('kyo',1);lv('kok')}},
 fis:{n:'海洋開發',c:{fund:6,oil:1},d:'漁獲 +3・健康 +2・海底油田と瓦斯田の開發と産出↑・電力 +10・税收↑',f:()=>{S.fish+=.375;S.elec+=10;up('ken',2);lv('fis');S.D.forEach((x,i)=>{const d=DD[i];if(d[4]=='sea'&&S.tech.sea&&rs(d[2]).o==P)x.v=Math.min(1,x.v+.1)})}},
 sav:{n:'貯蓄奬勵',c:{fund:5},d:'貯蓄 +3（國帑と工業成長が增す）',f:()=>up('sav',3),e:()=>S.sav<200},
 inf:{n:'情報',c:{fund:6},d:'情報 +5・能力 +2・機密收集で研究點・全分野の伸び率↑（成算・察知・蜂起・講和・撹乱）',f:()=>{up('inf',5);up('nou',2);lv('inf');const v=S.inf*.2*(1+S.imi/300);S.sci+=v;lg('情報活動、機密收集で研究點 +'+Math.round(v))}},
@@ -1100,7 +1100,7 @@ cell=(l,v,s,n)=>`<div class="c"><em>${l}</em><b>${v}</b>${s!=null?`<s class="${n
 oc=o=>o==P?'var(--au)':isI(o)?'var(--ok)':atW(o)?'var(--sh)':'var(--mu)',
 score=c=>Math.round(c.gdp+c.pop*.5+Object.keys(S.ach).length*50+(S.kin+S.shun+S.ken+S.nou)/4);
 /* 効果が上限に達した施策は押せない（能力は200・民心と關係は100が上限） */
-const MXA={inf:()=>S.inf>=200&&S.nou>=200,edu:()=>S.stab>=100,hea:()=>S.ken>=200&&S.shun>=200,umi:()=>S.ken>=200&&S.fai>=200&&L('umi')*.3>=3,ika:()=>S.ika>=200&&S.ken>=200&&S.nou>=200,sav:()=>S.sav>=200};
+const MXA={inf:()=>S.inf>=200&&S.nou>=200,edu:()=>S.stab>=100&&S.nou>=200&&S.kin>=200&&S.kyo>=200&&S.imi>=200,hea:()=>S.ken>=200&&S.shun>=200,umi:()=>S.ken>=200&&S.fai>=200&&L('umi')*.3>=3,ika:()=>S.ika>=200&&S.ken>=200&&S.nou>=200,sav:()=>S.sav>=200};
 ['de','it','gb','fr','es','nl','pt','tr','us','su'].forEach(k=>MXA[k]=()=>(S.rel[k]||0)>=100);
 function amx(k){return MXA[k]?!!MXA[k]():false}
 function ab(k){const a=A[k];if(a.x&&!a.x())return'';const mx=amx(k),en=!mx&&can(a.c)&&(!a.e||a.e());return`<button class="act" data-a="do:${k}"${en?'':' disabled'}><b>${a.n}</b><span>${a.d}</span><i>${mx?'効果は上限':cs(a.c)}</i></button>`}
