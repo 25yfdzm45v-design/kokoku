@@ -1,5 +1,5 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="皇國經綸"><meta name="theme-color" content="#181e2c"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"></head><body>
-<title>帝國經綸 Ver.53</title>
+<title>帝國經綸 Ver.54</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* 作戰室の机上：鐵紺の地に國防色の罫。金は見出し、朱は戰と裁可印にのみ使ふ */
@@ -86,7 +86,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .q2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:14px}.q2 .q{grid-template-columns:2.4em minmax(0,1fr) 2.4em}.mt{display:grid;grid-template-columns:minmax(4.5em,1.3fr) repeat(4,minmax(0,1fr));gap:3px 6px;font-size:13px;align-items:center;min-width:0}.mt .h{color:var(--mu);font-size:12px;text-align:right}.mt .h:first-child{text-align:left}.mt .me{color:var(--au);font-weight:700}.mt .v{position:relative;text-align:right;padding:1px 4px;font-variant-numeric:tabular-nums}.mt .v i{position:absolute;left:0;top:2px;bottom:2px;background:var(--au);opacity:.18}.mt .v.k i{opacity:.38}@media(max-width:520px){.sl{grid-template-columns:repeat(3,minmax(0,1fr))}.srow{display:contents}}@media(max-width:340px){.sl{grid-template-columns:repeat(2,minmax(0,1fr))}}
 </style>
 <div class="w">
-<header><h1>帝國經綸</h1><small class="ver">Ver.53</small><div class="dt" id="dt"></div></header>
+<header><h1>帝國經綸</h1><small class="ver">Ver.54</small><div class="dt" id="dt"></div></header>
 <div class="wars" id="wars"></div><div class="fl"><button class="sm" id="stt" data-a="stt">統計を畳む</button><button class="sm" data-a="menu">記録・始め方</button></div>
 <div class="st" id="st"></div>
 <nav class="tb" id="tb"></nav>
@@ -560,7 +560,7 @@ sav:{n:'貯蓄奬勵',c:{fund:5},d:'貯蓄 +3（國帑と工業成長が增す�
 inf:{n:'情報',c:{fund:6},d:'情報 +5・能力 +2・機密收集で研究點・全分野の伸び率↑（成算・察知・蜂起・講和・撹乱）',f:()=>{up('inf',5);up('nou',2);lv('inf');const v=S.inf*.2*(1+S.imi/300);S.sci+=v;lg('情報活動、機密收集で研究點 +'+Math.round(v))}},
 ika:{n:'醫學研究',c:{fund:7},d:'醫學 +5・健康 +3・能力 +2・死亡率低下で人口の伸び↑（經年で低下せず）',f:()=>{up('ika',5);up('ken',3);up('nou',2);lvP('ika')},e:()=>S.ika<200},
 yak:{n:'藥品生産',c:{fund:6},d:'醫藥品の産出 毎季 +2・健康 +2・死亡率低下で人口の伸び↑・税收↑',f:()=>{S.phar+=2;up('ken',2);lv('yak')}},
-sei:{n:'総動員',c:{fund:8},d:'民心 +8（協調で增す）・勤勉 +1・信仰 +1・全分野の伸び率↑',f:()=>{lv('sei');up('stab',8*(1+S.kyo/400));up('kin',1);up('fai',1)}},
+sei:{n:'総動員',c:{fund:8},d:'民心 +8（協調で增す）・勤勉 +1・信仰 +1・協調 +1・全分野の伸び率↑',f:()=>{lv('sei');up('stab',8*(1+S.kyo/400));up('kin',1);up('fai',1);up('kyo',1)}},
 mu:{n:'軍需生産',c:{fund:8,iron:3},d:'武器彈藥の産出 毎季 +2（工業力に比例、電力を使ふ）',f:()=>S.arms+=2},
 arm:{n:'陸軍擴張',c:{fund:10,iron:4,mun:4},d:'陸軍 +12',f:()=>{S.army+=12;S.milT=S.y*4+S.q}},
 nav:{n:'海軍擴張',c:{fund:14,iron:8,mun:3},d:'海軍 +8',f:()=>{S.navy+=8;S.milT=S.y*4+S.q}},
